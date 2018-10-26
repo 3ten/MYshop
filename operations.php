@@ -44,4 +44,16 @@ if ($_POST["operation"] == "ProductDell") {
 }
 
 /************************************************************************************************************************************************************/
+
+if ($_POST["operation"] == "OrderDell") {
+    include("db.php");
+    if (isset($_POST["articul"])) {
+        $articul = mb_convert_encoding($_POST["articul"], "windows-1251", "UTF-8");
+
+//$articul = mb_convert_encoding("00001", "windows-1251", "UTF-8");
+        $result = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ARTICUL = '$articul'", $db);
+    }
+}
+
+/************************************************************************************************************************************************************/
 ?>

@@ -63,6 +63,7 @@ $order = array();
 
 <script>
     $(document).ready(function () {
+
         $('.button').click(function () {
             var el = document.getElementById(this.id);
             var name = el.dataset.name;
