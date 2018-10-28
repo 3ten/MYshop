@@ -21,6 +21,7 @@ include("menu.php");
 <body>
 
 
+
 <div class="container">
     <div class="row">
         <?php
@@ -28,10 +29,11 @@ include("menu.php");
             $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
             $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
             $price = mb_convert_encoding($row['PRICE'], "UTF-8", "windows-1251");
+            $session = $_SESSION['SESSION'];
 
-            $orderres = ibase_query("select * from SHOP_ORDER_3TEN where ARTICUL ='$articul'", $db);
+            $orderres = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $db);
             $OrderRow = ibase_fetch_assoc($orderres);
-            if (empty(mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251"))) {
+            if ($articul != mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251")) {
                 $IsOrderText = "добавить в корзину";
                 $IsOrder = "false";
             } else {

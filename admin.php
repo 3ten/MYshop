@@ -46,12 +46,13 @@ $order = array();
             echo
                 ' 
        <div  class="col-sm-4"> 
+       <input type="button" class="imgAdd" value="...">
        <img src="img/milk.jpg"> 
        <h3>' . $name . ' </h3> 
        <p>' . $articul . ' </p>
        <p> ' . $InShopText . ' </p>
-      <p> <input type="text" id ="' . $articul . 'txt"> </p>
-      <p> <input type="button" id="' . $articul . '" data-name="' . $name . '" data-price="' . $price . '" data-inshop="' . $InShop . '" class="button" value="добавить"> </p>
+       <p> <input type="text" id ="' . $articul . 'txt"> </p>
+       <p> <input type="button" id="' . $articul . '" data-name="' . $name . '" data-price="' . $price . '" data-inshop="' . $InShop . '" class="button" value="добавить"> </p>
        </div> 
                 
                 ';
@@ -63,6 +64,9 @@ $order = array();
 
 <script>
     $(document).ready(function () {
+        $('.imgAdd').click(function () {
+
+        });
 
         $('.button').click(function () {
             var el = document.getElementById(this.id);

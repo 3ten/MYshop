@@ -34,3 +34,6 @@ body {
     cursor:pointer;
     padding: 1px 87px 10px;
 }
+.imgAdd{
+    position:absolute;
+}
