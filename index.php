@@ -23,6 +23,7 @@ include("menu.php");
 
 <body>
 
+	<h1 align="center" style="color: #AA2277">KAK TEbE TAKOE ILON MASK?</h1>
 
 <div class="container">
     <div class="row">
