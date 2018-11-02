@@ -8,32 +8,39 @@ if (empty($_SESSION['SESSION'])) {
 }
 include("menu.php");
 ?>
+<!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 </head>
 
 <body>
 
 
-
 <div class="container">
     <div class="row">
         <?php
         while (@$row = ibase_fetch_assoc($res)) {
-            $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
+            $articul = $row['ARTICUL'];
             $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
             $price = mb_convert_encoding($row['PRICE'], "UTF-8", "windows-1251");
             $session = $_SESSION['SESSION'];
-
-            $orderres = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $db);
+            $path = mb_convert_encoding($row['PHOTO_PATH'], "UTF-8", "windows-1251");
+            if (!file_exists($path)) {
+                $path = "img/default.jpg";
+            }
+            $orderres = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session' and ARTICUL = '$articul'", $db);
+            $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
             $OrderRow = ibase_fetch_assoc($orderres);
-            if ($articul != mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251")) {
+            //if ($articul != mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251")) {
+            if (empty($OrderRow["ARTICUL"])) {
                 $IsOrderText = "добавить в корзину";
                 $IsOrder = "false";
             } else {
@@ -43,7 +50,7 @@ include("menu.php");
             echo
                 ' 
        <div id="' . $articul . '" class="col-sm-4" data-isorder="' . $IsOrder . '"> 
-       <img src="img/milk.jpg"> 
+       <img src="' . $path . '" class="img-fluid"> 
        <h3>' . $name . ' </h3> 
        <p>' . $price . ' Р. </p> 
        <p>' . $IsOrderText . ' </p>

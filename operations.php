@@ -8,8 +8,10 @@ if ($_POST["operation"] == "ProductAdd") {
         $price = mb_convert_encoding($_POST["price"], "windows-1251", "UTF-8");
         $articul = mb_convert_encoding($_POST["articul"], "windows-1251", "UTF-8");
         $name = mb_convert_encoding($_POST["name"], "windows-1251", "UTF-8");
+        $path = 'img/' . basename($_POST['path']);
+        $path = mb_convert_encoding($path, "windows-1251", "UTF-8");
 
-        $result = ibase_query("UPDATE or INSERT INTO SHOP_PRODUCTS (ARTICUL,NAME,PRICE) VALUES('$articul','$name','$price')", $db);
+        $result = ibase_query("UPDATE or INSERT INTO SHOP_PRODUCTS (ARTICUL,NAME,PRICE,PHOTO_PATH) VALUES('$articul','$name','$price','$path')", $db);
     }
 }
 /************************************************************************************************************************************************************/
@@ -24,6 +26,7 @@ if ($_POST["operation"] == "OrderAdd") {
         $id = mb_convert_encoding(rand(1000, 9999), "windows-1251", "UTF-8");
         $result = ibase_query("select * from SHOP_PRODUCTS where ARTICUL ='$id'", $db);
         $shoprow = ibase_fetch_assoc($result);
+
         while ($id == mb_convert_encoding($shoprow["ID"], "UTF-8", "windows-1251")) {
             $id = mb_convert_encoding(rand(1000, 9999), "windows-1251", "UTF-8");
         }
@@ -55,5 +58,10 @@ if ($_POST["operation"] == "OrderDell") {
     }
 }
 
+/************************************************************************************************************************************************************/
+//if ($_POST["operation"] == "ImageAdd") {
+
+
+//}
 /************************************************************************************************************************************************************/
 ?>
