@@ -3,8 +3,6 @@ session_start();
 include("db.php");
 $res = ibase_query("select articul, name from CARDSCLA WHERE CLASSIF > -1", $db);
 //$row = ibase_fetch_assoc($res);
-$i = 0;
-
 $order = array();
 
 
