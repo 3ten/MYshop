@@ -19,8 +19,6 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
 <div class="container">
     <div class="productrow">
         <div class="row">
-
-
             <?php
             $sum = 0;
             while (@$row = ibase_fetch_assoc($res)) {
@@ -37,11 +35,12 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
                     if (!file_exists($path)) {
                         $path = "img/default.jpg";
                     }
+                    ?>
+                    <div id="' . $articul . '" class="col-sm-4"><img src="<?php echo $path ?>">
+                        <h3><?php echo $name ?></h3>
+                        <p><?php echo $price ?> руб. </p></div>
 
-                    echo
-                        ' 
-       <div id="' . $articul . '" class="col-sm-4"> <img src="' . $path . '"> <h3>' . $name . ' </h3> <p>' . $price . ' руб. </p> </div>         
-                        ';
+                    <?php
                     $sum += (int)$price;
                 }
             }
@@ -54,7 +53,6 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
 <head>
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/popup.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

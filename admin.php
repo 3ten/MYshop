@@ -11,6 +11,8 @@ $ext = array_pop(explode('.', $_FILES['myfile']['name'])); // расширени
 $new_name = time() . '.' . $ext; // новое имя с расширением
 $full_path = $path . $new_name; // полный путь с новым именем и расширением
 
+$articul_min = 99999;
+$articul_max = -2;
 if ($_FILES['myfile']['error'] == 0) {
     if (move_uploaded_file($_FILES['myfile']['tmp_name'], $full_path)) {
         // Если файл успешно загружен, то вносим в БД (надеюсь, что вы знаете как)
@@ -32,7 +34,11 @@ if ($_FILES['myfile']['error'] == 0) {
 </head>
 <body>
 <div class="menu">
-    <a href="index.php"> <img src="img/shop.png"> </a>
+    <div class="row">
+        <a href="index.php"> <img src="img/shop.png"> </a>
+        <input type="text" placeholder="Поиск" id="search">
+    </div>
+
 </div>
 
 <div class="container">
@@ -47,14 +53,22 @@ if ($_FILES['myfile']['error'] == 0) {
         $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
         $path = mb_convert_encoding($shoprow["PHOTO_PATH"], "UTF-8", "windows-1251");
 
+
+        if ($articul_max < (int)$articul) {
+            $articul_max = (int)$articul;
+        }
+        if ($articul_min > (int)$articul) {
+            $articul_min = (int)$articul;
+        }
+
         if (!file_exists($path)) {
             $path = "img/default.jpg";
         }
 
         ?>
 
-        <div class="col-sm-4">
-
+        <!--  <div class="col-sm-4" id="<? echo $articul ?>"> -->
+        <div class="col-sm-4" id="id_<? echo $articul ?>">
             <div class="wrapper">
                 <div class="form-group">
                     <input type="file" class="form-control-file" multiple="multiple" accept=" image/*">
@@ -181,12 +195,8 @@ if ($_FILES['myfile']['error'] == 0) {
                 error: function (jqXHR, status, errorThrown) {
                     console.log('ОШИБКА AJAX Запроса: ' + status, jqXHR);
                 }
-
             });
-
-
         });
-
 
     })(jQuery);
     /*******************************************************************************/
@@ -196,6 +206,7 @@ if ($_FILES['myfile']['error'] == 0) {
             var name = el.dataset.name;
             var price = document.getElementById(this.id + "txt").value;
             var InShop = el.dataset.inshop;
+
             if (price !== '') {
                 $.ajax({
                     type: 'POST',
@@ -210,6 +221,44 @@ if ($_FILES['myfile']['error'] == 0) {
                 alert("введите цену");
             }
         });
+    });
+
+    $('#search').on('input', function () {
+
+        var art_min = parseInt(<?php echo $articul_min ?>);
+        var art_max = parseInt(<?php echo $articul_max ?>);
+
+        var element = document.getElementById("id_00002");
+        var startValue = $(element).css('display');
+
+        for (var i = art_min; i <= art_max; i++) {
+
+            var id_end = i.toString();
+
+            while (id_end.length < 5) {
+                id_end = "0" + id_end;
+
+            }
+
+            var el = document.getElementById(id_end);
+            if (el) {
+                var name = el.dataset.name;
+                var searchText = document.getElementById('search').value;
+                if (name.indexOf(searchText) === -1) {
+                    $('#id_' + id_end).css('display', 'none');
+                    //alert("ОПА");
+                } else {
+                    $('#id_' + id_end).css({'display': 'inline'});
+                }
+
+
+            } else {
+                // console.log("id_" + i.toString());
+            }
+
+        }
+
+
     });
 
 
