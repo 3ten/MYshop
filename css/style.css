@@ -112,11 +112,17 @@ br.both {
     position: absolute;
 }
 
-.row {
-    /*display: inline; */
-    padding: /*64px*/ 100px 0px;
+/*.row {
+    display: inline;
+    padding: 64px 100px 0px;
 }
+*/
+
 
 .button, .dell {
     border: 0px;
+}
+
+.col-sm-4 h3 {
+    height: 100px;
 }

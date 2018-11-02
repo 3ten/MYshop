@@ -47,15 +47,16 @@ include("menu.php");
                 $IsOrderText = "в корзине";
                 $IsOrder = "true";
             }
-            echo
-                ' 
-       <div id="' . $articul . '" class="col-sm-4" data-isorder="' . $IsOrder . '"> 
-       <img src="' . $path . '" class="img-fluid"> 
-       <h3>' . $name . ' </h3> 
-       <p>' . $price . ' Р. </p> 
-       <p>' . $IsOrderText . ' </p>
-       </div>          
-                ';
+            ?>
+
+            <div id="<?php echo $articul ?>" class="col-sm-4" data-isorder="' . $IsOrder . '">
+                <img src="<?php echo $path ?>" class="img-fluid">
+                <h3><?php echo $name ?> </h3>
+                <p><?php echo $price ?> Р. </p>
+                <p><?php echo $IsOrderText ?> </p>
+            </div>
+
+            <?php
         }
         ?>
     </div>
