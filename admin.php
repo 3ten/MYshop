@@ -170,7 +170,7 @@ if ($_FILES['myfile']['error'] == 0) {
                 contentType: false,
                 // функция успешного ответа сервера
                 success: function (respond, status, jqXHR) {
-                    // ОК
+                    // Ок
                     if (typeof respond.error === 'undefined') {
 
                     }
