@@ -181,7 +181,7 @@ if ($_FILES['myfile']['error'] == 0) {
                 },
                 // функция ошибки ответа сервера
                 error: function (jqXHR, status, errorThrown) {
-                    console.log('ОШИБКА AJAX запроса: ' + status, jqXHR);
+                    console.log('ОШИБКА AJAX Запроса: ' + status, jqXHR);
                 }
 
             });
