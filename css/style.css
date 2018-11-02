@@ -33,9 +33,9 @@ body {
 .menu {
     background: #d0cdcd;
     border-radius: 10px;
-    position:fixed;
+    position: fixed;
     width: 100%;
-    z-index: 99999;
+    z-index: 5;
 
 }
 
@@ -71,8 +71,7 @@ br.both {
     top: 0;
     left: 0;
     background: #000000;
-    border: 1px solid #cecece;
-    z-index: 1;
+    z-index: 10;
 }
 
 #popupContact {
@@ -83,7 +82,7 @@ br.both {
     width: 408px;
     background: #FFFFFF;
     border: 2px solid #cecece;
-    z-index: 2;
+    z-index: 11;
     padding: 12px;
     font-size: 13px;
 }
@@ -117,6 +116,7 @@ br.both {
     /*display: inline; */
     padding: /*64px*/ 100px 0px;
 }
-.button, .dell{
+
+.button, .dell {
     border: 0px;
 }
