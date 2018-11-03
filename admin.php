@@ -42,7 +42,7 @@ if ($_FILES['myfile']['error'] == 0) {
 </div>
 
 <div class="container">
-    <div class="row">
+    <div class="row" id="main">
         <?php
         while (@$row = ibase_fetch_assoc($res)) {
 
@@ -201,11 +201,13 @@ if ($_FILES['myfile']['error'] == 0) {
     })(jQuery);
     /*******************************************************************************/
     $(document).ready(function () {
+        alert(1);
         $(".button").click(function () {
             var el = document.getElementById(this.id);
             var name = el.dataset.name;
             var price = document.getElementById(this.id + "txt").value;
             var InShop = el.dataset.inshop;
+
 
             if (price !== '') {
                 $.ajax({
@@ -225,41 +227,29 @@ if ($_FILES['myfile']['error'] == 0) {
 
     $('#search').on('input', function () {
 
-        var art_min = parseInt(<?php echo $articul_min ?>);
-        var art_max = parseInt(<?php echo $articul_max ?>);
+        /********************************************/
+        var children = $('#main').children();
+        var currentElement;
+        var currentElementId;
+        var name;
+        var searchText;
+        for (var i = 0; i < children.length; i++) {
+            currentElementId = children.eq(i).attr('id').replace(/id_/g, '');
+            currentElement = document.getElementById(currentElementId);
+            if (currentElement) {
+                name = currentElement.dataset.name;
+                searchText = document.getElementById('search').value;
+                if (name.toUpperCase().indexOf(searchText.toUpperCase()) === -1) {
+                    children.eq(i).css('display', 'none');
 
-        var element = document.getElementById("id_00002");
-        var startValue = $(element).css('display');
-
-        for (var i = art_min; i <= art_max; i++) {
-
-            var id_end = i.toString();
-
-            while (id_end.length < 5) {
-                id_end = "0" + id_end;
-
-            }
-
-            var el = document.getElementById(id_end);
-            if (el) {
-                var name = el.dataset.name;
-                var searchText = document.getElementById('search').value;
-                if (name.indexOf(searchText) === -1) {
-                    $('#id_' + id_end).css('display', 'none');
-                    //alert("ОПА");
                 } else {
-                    $('#id_' + id_end).css({'display': 'inline'});
+                    children.eq(i).css({'display': 'inline'});
                 }
-
-
-            } else {
-                // console.log("id_" + i.toString());
             }
 
         }
-
-
-    });
+        /********************************************/
+    );
 
 
 </script>
