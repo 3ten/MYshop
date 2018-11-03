@@ -26,6 +26,22 @@
 .button, .dell {
     border: 0px;
 }
+
 .col-sm-4 {
     display: none;
+}
+
+.form-control {
+    color: black;
+}
+
+.priceText {
+    max-width: 105px;
+
+}
+
+#id_row {
+
+    text-align: center;
+
 }

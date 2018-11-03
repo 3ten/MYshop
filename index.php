@@ -6,7 +6,7 @@ $res = ibase_query("select * from SHOP_PRODUCTS", $db);
 if (empty($_SESSION['SESSION'])) {
     $_SESSION['SESSION'] = rand(100000, 999999);
 }
-include("menu.php");
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,7 +14,7 @@ include("menu.php");
     <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,7 +22,12 @@ include("menu.php");
 </head>
 
 <body>
-
+<div class="menu">
+    <div class="row">
+        <a href="order.php"> <img src="img/basket.png"> </a>
+        <input type="text" placeholder="Поиск" id="search">
+    </div>
+</div>
 	<!--<h1 align="center" style="color: #AA2277">KAK TEbE TAKOE ILON MASK?</h1>-->
 
 <div class="container">
@@ -50,7 +55,7 @@ include("menu.php");
             }
             ?>
 
-            <div id="<?php echo $articul ?>" class="col-sm-4" data-isorder="' . $IsOrder . '">
+            <div id="<?php echo $articul ?>" class="col-sm-4" data-isorder="<?php echo $IsOrder ?>">
                 <img src="<?php echo $path ?>" class="img-fluid">
                 <h3><?php echo $name ?> </h3>
                 <p><?php echo $price ?> Р. </p>

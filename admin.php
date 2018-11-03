@@ -3,7 +3,6 @@ session_start();
 include("db.php");
 $res = ibase_query("select articul, name from CARDSCLA WHERE CLASSIF > -1", $db);
 //$row = ibase_fetch_assoc($res);
-$order = array();
 
 
 $path = 'img/'; // директория для загрузки
@@ -11,8 +10,7 @@ $ext = array_pop(explode('.', $_FILES['myfile']['name'])); // расширени
 $new_name = time() . '.' . $ext; // новое имя с расширением
 $full_path = $path . $new_name; // полный путь с новым именем и расширением
 
-$articul_min = 99999;
-$articul_max = -2;
+
 if ($_FILES['myfile']['error'] == 0) {
     if (move_uploaded_file($_FILES['myfile']['tmp_name'], $full_path)) {
         // Если файл успешно загружен, то вносим в БД (надеюсь, что вы знаете как)
@@ -34,12 +32,12 @@ if ($_FILES['myfile']['error'] == 0) {
 
 </head>
 <body>
+
 <div class="menu">
     <div class="row">
         <a href="index.php"> <img src="img/shop.png"> </a>
         <input type="text" placeholder="Поиск" id="search">
     </div>
-
 </div>
 
 <div class="container">
@@ -51,16 +49,15 @@ if ($_FILES['myfile']['error'] == 0) {
         $result = ibase_query("select * from SHOP_PRODUCTS where ARTICUL ='$articul'", $db);
         $shoprow = ibase_fetch_assoc($result);
         $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
-        $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
+        if (!empty($shoprow["NAME"])) {
+            $name = mb_convert_encoding($shoprow["NAME"], "UTF-8", "windows-1251");
+        } else {
+            $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
+        }
+        if (!empty($shoprow["PRICE"])) {
+            $price = mb_convert_encoding($shoprow["PRICE"], "UTF-8", "windows-1251");
+        }
         $path = mb_convert_encoding($shoprow["PHOTO_PATH"], "UTF-8", "windows-1251");
-
-
-        if ($articul_max < (int)$articul) {
-            $articul_max = (int)$articul;
-        }
-        if ($articul_min > (int)$articul) {
-            $articul_min = (int)$articul;
-        }
 
         if (!file_exists($path)) {
             $path = "img/default.jpg";
@@ -83,12 +80,14 @@ if ($_FILES['myfile']['error'] == 0) {
             ?>
 
             <img src="img/default.jpg" class="img-fluid">
-            <h3><?php echo $name; ?>  </h3>
-            <p> <?php echo $InShopText; ?></p>
             <div class="form-group">
-                <input type="text" id="<?php echo $articul; ?>txt" class="form-control">
+                <input type="text" id="id_<?php echo $articul; ?>txt" class="form-control"
+                       value="<?php echo $name; ?>">
             </div>
             <div class="form-group">
+                <input type="text" id="<?php echo $articul; ?>txt" class="priceText" placeholder="Введите цену"
+                       value="<?php echo $price; ?>">
+
                 <input type="button" id="<?php echo $articul; ?>" data-name="<?php echo $name; ?>"
                        data-price="<?php echo $price; ?>"
                        data-inshop="<?php echo $InShop; ?>" class="button" value="добавить">
@@ -103,18 +102,24 @@ if ($_FILES['myfile']['error'] == 0) {
 
         ?>
         <img src="<?php echo $path; ?>" class="img-fluid">
-        <h3><?php echo $name; ?></h3>
 
-        <p> <?php echo $InShopText; ?> </p>
+
         <div class="form-group">
-            <input type="text" id="<?php echo $articul; ?>txt" class="form-control">
+            <input type="text" id="id_<?php echo $articul; ?>txt" class="form-control"
+                   value="<?php echo $name; ?>">
         </div>
         <div class="form-group">
+
+            <input type="text" id="<?php echo $articul; ?>txt" class="priceText"
+                   placeholder="Введите цену" value="<?php echo $price; ?>">
             <input type="button" id="<?php echo $articul; ?>" data-name="<?php echo $name; ?>"
                    data-price="<?php echo $price; ?>"
                    data-inshop="<?php echo $InShop; ?>" class="button" value="Обновить">
             <input type="button" id="<?php echo $articul; ?>" class="dell" value="удалить">
+
+
         </div>
+
     </div>
     <?php
     }
@@ -206,7 +211,7 @@ if ($_FILES['myfile']['error'] == 0) {
         //document.documentElement.clientHeight
         //document.getElementById('id_00002').offsetHeight
 
-        let elementSum = ~~(document.documentElement.clientHeight / 500) +2;
+        let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
         let children = $('#main').children();
         let i;
         if (children.length > elementSum) {
@@ -248,7 +253,8 @@ if ($_FILES['myfile']['error'] == 0) {
 
         $(".button").click(function () {
             let el = document.getElementById(this.id);
-            let name = el.dataset.name;
+            // let name = el.dataset.name;
+            let name = document.getElementById("id_" + this.id + "txt").value;
             let price = document.getElementById(this.id + "txt").value;
             if (price !== '') {
                 $.ajax({

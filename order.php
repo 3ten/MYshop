@@ -16,46 +16,51 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
     <script src="js/popup.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
+<body>
 <div class="menu">
-    <a href="index.php"> <img src="img/shop.png"> </a>
-
+    <div class="row">
+        <a href="index.php"> <img src="img/shop.png"> </a>
+        <input type="text" placeholder="Поиск" id="search">
+    </div>
 </div>
+
 <div class="pagename">
     <h3>Корзина</h3>
 </div>
 
 <div class="container">
-    <div class="productrow">
-        <div class="row">
-            <?php
-            $sum = 0;
-            while (@$row = ibase_fetch_assoc($res)) {
-                $articul = $row['ARTICUL'];
+    <div class="row">
+        <?php
+        $sum = 0;
+        while (@$row = ibase_fetch_assoc($res)) {
+            $articul = $row['ARTICUL'];
 
-                $ProductQuery = ibase_query("select * from SHOP_PRODUCTS where ARTICUL ='$articul'", $db);
-                $product = ibase_fetch_assoc($ProductQuery);
-                $articul = mb_convert_encoding($product['ARTICUL'], "UTF-8", "windows-1251");
-                if (!empty($articul)) {
-                    $name = mb_convert_encoding($product['NAME'], "UTF-8", "windows-1251");
-                    $price = mb_convert_encoding($product['PRICE'], "UTF-8", "windows-1251");
-                    $path = mb_convert_encoding($product['PHOTO_PATH'], "UTF-8", "windows-1251");
+            $ProductQuery = ibase_query("select * from SHOP_PRODUCTS where ARTICUL ='$articul'", $db);
+            $product = ibase_fetch_assoc($ProductQuery);
+            $articul = mb_convert_encoding($product['ARTICUL'], "UTF-8", "windows-1251");
+            if (!empty($articul)) {
+                $name = mb_convert_encoding($product['NAME'], "UTF-8", "windows-1251");
+                $price = mb_convert_encoding($product['PRICE'], "UTF-8", "windows-1251");
+                $path = mb_convert_encoding($product['PHOTO_PATH'], "UTF-8", "windows-1251");
 
-                    if (!file_exists($path)) {
-                        $path = "img/default.jpg";
-                    }
-                    ?>
-                    <div id="' . $articul . '" class="col-sm-4"><img src="<?php echo $path ?>">
-                        <h3><?php echo $name ?></h3>
-                        <p><?php echo $price ?> руб. </p></div>
-
-                    <?php
-                    $sum += (int)$price;
+                if (!file_exists($path)) {
+                    $path = "img/default.jpg";
                 }
-            }
-            ?>
-        </div>
+                ?>
+                <div id="<?php echo $articul; ?>" class="col-sm-4">
+                    <img src="<?php echo $path ?>" class="img-fluid">
+                    <h3><?php echo $name ?></h3>
+                    <p><?php echo $price ?> руб.</p>
+                </div>
 
+                <?php
+                $sum += (int)$price;
+            }
+        }
+        ?>
     </div>
+
+
     <input id="button" class="button" type="submit" value="Оплатить">
 </div>
 
@@ -85,7 +90,6 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
 </div>
 
 
-<body>
 </body>
 </html>
 
