@@ -1,52 +1,7 @@
-
-body {
-    font: 16px/20px 'Lucida Grande', Tahoma, Verdana, sans-serif;
-    overflow: hidden;
-    background: linear-gradient(45deg, #0ca3d2, #35dcca) fixed;
-}
-
-.col-sm-4 {
-    text-align: center;
-    cborder: 1px black solid;
-    padding: 10px;
-    background-color: rgba(99, 96, 96, 0.1);
-
-}
-
 .productrow {
     height: 720px;
     overflow: auto;
     overflow-x: hidden;
-
-}
-
-.col-sm-4 img {
-    width: 100%;
-}
-
-.col-sm-4:hover {
-
-    background-color: rgba(99, 96, 96, 0.5);
-}
-
-.menu {
-    background: #d0cdcd;
-    border-radius: 10px;
-
-}
-
-.button {
-    padding: 1px 87px 10px;
-}
-
-.button:hover {
-
-    cursor: pointer;
-    padding: 1px 87px 10px;
-}
-
-.imgAdd {
-    position: absolute;
 }
 
 .pagename {
@@ -54,7 +9,6 @@ body {
 }
 
 /********************/
-
 
 img {
     border: 0;
@@ -78,8 +32,7 @@ br.both {
     top: 0;
     left: 0;
     background: #000000;
-    border: 1px solid #cecece;
-    z-index: 1;
+    z-index: 10;
 }
 
 #popupContact {
@@ -90,7 +43,7 @@ br.both {
     width: 408px;
     background: #FFFFFF;
     border: 2px solid #cecece;
-    z-index: 2;
+    z-index: 11;
     padding: 12px;
     font-size: 13px;
 }
@@ -115,3 +68,4 @@ br.both {
 }
 
 /********************/
+

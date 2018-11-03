@@ -8,6 +8,14 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
 ?>
 <!DOCTYPE html>
 <html>
+<head>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/order.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popup.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
 <div class="menu">
     <a href="index.php"> <img src="img/shop.png"> </a>
 
@@ -50,14 +58,7 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
     </div>
     <input id="button" class="button" type="submit" value="Оплатить">
 </div>
-<head>
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popup.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-</head>
 <div class="container">
     <div class="row">
 

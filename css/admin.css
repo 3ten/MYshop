@@ -1,0 +1,31 @@
+.productrow {
+    height: 720px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.imgAdd {
+    position: absolute;
+}
+
+.pagename {
+    text-align: center;
+}
+
+#dell {
+    background: white;
+    position: absolute;
+}
+
+/*.row {
+    display: inline;
+    padding: 64px 100px 0px;
+}
+*/
+
+.button, .dell {
+    border: 0px;
+}
+.col-sm-4 {
+    display: none;
+}

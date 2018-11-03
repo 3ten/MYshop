@@ -1,4 +1,3 @@
-
 body {
     font: 16px/20px 'Lucida Grande', Tahoma, Verdana, sans-serif;
     overflow: auto;
@@ -10,13 +9,6 @@ body {
     border: 1px rgba(0, 0, 0, 0.05) solid;
     padding: 10px;
     background-color: rgba(99, 96, 96, 0.1);
-
-}
-
-.productrow {
-    height: 720px;
-    overflow: auto;
-    overflow-x: hidden;
 
 }
 
@@ -39,93 +31,10 @@ body {
 
 }
 
-.imgAdd {
-    position: absolute;
-}
-
-.pagename {
-    text-align: center;
-}
-
-/********************/
-
-img {
-    border: 0;
-}
-
-a {
-    cursor: pointer;
-    text-decoration: none;
-}
-
-br.both {
-    clear: both;
-}
-
-#backgroundPopup {
-    display: none;
-    position: fixed;
-    _position: absolute; /* hack for internet explorer 6 */
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    background: #000000;
-    z-index: 10;
-}
-
-#popupContact {
-    display: none;
-    position: fixed;
-    _position: absolute; /* hack for internet explorer 6 */
-    height: 384px;
-    width: 408px;
-    background: #FFFFFF;
-    border: 2px solid #cecece;
-    z-index: 11;
-    padding: 12px;
-    font-size: 13px;
-}
-
-#popupContact h1 {
-    color: #6FA5FD;
-    font-size: 22px;
-    border-bottom: 1px dotted #D3D3D3;
-    padding-bottom: 2px;
-    margin-bottom: 20px;
-}
-
-#popupContactClose {
-    font-size: 14px;
-    line-height: 14px;
-    right: 6px;
-    top: 4px;
-    position: absolute;
-    color: #6fa5fd;
-    font-weight: bold;
-    display: block;
-}
-
-/********************/
-#dell {
-    background: white;
-    position: absolute;
-}
-
-/*.row {
-    display: inline;
-    padding: 64px 100px 0px;
-}
-*/
-
-.button, .dell {
-    border: 0px;
-}
-
 .col-sm-4 h3 {
     height: 100px;
 }
 
-.col-sm-4 {
-    display: none;
+.container {
+    padding: 80px 0px;
 }

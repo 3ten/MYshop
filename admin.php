@@ -26,6 +26,7 @@ if ($_FILES['myfile']['error'] == 0) {
 <head>
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
@@ -204,7 +205,8 @@ if ($_FILES['myfile']['error'] == 0) {
     $(document).ready(function () {
         //document.documentElement.clientHeight
         //document.getElementById('id_00002').offsetHeight
-        let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
+
+        let elementSum = ~~(document.documentElement.clientHeight / 500) +2;
         let children = $('#main').children();
         let i;
         if (children.length > elementSum) {
@@ -235,6 +237,7 @@ if ($_FILES['myfile']['error'] == 0) {
                     let name = currentElement.dataset.name;
                     let searchText = document.getElementById('search').value;
                     if (name.toUpperCase().indexOf(searchText.toUpperCase()) === -1) {
+
                     } else {
                         children.eq(i).css({'display': 'inline'});
                     }
