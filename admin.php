@@ -200,15 +200,53 @@ if ($_FILES['myfile']['error'] == 0) {
 
     })(jQuery);
     /*******************************************************************************/
+
     $(document).ready(function () {
+        //document.documentElement.clientHeight
+        //document.getElementById('id_00002').offsetHeight
+        let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
+        let children = $('#main').children();
+        let i;
+        if (children.length > elementSum) {
+            elementSum = elementSum * 3;
+        } else {
+            elementSum = children.length;
+        }
+
+        for (i = 0; i < elementSum; i++) {
+            children.eq(i).css({'display': 'inline'});
+        }
+
+
+        window.onscroll = function () {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+
+                if (children.length > (i + elementSum)) {
+                    elementSum += i;
+                } else {
+                    elementSum = children.length;
+                }
+
+                for (i; i < elementSum; i++) {
+
+                    let currentElementId = children.eq(i).attr('id').replace(/id_/g, '');
+                    let currentElement = document.getElementById(currentElementId);
+
+                    let name = currentElement.dataset.name;
+                    let searchText = document.getElementById('search').value;
+                    if (name.toUpperCase().indexOf(searchText.toUpperCase()) === -1) {
+                    } else {
+                        children.eq(i).css({'display': 'inline'});
+                    }
+
+                }
+            }
+        };
 
         $(".button").click(function () {
-            var el = document.getElementById(this.id);
-            var name = el.dataset.name;
-            var price = document.getElementById(this.id + "txt").value;
-            var InShop = el.dataset.inshop;
-
-
+            let el = document.getElementById(this.id);
+            let name = el.dataset.name;
+            let price = document.getElementById(this.id + "txt").value;
             if (price !== '') {
                 $.ajax({
                     type: 'POST',
@@ -225,15 +263,15 @@ if ($_FILES['myfile']['error'] == 0) {
         });
     });
 
+
     $('#search').on('input', function () {
 
         /********************************************/
-        var children = $('#main').children();
-        var currentElement;
-        var currentElementId;
-        var name;
-        var searchText;
-        for (var i = 0; i < children.length; i++) {
+        let children = $('#main').children();
+        let currentElement, currentElementId, name, searchText, counter = 0;
+        let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
+
+        for (let i = 0; i < children.length; i++) {
             currentElementId = children.eq(i).attr('id').replace(/id_/g, '');
             currentElement = document.getElementById(currentElementId);
             if (currentElement) {
@@ -241,9 +279,12 @@ if ($_FILES['myfile']['error'] == 0) {
                 searchText = document.getElementById('search').value;
                 if (name.toUpperCase().indexOf(searchText.toUpperCase()) === -1) {
                     children.eq(i).css('display', 'none');
-
                 } else {
-                    children.eq(i).css({'display': 'inline'});
+
+                    if (counter <= elementSum * 3) {
+                        children.eq(i).css({'display': 'inline'});
+                        counter++;
+                    }
                 }
             }
 
