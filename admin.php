@@ -201,7 +201,7 @@ if ($_FILES['myfile']['error'] == 0) {
     })(jQuery);
     /*******************************************************************************/
     $(document).ready(function () {
-        alert(1);
+
         $(".button").click(function () {
             var el = document.getElementById(this.id);
             var name = el.dataset.name;
@@ -249,7 +249,7 @@ if ($_FILES['myfile']['error'] == 0) {
 
         }
         /********************************************/
-    );
+    });
 
 
 </script>
