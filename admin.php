@@ -81,8 +81,11 @@ if ($_FILES['myfile']['error'] == 0) {
 
             <img src="img/default.jpg" class="img-fluid">
             <div class="form-group">
-                <input type="text" id="id_<?php echo $articul; ?>txt" class="form-control"
-                       value="<?php echo $name; ?>">
+                <label for="id_<?php echo $articul; ?>txt"></label><textarea id="id_<?php echo $articul; ?>txt"
+                                                                             placeholder="Введите название продукта"
+                                                                             class="form-control"><?php echo $name; ?></textarea>
+                <!-- <input type="text" id="id_<php echo $articul; ?>txt" class="form-control"
+                       value="<php echo $name; ?>"> -->
             </div>
             <div class="form-group">
                 <input type="text" id="<?php echo $articul; ?>txt" class="priceText" placeholder="Введите цену"
@@ -105,8 +108,11 @@ if ($_FILES['myfile']['error'] == 0) {
 
 
         <div class="form-group">
-            <input type="text" id="id_<?php echo $articul; ?>txt" class="form-control"
-                   value="<?php echo $name; ?>">
+            <label for="id_<?php echo $articul; ?>txt"></label><textarea id="id_<?php echo $articul; ?>txt"
+                                                                         placeholder="Введите название продукта"
+                                                                         class="form-control"><?php echo $name; ?></textarea>
+            <!-- <input type="text" id="id_<php echo $articul; ?>txt" class="form-control"
+                   value="<php echo $name; ?>"> -->
         </div>
         <div class="form-group">
 
@@ -123,7 +129,7 @@ if ($_FILES['myfile']['error'] == 0) {
     </div>
     <?php
     }
-
+    $price = "";
 
     }
     ?>
