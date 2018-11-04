@@ -10,8 +10,13 @@ if ($_POST["operation"] == "ProductAdd") {
         $name = mb_convert_encoding($_POST["name"], "windows-1251", "UTF-8");
         $path = 'img/' . basename($_POST['path']);
         $path = mb_convert_encoding($path, "windows-1251", "UTF-8");
-
         $result = ibase_query("UPDATE or INSERT INTO SHOP_PRODUCTS (ARTICUL,NAME,PRICE,PHOTO_PATH) VALUES('$articul','$name','$price','$path')", $db);
+
+        $GetOrderRes = ibase_query("SELECT * FROM SHOP_ORDER_3TEN WHERE ARTICUL ='$articul'", $db);
+        $GetOrder = ibase_fetch_assoc($GetOrderRes);
+        if (!empty($GetOrder["ARTICUL"])) {
+            $DelOrderRes = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ARTICUL = '$articul'", $db);
+        }
     }
 }
 /************************************************************************************************************************************************************/
@@ -42,6 +47,7 @@ if ($_POST["operation"] == "ProductDell") {
         $articul = mb_convert_encoding($_POST["articul"], "windows-1251", "UTF-8");
 
 //$articul = mb_convert_encoding("00001", "windows-1251", "UTF-8");
+        $result = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ARTICUL = '$articul'", $db);
         $result = ibase_query("DELETE FROM SHOP_PRODUCTS WHERE ARTICUL = '$articul'", $db);
     }
 }
