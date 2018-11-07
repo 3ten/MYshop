@@ -23,7 +23,8 @@ h3 {
     background-color: rgba(99, 96, 96, 0.1);
     margin: 10px;
     cursor: pointer;
-    max-width: 260px;
+    max-width: 250px;
+    min-height: 400px;
 }
 
 .col-sm-4.added {
