@@ -23,13 +23,15 @@ if (empty($_SESSION['SESSION'])) {
 </head>
 
 <body>
-<div class="menu">
-    <div class="row">
-        <a href="order.php"> <img src="img/basket.png"> </a>
-        <input type="text" placeholder="Поиск" id="search">
+
+<!--<h1 align="center" style="color: #AA2277;">KAK TEbE TAKOE ILON MASK?</h1>-->
+
+    <div class="menu">
+        <div class="row">
+            <a href="order.php"><img class="logo" src="img/basket.png"></a>
+            <input type="text" placeholder="Поиск" id="search">
+        </div>
     </div>
-</div>
-	<!--<h1 align="center" style="color: #AA2277">KAK TEbE TAKOE ILON MASK?</h1>-->
 
 <div class="container">
     <div class="row">

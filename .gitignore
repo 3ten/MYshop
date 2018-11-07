@@ -1,5 +1,3 @@
-# Created by .ignore support plugin (hsz.mobi)
 .idea
-.gitignore
-.idea/inspectionProfiles/
-.idea/workspace.xml
+Demo.fdb
+db.php

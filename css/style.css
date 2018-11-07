@@ -18,17 +18,51 @@ body {
 }
 
 .col-sm-4:hover {
-
     background-color: rgba(99, 96, 96, 0.5);
 }
 
+#search {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+    outline: 0;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0px 0px 0px 10px;
+    transition: linear 0.3s;
+}
+
+#search::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    opacity: 1;
+}
+
+#search:hover {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.95);
+    transition: linear 0.3s;
+}
+
+#search:focus {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.95);
+}
+
+.logo {
+    width: 75%;
+    padding: 5px;
+    margin-left: 4px;
+}
+
+.row {
+    margin: 0px;
+}
+
 .menu {
-    background: #d0cdcd;
-    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.5); /* rgba(255, 255, 255, 0.5); */
     position: fixed;
     width: 100%;
-    z-index: 5;
+    z-index: 1;
 
+    text-align: center;
+    vertical-align: middle;
 }
 
 .col-sm-4 h3 {
