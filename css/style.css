@@ -1,7 +1,19 @@
 body {
-    font: 16px/20px 'Lucida Grande', Tahoma, Verdana, sans-serif;
+    font: 16px/20px 'Ubuntu', sans-serif;
     overflow: auto;
     background: linear-gradient(45deg, #0ca3d2, #35dcca) fixed;
+}
+
+h3 {
+    font-weight: unset;
+    margin-top: 10px;
+}
+
+.order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
 .col-sm-4 {
@@ -9,16 +21,26 @@ body {
     border: 1px rgba(0, 0, 0, 0.05) solid;
     padding: 10px;
     background-color: rgba(99, 96, 96, 0.1);
+    margin: 10px;
+    cursor: pointer;
+    max-width: 260px;
+}
 
+.col-sm-4.added {
+    background-color: rgba(25, 25, 25, 0.3) !important;
+    opacity: 0.75;
+    /* cursor: default; */
 }
 
 .col-sm-4 img {
-    min-height: 200px;
+    /* min-height: 200px; */ /* Искажаются пропорции изображения */
     max-height: 200px;
 }
 
 .col-sm-4:hover {
-    background-color: rgba(99, 96, 96, 0.5);
+    /* background: linear-gradient(to bottom right, rgba(50, 50, 50, 0.5), rgba(100, 100, 100, 0.1)); */
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: linear 0.1s;
 }
 
 #search {
@@ -28,7 +50,7 @@ body {
     outline: 0;
     color: rgba(255, 255, 255, 0.9);
     margin: 0px 0px 0px 10px;
-    transition: linear 0.3s;
+    transition: linear 0.15s;
 }
 
 #search::placeholder {
@@ -38,7 +60,6 @@ body {
 
 #search:hover {
     border-bottom: 2px solid rgba(255, 255, 255, 0.95);
-    transition: linear 0.3s;
 }
 
 #search:focus {
@@ -60,7 +81,6 @@ body {
     position: fixed;
     width: 100%;
     z-index: 1;
-
     text-align: center;
     vertical-align: middle;
 }

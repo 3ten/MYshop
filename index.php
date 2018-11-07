@@ -12,6 +12,9 @@ if (empty($_SESSION['SESSION'])) {
 <html>
 <head>
     <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 
@@ -34,7 +37,7 @@ if (empty($_SESSION['SESSION'])) {
     </div>
 
 <div class="container">
-    <div class="row">
+    <div class="row order">
         <?php
         while (@$row = ibase_fetch_assoc($res)) {
             $articul = $row['ARTICUL'];
@@ -50,21 +53,23 @@ if (empty($_SESSION['SESSION'])) {
             $OrderRow = ibase_fetch_assoc($orderres);
             //if ($articul != mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251")) {
             if (empty($OrderRow["ARTICUL"])) {
-                $IsOrderText = "добавить в корзину";
+                // $IsOrderText = "добавить в корзину";
                 $IsOrder = "false";
+                $OrderClass = "col-sm-4";
             } else {
-                $IsOrderText = "в корзине";
+                // $IsOrderText = "в корзине";
                 $IsOrder = "true";
+                $OrderClass = "col-sm-4 added";
             }
             ?>
 
-            <div id="<?php echo $articul ?>" class="col-sm-4" data-isorder="<?php echo $IsOrder ?>">
+            <div id="<?php echo $articul ?>" class="<?php echo $OrderClass; ?>" data-isorder="<?php echo $IsOrder ?>">
                 <img src="<?php echo $path ?>" class="img-fluid">
-                <h3><?php echo $name ?> </h3>
-                <p><?php echo $price ?> Р. </p>
-                <p><?php echo $IsOrderText ?> </p>
+                <h3><?php echo $name ?></h2>
+                <p>Здесь, может быть, стоит разместить описание товара</p>
+                <p><strong><?php echo $price ?> руб.</strong></p>
+                <!--<p><?php echo $IsOrderText ?> </p>-->
             </div>
-
             <?php
         }
         ?>
