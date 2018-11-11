@@ -62,6 +62,8 @@ var myfile_name;
 /*******************************************************************************/
 
 $(document).ready(function () {
+
+
     $('.dell').on('click', function (event) {
         $.ajax({
             type: 'POST',
@@ -80,7 +82,7 @@ $(document).ready(function () {
     let children = $('#main').children();
     let i;
     if (children.length > elementSum) {
-        elementSum = elementSum * 3;
+        elementSum = elementSum *3;
     } else {
         elementSum = children.length;
     }
@@ -91,7 +93,7 @@ $(document).ready(function () {
 
 
     window.onscroll = function () {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() -260 ) {
 
             if (children.length > (i + elementSum)) {
                 elementSum += i;

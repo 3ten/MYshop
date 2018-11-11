@@ -6,7 +6,7 @@ body {
 
 h3 {
     font-weight: unset;
-    margin-top: 10px;
+  /*  margin-top: 10px;*/ /* в корзине что то не так */
 }
 
 .order {
@@ -23,9 +23,9 @@ h3 {
     background-color: rgba(99, 96, 96, 0.1);
     margin: 10px;
     cursor: pointer;
-    max-width: 250px;
-    min-height: 400px;
+    max-width: 260px;
 }
+
 
 .col-sm-4.added {
     background-color: rgba(25, 25, 25, 0.3) !important;
@@ -92,4 +92,11 @@ h3 {
 
 .container {
     padding: 80px 0px;
+}
+
+#admin_logo{
+    text-align:right;
+}
+.menu.row{
+
 }

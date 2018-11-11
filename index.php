@@ -27,17 +27,16 @@ if (empty($_SESSION['SESSION'])) {
 
 <body>
 
-<!--<h1 align="center" style="color: #AA2277;">KAK TEbE TAKOE ILON MASK?</h1>-->
-
-    <div class="menu">
-        <div class="row">
-            <a href="order.php"><img class="logo" src="img/basket.png"></a>
-            <input type="text" placeholder="Поиск" id="search">
-        </div>
+<div class="menu">
+    <div class="row">
+        <a href="order.php"><img class="logo" src="img/basket.png"></a>
+        <input type="text" placeholder="Поиск" id="search">
+        <a href="admin.php"><img class="logo" src="img/admin.png"></a>
     </div>
+</div>
 
 <div class="container">
-    <div class="row order">
+    <div class="row order" id="main">
         <?php
         while (@$row = ibase_fetch_assoc($res)) {
             $articul = $row['ARTICUL'];
@@ -63,12 +62,12 @@ if (empty($_SESSION['SESSION'])) {
             }
             ?>
 
-            <div id="<?php echo $articul ?>" class="<?php echo $OrderClass; ?>" data-isorder="<?php echo $IsOrder ?>">
+            <div id="<?php echo $articul ?>" class="<?php echo $OrderClass; ?>" data-isorder="<?php echo $IsOrder ?>"
+                 data-name="<?php echo $name; ?>">
                 <img src="<?php echo $path ?>" class="img-fluid">
-                <h3><?php echo $name ?></h2>
+                <h3><?php echo $name ?></h3>
                 <p>Здесь, может быть, стоит разместить описание товара</p>
                 <p><strong><?php echo $price ?> руб.</strong></p>
-                <!--<p><?php echo $IsOrderText ?> </p>-->
             </div>
             <?php
         }

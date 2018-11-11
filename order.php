@@ -9,17 +9,20 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
 <!DOCTYPE html>
 <html>
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/order.css">
     <script src="js/jquery.min.js"></script>
     <script src="js/popup.js"></script>
+    <script async src="js/main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
 <div class="menu">
     <div class="row">
-        <a href="index.php"> <img src="img/shop.png"> </a>
+        <a href="index.php"> <img class="logo" src="img/shop.png"> </a>
         <input type="text" placeholder="Поиск" id="search">
     </div>
 </div>
@@ -29,7 +32,7 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
 </div>
 
 <div class="container">
-    <div class="row">
+    <div class="row" id="main">
         <?php
         $sum = 0;
         while (@$row = ibase_fetch_assoc($res)) {
@@ -47,7 +50,7 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
                     $path = "img/default.jpg";
                 }
                 ?>
-                <div id="<?php echo $articul; ?>" class="col-sm-4">
+                <div id="<?php echo $articul; ?>" class="col-sm-4" data-name="<?php echo $name; ?>">
                     <img src="<?php echo $path ?>" class="img-fluid">
                     <h3><?php echo $name ?></h3>
                     <p><?php echo $price ?> руб.</p>
