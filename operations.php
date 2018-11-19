@@ -8,15 +8,15 @@ if ($_POST["operation"] == "ProductAdd") {
         $price = mb_convert_encoding($_POST["price"], "windows-1251", "UTF-8");
         $articul = mb_convert_encoding($_POST["articul"], "windows-1251", "UTF-8");
         $name = mb_convert_encoding($_POST["name"], "windows-1251", "UTF-8");
+        $category = mb_convert_encoding($_POST["category"], "windows-1251", "UTF-8");
         $path = 'img/' . basename($_POST['path']);
-        $path = mb_convert_encoding($path, "windows-1251", "UTF-8");
-        $result = ibase_query("UPDATE or INSERT INTO SHOP_PRODUCTS (ARTICUL,NAME,PRICE,PHOTO_PATH) VALUES('$articul','$name','$price','$path')", $db);
-
-        $GetOrderRes = ibase_query("SELECT * FROM SHOP_ORDER_3TEN WHERE ARTICUL ='$articul'", $db);
-        $GetOrder = ibase_fetch_assoc($GetOrderRes);
-        if (!empty($GetOrder["ARTICUL"])) {
-            $DelOrderRes = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ARTICUL = '$articul'", $db);
+        if (!file_exists($path)) {
+            $path = "img/default.jpg";
         }
+        $path = mb_convert_encoding($path, "windows-1251", "UTF-8");
+        $result = ibase_query("UPDATE or INSERT INTO SHOP_PRODUCTS (ARTICUL,NAME,PRICE,PHOTO_PATH,CATEGORY) VALUES('$articul','$name','$price','$path','$category')", $db);
+        $DelOrderRes = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ARTICUL = '$articul'", $db);
+
     }
 }
 /************************************************************************************************************************************************************/
@@ -65,6 +65,12 @@ if ($_POST["operation"] == "OrderDell") {
 }
 
 /************************************************************************************************************************************************************/
-
+if ($_POST["operation"] == "category_add") {
+    include("db.php");
+    if (isset($_POST['category'])) {
+        $category = mb_convert_encoding($_POST['category'], "windows-1251", "UTF-8");
+        $result = ibase_query("UPDATE OR INSERT INTO SHOP_CATEGORY_3TEN (CATEGORY) VALUES('$category')", $db);
+    }
+}
 /************************************************************************************************************************************************************/
 ?>

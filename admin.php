@@ -15,6 +15,12 @@ if ($_FILES['myfile']['error'] == 0) {
         // Можно сохранить $full_path (полный путь) или просто имя файла - $new_name
     }
 }
+
+$categoryRes = ibase_query("SELECT * FROM SHOP_CATEGORY_3TEN", $db);
+$category = array();
+while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
+    $category[] = mb_convert_encoding($categoryRow['CATEGORY'], "UTF-8", "windows-1251");
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,8 +42,17 @@ if ($_FILES['myfile']['error'] == 0) {
     <div class="row">
         <a href="index.php"> <img class="logo" src="img/shop.png"> </a>
         <input type="text" placeholder="Поиск" id="search">
+        <a href="#"><img class="logo" src="img/down_menu_arrow.png"></a>
     </div>
 </div>
+<div class="row">
+    <label>
+        <input type="text" class="text-input" id="category_add_txt">
+        <a class="category_add"><img src="img/category_add.png"></a>
+    </label>
+</div>
+
+
 <div class="container">
     <div class="row" id="main">
         <?php
@@ -47,16 +62,14 @@ if ($_FILES['myfile']['error'] == 0) {
             $result = ibase_query("select * from SHOP_PRODUCTS where ARTICUL ='$articul'", $db);
             $shoprow = ibase_fetch_assoc($result);
             $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
-            if (!empty($shoprow["NAME"])) {
+            if (!empty($shoprow["ARTICUL"])) {
                 $name = mb_convert_encoding($shoprow["NAME"], "UTF-8", "windows-1251");
                 $price = mb_convert_encoding($shoprow["PRICE"], "UTF-8", "windows-1251");
+                $path = mb_convert_encoding($shoprow["PHOTO_PATH"], "UTF-8", "windows-1251");
             } else {
                 $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
-                $price = "";
+                $path = "img/default.jpg";
             }
-
-            $path = mb_convert_encoding($shoprow["PHOTO_PATH"], "UTF-8", "windows-1251");
-
             if (!file_exists($path)) {
                 $path = "img/default.jpg";
             }
@@ -68,12 +81,21 @@ if ($_FILES['myfile']['error'] == 0) {
                     </div>
                     <div class="ajax-reply"></div>
                 </div>
-                <img src="img/default.jpg" class="img-fluid">
+                <img src="<?php echo $path; ?>" class="img-fluid">
                 <div class="form-group">
                     <label for="id_<?php echo $articul; ?>txt"></label><textarea id="id_<?php echo $articul; ?>txt"
                                                                                  placeholder="Введите название продукта"
                                                                                  class="form-control"><?php echo $name; ?></textarea>
                 </div>
+                <label>
+                    <select id="<?php echo $articul; ?>_select">
+                        <?php
+                        for ($i = 0; $i < count($category); $i++) {
+                            echo "<option value='$category[$i]'>" . $category[$i] . "</option>";
+                        }
+                        ?>
+                    </select>
+                </label>
                 <div class="form-group">
                     <input type="text" id="<?php echo $articul; ?>txt" class="priceText" placeholder="Введите цену"
                            value="<?php echo $price; ?>">
@@ -97,9 +119,7 @@ if ($_FILES['myfile']['error'] == 0) {
                     ?>
                 </div>
             </div>
-            <?php
-        }
-        ?>
+        <?php } ?>
     </div>
 </body>
 </html>

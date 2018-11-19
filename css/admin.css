@@ -40,11 +40,13 @@
 }
 
 #id_row {
-
     text-align: center;
-
 }
 
 textarea {
     resize: none;
+}
+
+.text-input{
+    margin:100px 100px 0px;
 }

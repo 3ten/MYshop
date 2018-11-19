@@ -42,6 +42,7 @@ if (empty($_SESSION['SESSION'])) {
             $articul = $row['ARTICUL'];
             $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
             $price = mb_convert_encoding($row['PRICE'], "UTF-8", "windows-1251");
+            $category = mb_convert_encoding($row['CATEGORY'], "UTF-8", "windows-1251");
             $session = $_SESSION['SESSION'];
             $path = mb_convert_encoding($row['PHOTO_PATH'], "UTF-8", "windows-1251");
             if (!file_exists($path)) {
@@ -67,6 +68,7 @@ if (empty($_SESSION['SESSION'])) {
                 <img src="<?php echo $path ?>" class="img-fluid">
                 <h3><?php echo $name ?></h3>
                 <p>Здесь, может быть, стоит разместить описание товара</p>
+                <p>TESTCategory:<?php echo $category; ?></p>
                 <p><strong><?php echo $price ?> руб.</strong></p>
             </div>
             <?php

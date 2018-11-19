@@ -1,7 +1,7 @@
 <?php
 /*$database = 'D:\Datakrat\Database\Datakrat.fdb'; */
 //$database = 'D:\Datakrat\Database\Datakrat.fdb';
-$database = 'C:\Users\user\Downloads\OSPanel\domains\localhost\Demo.fdb';
+$database = 'D:\Datakrat\Database\Demo.fdb';
 $user = 'SYSDBA';
 $password = '1';
 $db = ibase_connect($database, $user, $password);

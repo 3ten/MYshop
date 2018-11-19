@@ -75,6 +75,18 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('.category_add').on('click', function (event) {
+        let category = document.getElementById("category_add_txt").value;
+        $.ajax({
+            type: 'POST',
+            url: 'operations.php',
+            data: 'operation=category_add&category=' + category,
+            success: function (data) {
+                alert("Категория добавлена");
+            }
+        });
+    });
     //document.documentElement.clientHeight
     //document.getElementById('id_00002').offsetHeight
 
@@ -82,7 +94,7 @@ $(document).ready(function () {
     let children = $('#main').children();
     let i;
     if (children.length > elementSum) {
-        elementSum = elementSum *3;
+        elementSum = elementSum * 3;
     } else {
         elementSum = children.length;
     }
@@ -93,7 +105,8 @@ $(document).ready(function () {
 
 
     window.onscroll = function () {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height() -260 ) {
+
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 300) {
 
             if (children.length > (i + elementSum)) {
                 elementSum += i;
@@ -123,11 +136,13 @@ $(document).ready(function () {
         // let name = el.dataset.name;
         let name = document.getElementById("id_" + this.id + "txt").value;
         let price = document.getElementById(this.id + "txt").value;
+        let category = document.getElementById(this.id + "_select").value;
+        alert(category);
         if (price !== '') {
             $.ajax({
                 type: 'POST',
                 url: 'operations.php',
-                data: 'operation=ProductAdd&articul=' + this.id + '&name=' + name + '&price=' + price + '&path=' + myfile_name,
+                data: 'operation=ProductAdd&articul=' + this.id + '&name=' + name + '&price=' + price + '&path=' + myfile_name + '&category=' + category,
                 success: function (data) {
                     alert("Добавлено");
                     location.reload();
