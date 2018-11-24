@@ -57,7 +57,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
     <div class="row" id="main">
         <?php
         while (@$row = ibase_fetch_assoc($res)) {
-
+            $price = null;
             $articul = $row['ARTICUL'];
             $result = ibase_query("select * from SHOP_PRODUCTS where ARTICUL ='$articul'", $db);
             $shoprow = ibase_fetch_assoc($result);
