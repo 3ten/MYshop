@@ -35,7 +35,7 @@ if ($_POST["operation"] == "OrderAdd") {
         while ($id == mb_convert_encoding($shoprow["ID"], "UTF-8", "windows-1251")) {
             $id = mb_convert_encoding(rand(1000, 9999), "windows-1251", "UTF-8");
         }
-        $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID ) VALUES('$articul','$session','$id')", $db);
+        $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID,ORDER_ID ) VALUES('$articul','$session','$id',gen_id(SHOP_ORDER_ID_GEN_3TEN,1))", $db);
     }
 }
 

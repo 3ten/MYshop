@@ -3,7 +3,7 @@ session_start();
 //echo $_SESSION['NAME'];
 include("db.php");
 $session = mb_convert_encoding($_SESSION['SESSION'], "windows-1251", "UTF-8");
-$res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session'", $db);
+$res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $db);
 
 ?>
 <!DOCTYPE html>
@@ -37,6 +37,7 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
         $sum = 0;
         while (@$row = ibase_fetch_assoc($res)) {
             $articul = $row['ARTICUL'];
+            $order_id = mb_convert_encoding($row['ORDER_ID'], "UTF-8", "windows-1251");
 
             $ProductQuery = ibase_query("select * from SHOP_PRODUCTS where ARTICUL ='$articul'", $db);
             $product = ibase_fetch_assoc($ProductQuery);
@@ -51,9 +52,9 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
                 }
                 ?>
                 <div id="<?php echo $articul; ?>" class="col-sm-4" data-name="<?php echo $name; ?>">
-                    <img src="<?php echo $path ?>" class="img-fluid">
-                    <h3><?php echo $name ?></h3>
-                    <p><?php echo $price ?> руб.</p>
+                    <img src="<?php echo $path; ?>" class="img-fluid">
+                    <h3><?php echo $name; ?></h3>
+                    <p><?php echo $price; ?> руб.</p>
                 </div>
 
                 <?php
@@ -77,12 +78,13 @@ $res = ibase_query("select ARTICUL from SHOP_ORDER_3TEN where SESSION ='$session
             <form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
                 <input type="hidden" name="receiver" value="410016725577528">
                 <input type="hidden" name="quickpay-form" value="shop">
-                <input type="hidden" name="targets" value="Заказ">
+                <input type="hidden" name="targets" value="Заказ №<?php echo $order_id; ?>">
+                <input type="hidden" name="label" value="<?php echo $order_id; ?>">
                 <input type="hidden" name="sum" value="<?php echo $sum; ?>" data-type="number">
                 <input type="hidden" name="need-phone" value="+7"><br>
                 <label><input type="radio" name="paymentType" value="PC">Яндекс.Деньгами</label><br>
                 <label><input type="radio" name="paymentType" value="AC">Банковской картой</label> <br>
-                <input type="hidden" name="successURL" value="http://212.17.28.36:88/success.php">
+                <input type="hidden" name="successURL" value="http://212.17.28.36:88:33888/success.php">
                 <input type="submit" value="Оплатить">
             </form>
             </p>
