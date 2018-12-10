@@ -73,4 +73,13 @@ if ($_POST["operation"] == "category_add") {
     }
 }
 /************************************************************************************************************************************************************/
+if ($_POST["operation"] == "order_product_quantity_change") {
+    include("db.php");
+    $order_id = $_POST["order_id"];
+    $articul = $_POST["articul"];
+    $quantity = $_POST["quantity"];
+    $result = ibase_query("update shop_order_3ten set QUANTITY = $quantity where ARTICUL = '$articul' and ORDER_ID = $order_id", $db);
+
+}
+/************************************************************************************************************************************************************/
 ?>

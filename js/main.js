@@ -183,3 +183,17 @@ $('#search').on('input', function () {
     /********************************************/
 });
 
+$('.quantity').on('input', function () {
+    // alert( this.id.replace(/quantity/g, ''));
+    let quantity = document.getElementById(this.id).value;
+    let order_id = document.getElementById(this.id).dataset.orderid;
+    $.ajax({
+        type: 'POST',
+        url: 'operations.php',
+        data: 'operation=order_product_quantity_change&articul=' + this.id.replace(/quantity/g, '') + '&order_id=' + order_id + '&quantity=' + quantity,
+        success: function (data) {
+            //alert("Добавлено " + quantity + " " + order_id + " ");
+            location.reload();
+        }
+    });
+});

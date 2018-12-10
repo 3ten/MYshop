@@ -35,9 +35,12 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
     <div class="row" id="main">
         <?php
         $sum = 0;
+
         while (@$row = ibase_fetch_assoc($res)) {
+            $quantity = 1;
             $articul = $row['ARTICUL'];
             $order_id = mb_convert_encoding($row['ORDER_ID'], "UTF-8", "windows-1251");
+            $quantity = mb_convert_encoding($row['QUANTITY'], "UTF-8", "windows-1251");
 
             $ProductQuery = ibase_query("select * from SHOP_PRODUCTS where ARTICUL ='$articul'", $db);
             $product = ibase_fetch_assoc($ProductQuery);
@@ -52,13 +55,20 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
                 }
                 ?>
                 <div id="<?php echo $articul; ?>" class="col-sm-4" data-name="<?php echo $name; ?>">
+                    <a id="Product_Order_dellBtn">x</a>
                     <img src="<?php echo $path; ?>" class="img-fluid">
                     <h3><?php echo $name; ?></h3>
                     <p><?php echo $price; ?> руб.</p>
+                    <input type="text"
+                           id="<?php echo $articul; ?>quantity"
+                           class="quantity" placeholder="количество"
+                           value="<?php echo $quantity; ?>"
+                           data-orderid="<?php echo $order_id; ?>"
+                    >
                 </div>
 
                 <?php
-                $sum += (int)$price;
+                $sum += (int)$price * (int)$quantity;
             }
         }
         ?>

@@ -13,7 +13,7 @@ $hash = sha1($_POST['notification_type'] . '&' .
 if ($_POST['sha1_hash'] !== $hash or $_POST['codepro'] === true or $_POST['unaccepted'] === true) exit('error');
 
 file_put_contents('history.php', $_POST['datetime'] . ' на сумму ' . $_POST['amount'] . PHP_EOL, FILE_APPEND);
-if (!empty($_POST['operation_id'])) {
+if (!empty($_POST['label'])) {
     $order_id = mb_convert_encoding($_POST['operation_id'], "windows-1251", "UTF-8");
     $res = ibase_query("select * from SHOP_ORDER_3TEN where ORDER_ID = '$order_id' ", $db);
 
@@ -23,10 +23,12 @@ if (!empty($_POST['operation_id'])) {
     while ($row = ibase_fetch_assoc($res)) {
         $articul = $row['articul'];
         $price = $_POST['amount'];
-        $docspecCreateRes = ibase_query("select * from SPEC_ADD_ARTICUL('$articul',1,1,1,$price,0,$dochead_id,1,1,1,'$articul',null, null)", $db);
+        $quantity = $row['QUANTITY'];
+        $docspecCreateRes = ibase_query("select * from SPEC_ADD_ARTICUL('$articul',1,1,$quantity,$price,0,$dochead_id,1,1,1,'$articul',null, null)", $db);
     }
+    $date = date("d.m.Y h:m:s");
+    $OrderKey = "test12";
+    $PaidOrder = ibase_query("insert into SHOP_PAIDORDER_3TEN values($order_id ,$dochead_id ,'',$date,'A','','$OrderKey',null) ", $db);
+
 }
-
-//select * from SPEC_ADD_ARTICUL('00555',1,1,1,110,0,390,1,1,1,'00555',null, null)
-
 ?>

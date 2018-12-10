@@ -7,6 +7,9 @@
 .pagename {
     text-align: center;
 }
+.col-sm-4{
+    cursor:default;
+}
 
 /********************/
 
@@ -68,4 +71,12 @@ br.both {
 }
 
 /********************/
+#Product_Order_dellBtn {
+    color: white;
+    position: absolute;
+    text-align: right;
+    background: rgba(25, 25, 25, 0.3) !important;
+    padding: 1px 4px 1px;
 
+    cursor: pointer;
+}
