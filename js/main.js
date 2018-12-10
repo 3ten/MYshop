@@ -130,6 +130,17 @@ $(document).ready(function () {
             }
         }
     };
+    let isCategoryOpened = false;
+    $(".test1").click(function () {
+
+        if (isCategoryOpened) {
+
+            document.getElementById('category').style.display = 'none';
+        } else {
+            document.getElementById('category').style.display = 'inline';
+        }
+        isCategoryOpened = !isCategoryOpened;
+    });
 
     $(".button").click(function () {
         let el = document.getElementById(this.id);

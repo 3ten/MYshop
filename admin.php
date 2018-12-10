@@ -42,11 +42,11 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
     <div class="row">
         <a href="index.php"> <img class="logo" src="img/shop.png"> </a>
         <input type="text" placeholder="Поиск" id="search">
-        <a href="#"><img class="logo" src="img/down_menu_arrow.png"></a>
+        <a href="#" class="test1"><img id="category_add_btn" class="logo" src="img/down_menu_arrow.png"></a>
     </div>
 </div>
 <div class="row">
-    <label>
+    <label id="category">
         <input type="text" class="text-input" id="category_add_txt">
         <a class="category_add"><img src="img/category_add.png"></a>
     </label>

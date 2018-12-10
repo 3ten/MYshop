@@ -50,3 +50,6 @@ textarea {
 .text-input{
     margin:100px 100px 0px;
 }
+#category{
+    display: none;
+}
