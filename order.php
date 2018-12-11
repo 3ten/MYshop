@@ -55,7 +55,7 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
                 }
                 ?>
                 <div id="<?php echo $articul; ?>" class="col-sm-4" data-name="<?php echo $name; ?>">
-                    <a id="Product_Order_dellBtn">x</a>
+                    <a class="Product_Order_dellBtn" id="<?php echo $articul; ?>DellBtn" style="color: white">x</a>
                     <img src="<?php echo $path; ?>" class="img-fluid">
                     <h3><?php echo $name; ?></h3>
                     <p><?php echo $price; ?> руб.</p>

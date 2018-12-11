@@ -142,6 +142,23 @@ $(document).ready(function () {
         isCategoryOpened = !isCategoryOpened;
     });
 
+    $(".Product_Order_dellBtn").click(function () {
+        let articul = this.id.replace(/DellBtn/g, '');
+        let id = this.id;
+        $.ajax({
+            type: 'POST',
+            url: 'operations.php',
+            data: 'operation=OrderDell&articul=' + articul,
+            success: function (data) {
+                alert("Удалено");
+                document.getElementById(articul).style.display = 'none'
+            }
+        });
+
+    });
+
+    //
+
     $(".button").click(function () {
         let el = document.getElementById(this.id);
         // let name = el.dataset.name;

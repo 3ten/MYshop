@@ -71,7 +71,7 @@ br.both {
 }
 
 /********************/
-#Product_Order_dellBtn {
+.Product_Order_dellBtn {
     color: white;
     position: absolute;
     text-align: right;
