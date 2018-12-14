@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("db.php");
-$res = ibase_query("select * from SHOP_PRODUCTS", $db);
+$res = ibase_query("select * from SHOP_CATEGORY_3TEN", $db);
 //$row = ibase_fetch_assoc($res);
 if (empty($_SESSION['SESSION'])) {
     $_SESSION['SESSION'] = rand(100000, 999999);
@@ -17,6 +17,7 @@ if (empty($_SESSION['SESSION'])) {
 
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
 
     <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
@@ -34,47 +35,59 @@ if (empty($_SESSION['SESSION'])) {
         <a href="admin.php"><img class="logo" src="img/admin.png"></a>
     </div>
 </div>
-
 <div class="container">
-    <div class="row order" id="main">
-        <?php
-        while (@$row = ibase_fetch_assoc($res)) {
-            $articul = $row['ARTICUL'];
-            $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
-            $price = mb_convert_encoding($row['PRICE'], "UTF-8", "windows-1251");
-            $category = mb_convert_encoding($row['CATEGORY'], "UTF-8", "windows-1251");
-            $session = $_SESSION['SESSION'];
-            $path = mb_convert_encoding($row['PHOTO_PATH'], "UTF-8", "windows-1251");
-            if (!file_exists($path)) {
-                $path = "img/default.jpg";
-            }
-            $orderres = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session' and ARTICUL = '$articul'", $db);
-            $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
-            $OrderRow = ibase_fetch_assoc($orderres);
-            //if ($articul != mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251")) {
-            if (empty($OrderRow["ARTICUL"])) {
-                // $IsOrderText = "добавить в корзину";
-                $IsOrder = "false";
-                $OrderClass = "col-sm-4";
-            } else {
-                // $IsOrderText = "в корзине";
-                $IsOrder = "true";
-                $OrderClass = "col-sm-4 added";
-            }
-            ?>
 
-            <div id="<?php echo $articul ?>" class="<?php echo $OrderClass; ?>" data-isorder="<?php echo $IsOrder ?>"
-                 data-name="<?php echo $name; ?>">
-                <img src="<?php echo $path ?>" class="img-fluid">
-                <h3><?php echo $name ?></h3>
-                <p>Здесь, может быть, стоит разместить описание товара</p>
-                <p>TESTCategory:<?php echo $category; ?></p>
-                <p><strong><?php echo $price ?> руб.</strong></p>
-            </div>
-            <?php
-        }
+
+    <?php
+    while (@$CategoryRow = ibase_fetch_assoc($res)) {
+        $MainCategory = $CategoryRow['CATEGORY'];
+        $ProductRes = ibase_query("select * from SHOP_PRODUCTS where CATEGORY ='$MainCategory'", $db);
+        $category = mb_convert_encoding($CategoryRow['CATEGORY'], "UTF-8", "windows-1251");
+        echo '<div class="category" ><a>' . $category . '</a></div>';
         ?>
-    </div>
+        <div class="row order" id="main">
+            <?php
+            while (@$row = ibase_fetch_assoc($ProductRes)) {
+                $articul = $row['ARTICUL'];
+                $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
+                $price = mb_convert_encoding($row['PRICE'], "UTF-8", "windows-1251");
+                $category = mb_convert_encoding($row['CATEGORY'], "UTF-8", "windows-1251");
+                $session = $_SESSION['SESSION'];
+                $path = mb_convert_encoding($row['PHOTO_PATH'], "UTF-8", "windows-1251");
+                if (!file_exists($path)) {
+                    $path = "img/default.jpg";
+                }
+                $orderres = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session' and ARTICUL = '$articul'", $db);
+                $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
+                $OrderRow = ibase_fetch_assoc($orderres);
+                //if ($articul != mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251")) {
+                if (empty($OrderRow["ARTICUL"])) {
+                    // $IsOrderText = "добавить в корзину";
+                    $IsOrder = "false";
+                    $OrderClass = "col-sm-4";
+                } else {
+                    // $IsOrderText = "в корзине";
+                    $IsOrder = "true";
+                    $OrderClass = "col-sm-4 added";
+                }
+                ?>
+
+                <div id="<?php echo $articul ?>" class="<?php echo $OrderClass; ?>"
+                     data-isorder="<?php echo $IsOrder ?>"
+                     data-name="<?php echo $name; ?>">
+                    <img src="<?php echo $path ?>" class="img-fluid">
+                    <h3><?php echo $name ?></h3>
+                    <p>Здесь, может быть, стоит разместить описание товара</p>
+                    <p><strong><?php echo $price ?> руб.</strong></p>
+                </div>
+                <?php
+            }
+
+            ?>
+        </div>
+        <?php
+    }
+    ?>
 </div>
 </body>
 

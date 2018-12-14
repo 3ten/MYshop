@@ -221,7 +221,6 @@ $('.quantity').on('input', function () {
         data: 'operation=order_product_quantity_change&articul=' + this.id.replace(/quantity/g, '') + '&order_id=' + order_id + '&quantity=' + quantity,
         success: function (data) {
             //alert("Добавлено " + quantity + " " + order_id + " ");
-            location.reload();
         }
     });
 });

@@ -35,7 +35,17 @@ if ($_POST["operation"] == "OrderAdd") {
         while ($id == mb_convert_encoding($shoprow["ID"], "UTF-8", "windows-1251")) {
             $id = mb_convert_encoding(rand(1000, 9999), "windows-1251", "UTF-8");
         }
-        $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID,ORDER_ID ) VALUES('$articul','$session','$id',gen_id(SHOP_ORDER_ID_GEN_3TEN,1))", $db);
+
+        $getorderid = ibase_query("select ORDER_ID from SHOP_ORDER_3TEN where SESSION  = '$session'", $db);
+        $order_idrow = ibase_fetch_assoc($getorderid);
+
+        $order_id = $order_idrow['ORDER_ID'];
+        if (empty($order_idrow['ORDER_ID'])) {
+            $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID,ORDER_ID ) VALUES('$articul','$session','$id',gen_id(SHOP_ORDER_ID_GEN_3TEN,1))", $db);
+        } else {
+            $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID,ORDER_ID ) VALUES('$articul','$session','$id',$order_id)", $db);
+        }
+
     }
 }
 
