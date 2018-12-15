@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if(empty($_SESSION['NAME'])){
+header("Location: login.php");
+
+}
 include("db.php");
 $res = ibase_query("select articul, name from CARDSCLA WHERE CLASSIF > -1", $db);
 //$row = ibase_fetch_assoc($res);

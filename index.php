@@ -77,7 +77,7 @@ if (empty($_SESSION['SESSION'])) {
                      data-name="<?php echo $name; ?>">
                     <img src="<?php echo $path ?>" class="img-fluid">
                     <h3><?php echo $name ?></h3>
-                    <p>Здесь, может быть, стоит разместить описание товара</p>
+                    <p>нажмиете чтобы добавть в корзину</p>
                     <p><strong><?php echo $price ?> руб.</strong></p>
                 </div>
                 <?php

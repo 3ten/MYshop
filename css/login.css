@@ -1,0 +1,43 @@
+body {
+    font: 16px/20px 'Lucida Grande', Tahoma, Verdana, sans-serif;
+    background: linear-gradient(45deg, #0ca3d2, #35dcca) fixed;
+}
+
+.col-sm-4 {
+
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -125px 0 0 -125px;
+    background: #ececec;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 7px;
+}
+
+.button {
+    padding: 15px 72px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border: none;
+}
+
+.button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.textbox {
+    padding: 5px 5px;
+    border-radius: 5px;
+    border: solid 2px #dddddd;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+}
+
+.row {
+    display: block;
+    text-align: center;
+    padding: 0px 0px 0px;
+}
