@@ -15,7 +15,6 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/order.css">
     <script src="js/jquery.min.js"></script>
-    <script src="js/popup.js"></script>
     <script async src="js/main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
@@ -73,55 +72,14 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
         }
         ?>
     </div>
+    <form method="post" action="order_payment.php">
+        <label>
+            <input type="text" name="order_id" value="<?php echo $order_id; ?>" hidden/>
+        </label>
+        <input id="paymentBtn" class="btn" type="submit" value="Оплатить">
 
+    </form>
 
-    <input id="button" class="button" type="submit" value="Оплатить">
-</div>
-
-<?php
-function GetSum($order_id, $db)
-{
-
-    $sum = 0;
-    $orderres = ibase_query("select * from SHOP_ORDER_3TEN where ORDER_ID = $order_id", $db);
-    while ($orderrow = ibase_fetch_assoc($orderres)) {
-        $articul = $orderrow['ARTICUL'];
-        $sumres = ibase_query("select PRICE from SHOP_PRODUCTS where ARTICUL = '$articul'", $db);
-        $sumrow = ibase_fetch_assoc($sumres);
-
-        $quantity = mb_convert_encoding($orderrow['QUANTITY'], "UTF-8", "windows-1251");
-        $price = mb_convert_encoding($sumrow['PRICE'], "UTF-8", "windows-1251");
-        $sum += (int)$quantity * (int)$price;
-        //$sum++;
-    }
-    return $sum;
-}
-
-?>
-<div class="container">
-    <div class="row">
-
-        <div id="popupContact">
-            <a id="popupContactClose">x</a>
-            <h1>Ваш заказ<br>на сумму <?php echo GetSum($order_id, $db); ?> рублей</h1>
-            <p id="contactArea">
-            <form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
-                <input type="hidden" name="receiver" value="410016725577528">
-                <input type="hidden" name="quickpay-form" value="shop">
-                <input type="hidden" name="targets" value="Заказ №<?php echo $order_id; ?>">
-                <input type="hidden" name="label" value="<?php echo $order_id; ?>">
-                <input type="hidden" name="sum" value="<?php echo GetSum($order_id, $db); ?>" data-type="number">
-                <input type="hidden" name="need-phone" value="+7"><br>
-                <label><input type="radio" name="paymentType" value="PC">Яндекс.Деньгами</label><br>
-                <label><input type="radio" name="paymentType" value="AC">Банковской картой</label> <br>
-                <input type="hidden" name="successURL" value="http://212.17.28.36:88:33888/success.php">
-                <input type="submit" value="Оплатить">
-            </form>
-            </p>
-        </div>
-        <div id="backgroundPopup"></div>
-
-    </div>
 </div>
 
 
