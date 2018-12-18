@@ -42,9 +42,15 @@ if (empty($_SESSION['SESSION'])) {
     while (@$CategoryRow = ibase_fetch_assoc($res)) {
         $MainCategory = $CategoryRow['CATEGORY'];
         $ProductRes = ibase_query("select * from SHOP_PRODUCTS where CATEGORY ='$MainCategory'", $db);
+
+        $checkRes = ibase_query("select * from SHOP_PRODUCTS where CATEGORY ='$MainCategory'", $db);
         $category = mb_convert_encoding($CategoryRow['CATEGORY'], "UTF-8", "windows-1251");
-       $chekRow  = ibase_fetch_assoc($ProductRes);
-      if (!empty($chekRow['ARTICUL']))  echo '<div class="category" ><a>' . $category . '</a></div>';
+
+        $checkRow = ibase_fetch_assoc($checkRes);
+        if (!empty($checkRow['ARTICUL'])) {
+            echo '<div class="category" ><a>' . $category . '</a></div>';
+        }
+
         ?>
         <div class="row order" id="main">
             <?php
