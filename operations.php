@@ -83,6 +83,14 @@ if ($_POST["operation"] == "category_add") {
     }
 }
 /************************************************************************************************************************************************************/
+if ($_POST["operation"] == "category_dell") {
+    include("db.php");
+    if (isset($_POST['category'])) {
+        $category = mb_convert_encoding($_POST['category'], "windows-1251", "UTF-8");
+        $result = ibase_query("DELETE FROM SHOP_CATEGORY_3TEN where CATEGORY = '$category'", $db);
+    }
+}
+/************************************************************************************************************************************************************/
 if ($_POST["operation"] == "order_product_quantity_change") {
     include("db.php");
     $order_id = $_POST["order_id"];

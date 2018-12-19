@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if(empty($_SESSION['NAME'])){
-header("Location: login.php");
+if (empty($_SESSION['NAME'])) {
+    header("Location: login.php");
 
 }
 include("db.php");
@@ -51,10 +51,22 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
     </div>
 </div>
 <div class="row">
-    <label id="category">
-        <input type="text" class="text-input" id="category_add_txt">
-        <a class="category_add"><img src="img/category_add.png"></a>
-    </label>
+    <div id="category">
+        <label>
+            <input type="text" class="text-input" id="category_add_txt" placeholder="Введите категорию">
+            <a class="category_add"><img src="img/category_add.png"></a>
+        </label><br>
+        <label>
+            <select id="CategoryDllSelect">
+                <?php
+                for ($i = 0; $i < count($category); $i++) {
+                    echo "<option selected value='$category[$i]'>" . $category[$i] . "</option>";
+                }
+                ?>
+            </select>
+        </label>
+        <input type="button" class="CategoryDell" value="удалить">
+    </div>
 </div>
 
 
@@ -71,6 +83,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                 $name = mb_convert_encoding($shoprow["NAME"], "UTF-8", "windows-1251");
                 $price = mb_convert_encoding($shoprow["PRICE"], "UTF-8", "windows-1251");
                 $path = mb_convert_encoding($shoprow["PHOTO_PATH"], "UTF-8", "windows-1251");
+                $productCategory = mb_convert_encoding($shoprow["CATEGORY"], "UTF-8", "windows-1251");
             } else {
                 $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
                 $path = "img/default.jpg";
@@ -96,8 +109,13 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                     <select id="<?php echo $articul; ?>_select">
                         <?php
                         for ($i = 0; $i < count($category); $i++) {
-                            echo "<option value='$category[$i]'>" . $category[$i] . "</option>";
+                            if ($category[$i] == $productCategory) {
+                                echo "<option selected value='$category[$i]'>" . $category[$i] . "</option>";
+                            } else {
+                                echo "<option value='$category[$i]'>" . $category[$i] . "</option>";
+                            }
                         }
+                        $productCategory = "";
                         ?>
                     </select>
                 </label>

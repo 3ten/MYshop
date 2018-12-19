@@ -78,12 +78,27 @@ $(document).ready(function () {
 
     $('.category_add').on('click', function (event) {
         let category = document.getElementById("category_add_txt").value;
+        if (category != "") {
+            $.ajax({
+                type: 'POST',
+                url: 'operations.php',
+                data: 'operation=category_add&category=' + category,
+                success: function (data) {
+                    alert("Категория добавлена");
+                }
+            });
+        } else alert("Введите категорию");
+    });
+
+    $('.CategoryDell').on('click', function (event) {
+        alert("");
+        let category = document.getElementById("CategoryDllSelect").value;
         $.ajax({
             type: 'POST',
             url: 'operations.php',
-            data: 'operation=category_add&category=' + category,
+            data: 'operation=category_dell&category=' + category,
             success: function (data) {
-                alert("Категория добавлена");
+                alert("Категория удалена");
             }
         });
     });
@@ -126,7 +141,6 @@ $(document).ready(function () {
                 } else {
                     children.eq(i).css({'display': 'inline'});
                 }
-
             }
         }
     };
