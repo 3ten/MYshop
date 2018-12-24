@@ -32,9 +32,11 @@ if (empty($_SESSION['SESSION'])) {
     <div class="row">
         <a href="order.php"><img class="logo" src="img/basket.png"></a>
         <input type="text" placeholder="Поиск" id="search">
-        <a href="admin.php"><img class="logo" src="img/admin.png"></a>
+        <a href="admin.php"><img id="admin_logo" class="logo" src="img/admin.png"></a>
     </div>
 </div>
+
+
 <div class="container">
 
 
@@ -89,7 +91,6 @@ if (empty($_SESSION['SESSION'])) {
                 </div>
                 <?php
             }
-
             ?>
         </div>
         <?php

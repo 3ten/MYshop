@@ -6,7 +6,7 @@ body {
 
 h3 {
     font-weight: unset;
-  /*  margin-top: 10px;*/ /* в корзине что то не так */
+    /*  margin-top: 10px;*/ /* в корзине что то не так */
 }
 
 .order {
@@ -25,7 +25,6 @@ h3 {
     cursor: pointer;
     max-width: 260px;
 }
-
 
 .col-sm-4.added {
     background-color: rgba(25, 25, 25, 0.3) !important;
@@ -68,8 +67,8 @@ h3 {
 }
 
 .logo {
-    width: 75%;
-    padding: 5px;
+    width: 85%;
+    padding: 1px;
     margin-left: 4px;
 }
 
@@ -82,7 +81,6 @@ h3 {
     position: fixed;
     width: 100%;
     z-index: 1;
-    text-align: center;
     vertical-align: middle;
 }
 
@@ -94,9 +92,6 @@ h3 {
     padding: 80px 0px;
 }
 
-#admin_logo{
-    text-align:right;
-}
-.menu.row{
-
+#admin_logo {
+    text-align: right;
 }

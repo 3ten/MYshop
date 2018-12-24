@@ -1,5 +1,13 @@
-.category{
-    text-align:center;
-    font-weight:bold;
-    font-size:30px;
+.category {
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.descriptionMenu {
+    position: fixed;
+    background: #1c7430;
+    right: 0px;
+    height: 100%;
+    z-index: 1;
 }

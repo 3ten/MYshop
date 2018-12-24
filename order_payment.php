@@ -31,29 +31,29 @@ function GetSum($order_id, $db)
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/order_payment.css">
 
-
-    <script async src="js/main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 
 <div class="container">
-
-        <div class="col-sm-4" align="center">
-            <h1>Ваш заказ<br>на сумму <?php echo GetSum($order_id, $db); ?> рублей</h1>
-            <form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
-                <input type="hidden" name="receiver" value="410016725577528">
-                <input type="hidden" name="quickpay-form" value="shop">
-                <input type="hidden" name="targets" value="Заказ №<?php echo $order_id; ?>">
-                <input type="hidden" name="label" value="<?php echo $order_id; ?>">
-                <input type="hidden" name="sum" value="<?php echo GetSum($order_id, $db); ?>" data-type="number">
-                <input type="hidden" name="need-phone" value="+7"><br>
-                <label><input class="radio" type="radio" name="paymentType" value="PC">Яндекс.Деньгами</label><br><br>
-                <label><input class="radio" type="radio" name="paymentType" value="AC">Банковской картой</label> <br><br>
-                <input type="hidden" name="successURL" value="http://212.17.28.36:88:33888/success.php">
-                <input type="submit" class="button" value="Оплатить">
-            </form>
-        </div>
+    <div class="col-sm-4" align="center">
+        <h1>Ваш заказ<br>на сумму <?php echo GetSum($order_id, $db); ?> рублей</h1>
+        <form method="POST" action="OrderRedirect.php">
+            номер телефона:<br> <input type="text" name="phone" placeholder="введите номер" class="text"
+                                       required><br><br>
+            город(населенный пункт):<br> <input type="text" name="city" placeholder="город(населенный пункт)"
+                                                class="text" required><br><br>
+            адрес(улица,д,кв):<br> <input type="text" name="address" placeholder="адрес(улица,д,кв)" class="text"
+                                          required><br><br>
+            <input type="hidden" name="targets" value="Заказ №<?php echo $order_id; ?>">
+            <input type="hidden" name="label" value="<?php echo $order_id; ?>">
+            <input type="hidden" name="sum" value="<?php echo GetSum($order_id, $db); ?>" data-type="number">
+            <label><input class="custom-radio" type="radio" name="paymentType"
+                          value="PC">Яндекс.Деньгами</label><br><br>
+            <label><input class="radio" type="radio" name="paymentType" value="AC">Банковской картой</label> <br><br>
+            <input type="submit" class="button" value="Оплатить">
+        </form>
+    </div>
 
 </div>
 

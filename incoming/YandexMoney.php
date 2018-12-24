@@ -7,28 +7,45 @@ $hash = sha1($_POST['notification_type'] . '&' .
     $_POST['datetime'] . '&' .
     $_POST['sender'] . '&' .
     $_POST['codepro'] . '&' .
-    'sqotNuZRBC7Bb6MJqSXG8qMo' . '&' .
+    'BMLTm6BoulnQ3ad/Pk94dDhU' . '&' .
     $_POST['label']);
 
-if ($_POST['sha1_hash'] !== $hash or $_POST['codepro'] === true or $_POST['unaccepted'] === true) exit('error');
-
-file_put_contents('history.php', $_POST['datetime'] . ' на сумму ' . $_POST['amount'] . PHP_EOL, FILE_APPEND);
-if (!empty($_POST['label'])) {
-    $order_id = mb_convert_encoding($_POST['operation_id'], "windows-1251", "UTF-8");
-    $res = ibase_query("select * from SHOP_ORDER_3TEN where ORDER_ID = '$order_id' ", $db);
-
-    $docheadRes = ibase_query("select * from SHOP_DOCHEAD_CREATOR(1,1,-1,107)", $db);
-    $docheadRow = ibase_fetch_assoc($docheadRes);
-    $dochead_id = $docheadRow['OUT_DOCHEAD'];
-    while ($row = ibase_fetch_assoc($res)) {
-        $articul = $row['articul'];
-        $price = $_POST['amount'];
-        $quantity = $row['QUANTITY'];
-        $docspecCreateRes = ibase_query("select * from SPEC_ADD_ARTICUL('$articul',1,1,$quantity,$price,0,$dochead_id,1,1,1,'$articul',null, null)", $db);
-    }
-    $date = date("d.m.Y h:m:s");
-    $OrderKey = "test12";
-    $PaidOrder = ibase_query("insert into SHOP_PAIDORDER_3TEN values($order_id ,$dochead_id ,'',$date,'A','','$OrderKey',null) ", $db);
+if ($_POST['sha1_hash'] !== $hash or $_POST['codepro'] === true or $_POST['unaccepted'] === true) {
+    exit('error');
 
 }
+
+$price = $_POST['amount'];
+$docheadRes = ibase_query("select * from SHOP_DOCHEAD_CREATOR($price,1,1,-1,14)", $db);
+
+$docheadRow = ibase_fetch_assoc($docheadRes);
+$dochead_id = $docheadRow['OUT_DOCHEAD'];
+
+$order_id = $_POST['label'];
+$res = ibase_query("select * from SHOP_ORDER_3TEN where ORDER_ID = $order_id ", $db);
+while ($row = ibase_fetch_assoc($res)) {
+    $articul = $row['ARTICUL'];
+    $price = $_POST['amount'];
+    $quantity = $row['QUANTITY'];
+    $docspecCreateRes = ibase_query("select * from SPEC_ADD_ARTICUL('$articul',1,1,$quantity,0,0,$dochead_id,1,1,1,'$articul',0, 0,null)", $db);
+    $docspecCreateRow = ibase_fetch_assoc($docspecCreateRes);
+    $date = date("d.m.Y h:m:s");
+    $OrderKey = rand(10000, 99999);
+    $PaidOrder = ibase_query("update SHOP_PAIDORDER_3TEN(ORDER_ID,DOCHEAD,ORDER_TIME,STATUS,ORDER_KEY) set values($order_id ,$dochead_id,'$date','A','$OrderKey') where  ORDER_ID =$order_id ", $db);
+
+    $url = '../operations.php';
+    $params = array(
+        'operation' => 'OrderDell',
+        'articul' => $articul
+    );
+    $result = file_get_contents($url, false, stream_context_create(array(
+        'http' => array(
+            'method' => 'POST',
+            'header' => 'Content-type: application/x-www-form-urlencoded',
+            'content' => http_build_query($params)
+        )
+    )));
+}
+
+
 ?>

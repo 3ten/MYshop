@@ -63,6 +63,11 @@ var myfile_name;
 
 $(document).ready(function () {
 
+    $('.col-sm-4').on('click', function (event) {
+        let name = document.getElementById(this.id).dataset.name;
+        document.getElementById("descriptionText").innerText = name;
+    });
+
 
     $('.dell').on('click', function (event) {
         $.ajax({
@@ -102,59 +107,6 @@ $(document).ready(function () {
             }
         });
     });
-    //document.documentElement.clientHeight
-    //document.getElementById('id_00002').offsetHeight
-
-    let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
-    let children = $('#main').children();
-    let i;
-    if (children.length > elementSum) {
-        elementSum = elementSum * 3;
-    } else {
-        elementSum = children.length;
-    }
-
-    for (i = 0; i < elementSum; i++) {
-        children.eq(i).css({'display': 'inline'});
-    }
-
-
-    window.onscroll = function () {
-
-        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 300) {
-
-            if (children.length > (i + elementSum)) {
-                elementSum += i;
-            } else {
-                elementSum = children.length;
-            }
-
-            for (i; i < elementSum; i++) {
-
-                let currentElementId = children.eq(i).attr('id').replace(/id_/g, '');
-                let currentElement = document.getElementById(currentElementId);
-
-                let name = currentElement.dataset.name;
-                let searchText = document.getElementById('search').value;
-                if (name.toUpperCase().indexOf(searchText.toUpperCase()) === -1) {
-
-                } else {
-                    children.eq(i).css({'display': 'inline'});
-                }
-            }
-        }
-    };
-    let isCategoryOpened = false;
-    $(".test1").click(function () {
-
-        if (isCategoryOpened) {
-
-            document.getElementById('category').style.display = 'none';
-        } else {
-            document.getElementById('category').style.display = 'inline';
-        }
-        isCategoryOpened = !isCategoryOpened;
-    });
 
     $(".Product_Order_dellBtn").click(function () {
         let articul = this.id.replace(/DellBtn/g, '');
@@ -170,9 +122,6 @@ $(document).ready(function () {
         });
 
     });
-
-    //
-
     $(".button").click(function () {
         let el = document.getElementById(this.id);
         // let name = el.dataset.name;
@@ -194,6 +143,59 @@ $(document).ready(function () {
             alert("введите цену");
         }
     });
+
+});
+
+/*******************************************************************************/
+let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
+let children = $('#main').children();
+let i;
+if (children.length > elementSum) {
+    elementSum = elementSum * 3;
+} else {
+    elementSum = children.length;
+}
+
+for (i = 0; i < elementSum; i++) {
+    children.eq(i).css({'display': 'inline'});
+}
+
+
+window.onscroll = function () {
+
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 300) {
+
+        if (children.length > (i + elementSum)) {
+            elementSum += i;
+        } else {
+            elementSum = children.length;
+        }
+
+        for (i; i < elementSum; i++) {
+
+            let currentElementId = children.eq(i).attr('id').replace(/id_/g, '');
+            let currentElement = document.getElementById(currentElementId);
+
+            let name = currentElement.dataset.name;
+            let searchText = document.getElementById('search').value;
+            if (name.toUpperCase().indexOf(searchText.toUpperCase()) === -1) {
+
+            } else {
+                children.eq(i).css({'display': 'inline'});
+            }
+        }
+    }
+};
+let isCategoryOpened = false;
+$(".test1").click(function () {
+
+    if (isCategoryOpened) {
+
+        document.getElementById('category').style.display = 'none';
+    } else {
+        document.getElementById('category').style.display = 'inline';
+    }
+    isCategoryOpened = !isCategoryOpened;
 });
 
 
