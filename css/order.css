@@ -7,8 +7,9 @@
 .pagename {
     text-align: center;
 }
-.col-sm-4{
-    cursor:default;
+
+.col-sm-4 {
+    cursor: default;
 }
 
 /********************/
@@ -79,4 +80,9 @@ br.both {
     padding: 1px 4px 1px;
 
     cursor: pointer;
+}
+
+.quantity {
+    width: 25px;
+    text-align: center;
 }

@@ -21,8 +21,11 @@ include("db.php");
     </head>
     </html>
 <?php
-
-$OrderRes = ibase_query("select * from SHOP_PAIDORDER_3TEN", $db);
+if (!empty($_POST['ORDER_ID'])) {
+    $order_id = $_POST['ORDER_ID'];
+    $PaidOrder = ibase_query("update SHOP_PAIDORDER_LIST_3TEN set STATUS = 'D' where ORDER_ID = $order_id) ", $db);
+}
+$OrderRes = ibase_query("select * from SHOP_PAIDORDER_LIST_3TEN", $db);
 
 while ($OrderRow = ibase_fetch_assoc($OrderRes)) {
     ?>
@@ -30,15 +33,20 @@ while ($OrderRow = ibase_fetch_assoc($OrderRes)) {
     <body>
     <div class="container">
         <div class="col-sm-4">
-            <p> номер заказа:  <?php echo $OrderRow['ORDER_ID']; ?> </p>
-            <p> номер клиента:  <?php echo $OrderRow['CLIENT_NUMBER']; ?> </p>
+            <p> номер заказа: <?php echo $OrderRow['ORDER_ID']; ?> </p>
+            <p> номер клиента: <?php echo $OrderRow['CLIENT_NUMBER']; ?> </p>
             <p> время закза: <?php echo $OrderRow['ORDER_TIME']; ?> </p>
             <p> Статус: <?php echo $OrderRow['STATUS']; ?> </p>
-            <p> почта клиента:  <?php echo $OrderRow['EMAIL']; ?> </p>
+            <p> почта клиента: <?php echo $OrderRow['EMAIL']; ?> </p>
             <p> ключ клиента: <?php echo $OrderRow['ORDER_KEY']; ?> </p>
             <p>   <?php echo $OrderRow['COMMENT']; ?> </p>
+            <p> время заказа: <?php echo $OrderRow['DELIVERY_TIME']; ?> </p>
+            <p> сумма заказа: <?php echo $OrderRow['ORDER_SUM']; ?> </p>
+            <form method="post" action="order_list.php">
+                <input type="hidden" name="ORDER_ID" value="<?php $OrderRow['ORDER_ID']; ?> >">
+                <input type="submit" class="button" value="Потвердить доставку/оплату">
+            </form>
         </div>
-    </div>
     </div>
     </body>
     </html>

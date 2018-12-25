@@ -7,9 +7,11 @@ $sum = $_POST['sum'];
 $phone = $_POST['phone'];
 $city = $_POST['city'];
 $address = $_POST['address'];
+$delivery_time = $_POST['DT'];
 $date = date("d.m.Y h:m:s");
 include("db.php");
-$PaidOrder = ibase_query("update or insert into SHOP_PAIDORDER_3TEN values($label,-1,'$phone','$date','W',null,'-1','$address') ", $db);
+$PaidOrder = ibase_query("update or insert into SHOP_PAIDORDER_LIST_3TEN values($label,-1,'$phone','$date','W',null,'-1','$address',$delivery_time,$sum) ", $db);
+if($paymentType == "CP"){header("Location: success.php");}
 ?>
 
 <html>

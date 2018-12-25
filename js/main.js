@@ -63,13 +63,7 @@ var myfile_name;
 
 $(document).ready(function () {
 
-    $('.col-sm-4').on('click', function (event) {
-        let name = document.getElementById(this.id).dataset.name;
-        document.getElementById("descriptionText").innerText = name;
-    });
-
-
-    $('.dell').on('click', function (event) {
+      $('.dell').on('click', function (event) {
         $.ajax({
             type: 'POST',
             url: 'operations.php',

@@ -48,9 +48,10 @@ function GetSum($order_id, $db)
             <input type="hidden" name="targets" value="Заказ №<?php echo $order_id; ?>">
             <input type="hidden" name="label" value="<?php echo $order_id; ?>">
             <input type="hidden" name="sum" value="<?php echo GetSum($order_id, $db); ?>" data-type="number">
-            <label><input class="custom-radio" type="radio" name="paymentType"
+            <label><input class="radio" type="radio" name="paymentType"
                           value="PC">Яндекс.Деньгами</label><br><br>
             <label><input class="radio" type="radio" name="paymentType" value="AC">Банковской картой</label> <br><br>
+            <label><input class="radio" type="radio" name="paymentType" value="CP">Наличными</label> <br><br>
             <input type="submit" class="button" value="Оплатить">
         </form>
     </div>

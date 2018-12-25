@@ -23,7 +23,7 @@ if (empty($_SESSION['SESSION'])) {
     <script src="js/jquery.min.js"></script>
     <script async src="js/main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="stylesheet" type="text/css" media="screen and (max-device-width:480px)" href="css/mobile.css"/>
 </head>
 
 <body>
@@ -102,7 +102,6 @@ if (empty($_SESSION['SESSION'])) {
 <script>
     $(document).ready(function () {
         $('.col-sm-4').click(function () {
-
             var el = document.getElementById(this.id);
             var IsOrder = el.dataset.isorder;
             if (IsOrder === "true") {

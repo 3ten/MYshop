@@ -1,0 +1,15 @@
+@media screen and (max-device-width:500px){
+    .col-sm-4 {
+        max-width: 500px;
+    }
+
+}
+
+@media screen and (max-device-width:350px){
+    .logo{
+        width: 65%;
+    }
+    #search{
+        width: 150px
+    }
+}

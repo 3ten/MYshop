@@ -31,7 +31,7 @@ while ($row = ibase_fetch_assoc($res)) {
     $docspecCreateRow = ibase_fetch_assoc($docspecCreateRes);
     $date = date("d.m.Y h:m:s");
     $OrderKey = rand(10000, 99999);
-    $PaidOrder = ibase_query("update SHOP_PAIDORDER_3TEN(ORDER_ID,DOCHEAD,ORDER_TIME,STATUS,ORDER_KEY) set values($order_id ,$dochead_id,'$date','A','$OrderKey') where  ORDER_ID =$order_id ", $db);
+    $PaidOrder = ibase_query("update SHOP_PAIDORDER_LIST_3TEN(ORDER_ID,DOCHEAD,ORDER_TIME,STATUS,ORDER_KEY) set values($order_id ,$dochead_id,'$date','A','$OrderKey') where  ORDER_ID =$order_id ", $db);
 
     $url = '../operations.php';
     $params = array(

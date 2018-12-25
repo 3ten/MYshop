@@ -35,6 +35,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" media="screen and (max-device-width:480px)" href="css/mobile.css" />
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
@@ -105,7 +106,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                                                                                  placeholder="Введите название продукта"
                                                                                  class="form-control"><?php echo $name; ?></textarea>
                 </div>
-                <label>
+             категория:   <label>
                     <select id="<?php echo $articul; ?>_select">
                         <?php
                         for ($i = 0; $i < count($category); $i++) {
@@ -120,8 +121,8 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                     </select>
                 </label>
                 <div class="form-group">
-                    <input type="text" id="<?php echo $articul; ?>txt" class="priceText" placeholder="Введите цену"
-                           value="<?php echo $price; ?>">
+                    цена:<input type="text" id="<?php echo $articul; ?>txt" class="priceText" placeholder="Введите цену"
+                           value="<?php echo $price; ?>"> <br>
                     <?php
                     if (empty(mb_convert_encoding($shoprow["ARTICUL"], "UTF-8", "windows-1251"))) {
                         $InShop = "false";
@@ -135,7 +136,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                         ?>
                         <input type="button" id="<?php echo $articul; ?>" data-name="<?php echo $name; ?>"
                                data-price="<?php echo $price; ?>"
-                               data-inshop="<?php echo $InShop; ?>" class="button" value="Обновить">
+                               data-inshop="<?php echo $InShop; ?>" class="button re" value="Обновить">
                         <input type="button" id="<?php echo $articul; ?>" class="dell" value="удалить">
                         <?php
                     }

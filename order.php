@@ -58,11 +58,11 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
                     <img src="<?php echo $path; ?>" class="img-fluid">
                     <h3><?php echo $name; ?></h3>
                     <p><?php echo $price; ?> руб.</p>
-                    <input type="text"
-                           id="<?php echo $articul; ?>quantity"
-                           class="quantity" placeholder="количество"
-                           value="<?php echo $quantity; ?>"
-                           data-orderid="<?php echo $order_id; ?>"
+                    количество: <input type="text"
+                                       id="<?php echo $articul; ?>quantity"
+                                       class="quantity" placeholder="количество"
+                                       value="<?php echo $quantity; ?>"
+                                       data-orderid="<?php echo $order_id; ?>"
                     >
                 </div>
 
