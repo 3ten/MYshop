@@ -45,6 +45,8 @@ function GetSum($order_id, $db)
                                                 class="text" required><br><br>
             адрес(улица,д,кв):<br> <input type="text" name="address" placeholder="адрес(улица,д,кв)" class="text"
                                           required><br><br>
+            время доставки:<br> <input type="text" name="DT" placeholder="время доставки" class="text"
+                                          required><br><br>
             <input type="hidden" name="targets" value="Заказ №<?php echo $order_id; ?>">
             <input type="hidden" name="label" value="<?php echo $order_id; ?>">
             <input type="hidden" name="sum" value="<?php echo GetSum($order_id, $db); ?>" data-type="number">

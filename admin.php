@@ -76,12 +76,14 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
         <?php
         while (@$row = ibase_fetch_assoc($res)) {
             $price = null;
+            $description = '';
             $articul = $row['ARTICUL'];
             $result = ibase_query("select * from SHOP_PRODUCTS where ARTICUL ='$articul'", $db);
             $shoprow = ibase_fetch_assoc($result);
             $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
             if (!empty($shoprow["ARTICUL"])) {
                 $name = mb_convert_encoding($shoprow["NAME"], "UTF-8", "windows-1251");
+                $description = mb_convert_encoding($shoprow["DESCRIPTION"], "UTF-8", "windows-1251");
                 $price = mb_convert_encoding($shoprow["PRICE"], "UTF-8", "windows-1251");
                 $path = mb_convert_encoding($shoprow["PHOTO_PATH"], "UTF-8", "windows-1251");
                 $productCategory = mb_convert_encoding($shoprow["CATEGORY"], "UTF-8", "windows-1251");
@@ -105,6 +107,9 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                     <label for="id_<?php echo $articul; ?>txt"></label><textarea id="id_<?php echo $articul; ?>txt"
                                                                                  placeholder="Введите название продукта"
                                                                                  class="form-control"><?php echo $name; ?></textarea>
+                    <label for="id_<?php echo $articul; ?>description"></label><textarea id="id_<?php echo $articul; ?>description"
+                                                                                 placeholder="Введите описание продукта"
+                                                                                 class="form-control"><?php echo $description; ?></textarea>
                 </div>
              категория:   <label>
                     <select id="<?php echo $articul; ?>_select">

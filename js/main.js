@@ -63,7 +63,7 @@ var myfile_name;
 
 $(document).ready(function () {
 
-      $('.dell').on('click', function (event) {
+    $('.dell').on('click', function (event) {
         $.ajax({
             type: 'POST',
             url: 'operations.php',
@@ -122,12 +122,12 @@ $(document).ready(function () {
         let name = document.getElementById("id_" + this.id + "txt").value;
         let price = document.getElementById(this.id + "txt").value;
         let category = document.getElementById(this.id + "_select").value;
-        alert(category);
+        let description = document.getElementById("id_" + this.id + "description").value;
         if (price !== '') {
             $.ajax({
                 type: 'POST',
                 url: 'operations.php',
-                data: 'operation=ProductAdd&articul=' + this.id + '&name=' + name + '&price=' + price + '&path=' + myfile_name + '&category=' + category,
+                data: 'operation=ProductAdd&articul=' + this.id + '&name=' + name + '&price=' + price + '&path=' + myfile_name + '&category=' + category + '&description=' + description,
                 success: function (data) {
                     alert("Добавлено");
                     location.reload();

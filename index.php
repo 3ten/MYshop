@@ -57,10 +57,12 @@ if (empty($_SESSION['SESSION'])) {
         <div class="row order" id="main">
             <?php
             while (@$row = ibase_fetch_assoc($ProductRes)) {
+                $description = '';
                 $articul = $row['ARTICUL'];
                 $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
                 $price = mb_convert_encoding($row['PRICE'], "UTF-8", "windows-1251");
                 $category = mb_convert_encoding($row['CATEGORY'], "UTF-8", "windows-1251");
+                $description = mb_convert_encoding($row['DESCRIPTION'], "UTF-8", "windows-1251");
                 $session = $_SESSION['SESSION'];
                 $path = mb_convert_encoding($row['PHOTO_PATH'], "UTF-8", "windows-1251");
                 if (!file_exists($path)) {
@@ -74,10 +76,12 @@ if (empty($_SESSION['SESSION'])) {
                     // $IsOrderText = "добавить в корзину";
                     $IsOrder = "false";
                     $OrderClass = "col-sm-4";
+                    $btntext = 'добавить';
                 } else {
                     // $IsOrderText = "в корзине";
                     $IsOrder = "true";
                     $OrderClass = "col-sm-4 added";
+                    $btntext = 'удалить';
                 }
                 ?>
 
@@ -87,6 +91,14 @@ if (empty($_SESSION['SESSION'])) {
                     <img src="<?php echo $path ?>" class="img-fluid">
                     <h3><?php echo $name ?></h3>
                     <p>нажмиете чтобы добавть в корзину</p>
+                    <div id="<?php echo $articul; ?>des" class="des">
+                        <label>
+                            <textarea readonly class="form-control textarea"><?php echo $description; ?></textarea>
+                        </label><br>
+                        <input type="button" id="<?php echo $articul; ?>btn" class="Obtn"
+                               value="<?php echo $btntext; ?>">
+                    </div>
+
                     <p><strong><?php echo $price ?> руб.</strong></p>
                 </div>
                 <?php
@@ -101,14 +113,16 @@ if (empty($_SESSION['SESSION'])) {
 
 <script>
     $(document).ready(function () {
-        $('.col-sm-4').click(function () {
-            var el = document.getElementById(this.id);
+
+        $('.Obtn').click(function (event) {
+            let id = this.id.replace(/btn/g, '');
+            var el = document.getElementById(id);
             var IsOrder = el.dataset.isorder;
             if (IsOrder === "true") {
                 $.ajax({
                     type: 'POST',
                     url: 'operations.php',
-                    data: 'operation=OrderDell&articul=' + this.id,
+                    data: 'operation=OrderDell&articul=' + id,
                     success: function (data) {
                         alert("Удалено");
                         location.reload();
@@ -118,7 +132,7 @@ if (empty($_SESSION['SESSION'])) {
                 $.ajax({
                     type: 'POST',
                     url: 'operations.php',
-                    data: 'operation=OrderAdd&articul=' + this.id,
+                    data: 'operation=OrderAdd&articul=' + id,
                     success: function (data) {
                         alert("Добавлено");
                         location.reload();
@@ -126,7 +140,27 @@ if (empty($_SESSION['SESSION'])) {
                 });
             }
         });
+        let isClicked = false;
+        $('.textarea').click(function (event) {
+            isClicked = true;
+        });
+        $('.col-sm-4').click(function (event) {
+            if (isClicked === false) {
+                if (document.getElementById(this.id + 'des').style.display === 'block') {
+                    document.getElementById(this.id + 'des').style.display = 'none';
+                } else {
+                    document.getElementById(this.id + 'des').style.display = 'block';
+                }
+            } else {
+                isClicked = false;
+            }
+
+
+        });
+
+
     });
+
 
 </script>
 
