@@ -29,7 +29,7 @@ h3 {
 .col-sm-4.added {
     background-color: rgba(25, 25, 25, 0.3) !important;
     opacity: 0.75;
-    /* cursor: default; */
+
 }
 
 .col-sm-4 img {
