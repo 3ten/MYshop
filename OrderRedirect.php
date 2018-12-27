@@ -11,16 +11,17 @@ $delivery_time = $_POST['DT'];
 $date = date("d.m.Y h:m:s");
 include("db.php");
 $PaidOrder = ibase_query("update or insert into SHOP_PAIDORDER_LIST_3TEN values($label,-1,'$phone','$date','W',null,'-1','$address','$delivery_time',$sum) ", $db);
+
 if ($paymentType == "CP") {
+    $PaidOrder = ibase_query("update SHOP_PAIDORDER_LIST_3TEN set STATUS = 'C'", $db);
     header("Location: success.php");
 } else {
-
 
     ?>
 
     <html>
     <form id="foobar" method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
-        <input type="hidden" name="receiver" value="410016725577528">
+        <input type="hidden" name="receiver" value="410018309644744">
         <input type="hidden" name="quickpay-form" value="shop">
         <input type="hidden" name="targets" value="<?php echo $targets; ?>">
         <input type="hidden" name="label" value="<?php echo $label; ?>">

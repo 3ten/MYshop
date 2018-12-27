@@ -36,7 +36,6 @@ while ($row = ibase_fetch_assoc($res)) {
     $PriceProd = $PriceProd * 0.95;
     $updatedocspeacres = ibase_query("update DOCSPEC set PRICERUB = $PriceProd where ARTICUL = $articul  and ID_DOCHEAD = $dochead_id", $db);
 
-
     $date = date("d.m.Y h:m:s");
     $OrderKey = rand(10000, 99999);
     $PaidOrder = ibase_query("update or insert into SHOP_PAIDORDER_LIST_3TEN(ORDER_ID,DOCHEAD,ORDER_TIME,STATUS,ORDER_KEY) values($order_id ,$dochead_id,'$date','A','$OrderKey')", $db);
@@ -44,5 +43,5 @@ while ($row = ibase_fetch_assoc($res)) {
 
 }
 
-
+$result = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ORDER_ID = '$$order_id'", $db);
 ?>

@@ -101,4 +101,32 @@ if ($_POST["operation"] == "order_product_quantity_change") {
 
 }
 /************************************************************************************************************************************************************/
+if ($_POST["operation"] == "payment") {
+    include("db.php");
+
+    $price = 0;
+    $docheadRes = ibase_query("select * from SHOP_DOCHEAD_CREATOR($price,1,1,-1,14)", $db);
+    $docheadRow = ibase_fetch_assoc($docheadRes);
+    $dochead_id = $docheadRow['OUT_DOCHEAD'];
+
+    $order_id = $_POST['ORDER_ID'];
+    $res = ibase_query("select * from SHOP_ORDER_3TEN where ORDER_ID = $order_id ", $db);
+    while ($row = ibase_fetch_assoc($res)) {
+        $articul = $row['ARTICUL'];
+        $quantity = $row['QUANTITY'];
+        $docspecCreateRes = ibase_query("select * from SPEC_ADD_ARTICUL('$articul',1,1,$quantity,0,0,$dochead_id,1,1,1,'$articul',0, 0,null)", $db);
+        $docspecCreateRow = ibase_fetch_assoc($docspecCreateRes);
+
+        $PriceRes = ibase_query("select PRICE from SHOP_PRODUCTS where ARTICUL = '$articul'", $db);
+        $priceRow = ibase_fetch_assoc($PriceRes);
+        $PriceProd = $priceRow['PRICE'];
+        $updatedocspeacres = ibase_query("update DOCSPEC set PRICERUB = $PriceProd where ARTICUL = $articul  and ID_DOCHEAD = $dochead_id", $db);
+        $date = date("d.m.Y h:m:s");
+        $OrderKey = rand(10000, 99999);
+        $PaidOrder = ibase_query("update or insert into SHOP_PAIDORDER_LIST_3TEN(ORDER_ID,DOCHEAD,ORDER_TIME,STATUS,ORDER_KEY) values($order_id ,$dochead_id,'$date','D','$OrderKey')", $db);
+    }
+
+    $result = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ORDER_ID = '$order_id' ", $db);
+}
+/************************************************************************************************************************************************************/
 ?>
