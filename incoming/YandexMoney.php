@@ -43,5 +43,5 @@ while ($row = ibase_fetch_assoc($res)) {
 
 }
 
-$result = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ORDER_ID = '$$order_id'", $db);
+$result = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ORDER_ID = '$order_id'", $db);
 ?>

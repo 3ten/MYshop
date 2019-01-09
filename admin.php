@@ -3,7 +3,6 @@ session_start();
 
 if (empty($_SESSION['NAME'])) {
     header("Location: login.php");
-
 }
 include("db.php");
 $res = ibase_query("select articul, name from CARDSCLA WHERE CLASSIF > -1", $db);
@@ -35,7 +34,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin.css">
-    <link rel="stylesheet" type="text/css" media="screen and (max-device-width:480px)" href="css/mobile.css" />
+    <link rel="stylesheet" type="text/css" media="screen and (max-device-width:500px)" href="css/mobile.css"/>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
@@ -107,11 +106,12 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                     <label for="id_<?php echo $articul; ?>txt"></label><textarea id="id_<?php echo $articul; ?>txt"
                                                                                  placeholder="Введите название продукта"
                                                                                  class="form-control"><?php echo $name; ?></textarea>
-                    <label for="id_<?php echo $articul; ?>description"></label><textarea id="id_<?php echo $articul; ?>description"
-                                                                                 placeholder="Введите описание продукта"
-                                                                                 class="form-control"><?php echo $description; ?></textarea>
+                    <label for="id_<?php echo $articul; ?>description"></label><textarea
+                            id="id_<?php echo $articul; ?>description"
+                            placeholder="Введите описание продукта"
+                            class="form-control"><?php echo $description; ?></textarea>
                 </div>
-             категория:   <label>
+                категория: <label>
                     <select id="<?php echo $articul; ?>_select">
                         <?php
                         for ($i = 0; $i < count($category); $i++) {
@@ -127,7 +127,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                 </label>
                 <div class="form-group">
                     цена:<input type="text" id="<?php echo $articul; ?>txt" class="priceText" placeholder="Введите цену"
-                           value="<?php echo $price; ?>"> <br>
+                                value="<?php echo $price; ?>"> <br>
                     <?php
                     if (empty(mb_convert_encoding($shoprow["ARTICUL"], "UTF-8", "windows-1251"))) {
                         $InShop = "false";

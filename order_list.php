@@ -1,6 +1,8 @@
 <?php
 session_start();
-
+if (empty($_SESSION['NAME'])) {
+    header("Location: login.php");
+}
 include("db.php");
 ?>
 <!DOCTYPE html>
@@ -12,7 +14,7 @@ include("db.php");
 
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/order.css">
 
     <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
@@ -49,40 +51,48 @@ $OrderRes = ibase_query("select * from SHOP_PAIDORDER_LIST_3TEN", $db);
             if ($OrderRow['STATUS'] == 'D') {
                 $orderId = $OrderRow['ORDER_ID'];
                 echo "заказ № $orderId оплачен";
-            } else if ($status == 'A') {
+            } else if ($status != 'W') {
                 ?>
                 <p> номер заказа: <?php echo $OrderRow['ORDER_ID']; ?> </p>
                 <p> номер клиента: <?php echo $OrderRow['CLIENT_NUMBER']; ?> </p>
                 <p> время закза: <?php echo $OrderRow['ORDER_TIME']; ?> </p>
-                <p> Статус: <?php echo $OrderRow['STATUS']; ?>- оплачен - ожидает доставку</p>
                 <p> почта клиента: <?php echo $OrderRow['EMAIL']; ?> </p>
                 <p> ключ клиента: <?php echo $OrderRow['ORDER_KEY']; ?> </p>
                 <p>   <?php echo $OrderRow['COMMENT']; ?> </p>
                 <p> время заказа: <?php echo $OrderRow['DELIVERY_TIME']; ?> </p>
                 <p> сумма заказа: <?php echo $OrderRow['ORDER_SUM']; ?> </p>
-                <form method="post" action="order_list.php">
-                    <input type="hidden" name="ORDER_ID" value="<?php echo $OrderRow['ORDER_ID']; ?>">
-                    <input type="submit" class="buttoin" value="Потвердить доставку">
-                </form>
                 <?php
-            } else if ($status == 'C') {
-                ?>
-                <p> номер заказа: <?php echo $OrderRow['ORDER_ID']; ?> </p>
-                <p> номер клиента: <?php echo $OrderRow['CLIENT_NUMBER']; ?> </p>
-                <p> время закза: <?php echo $OrderRow['ORDER_TIME']; ?> </p>
-                <p> Статус: <?php echo $OrderRow['STATUS']; ?>- ожидает оплату наличными - ожидает доставку</p>
-                <p> почта клиента: <?php echo $OrderRow['EMAIL']; ?> </p>
-                <p> ключ клиента: <?php echo $OrderRow['ORDER_KEY']; ?> </p>
-                <p>   <?php echo $OrderRow['COMMENT']; ?> </p>
-                <p> время заказа: <?php echo $OrderRow['DELIVERY_TIME']; ?> </p>
-                <p> сумма заказа: <?php echo $OrderRow['ORDER_SUM']; ?> </p>
-                <form method="post" action="operations.php">
-                    <input type="hidden" name="ORDER_ID" value="<?php echo $OrderRow['ORDER_ID']; ?>">
-                    <input type="hidden" name="operation" value="payment">
-                    <input type="hidden" name="paymentType" value="CP">
-                    <input type="submit" class="buttoin" value="Потвердить доставку и оплату">
-                </form>
-                <?php
+                $orderId = $OrderRow['ORDER_ID'];
+                $productsres = ibase_query("select * from SHOP_ORDER_3TEN where ORDER_ID = $orderId", $db);
+                echo ' <p>заказ:<br>';
+                while ($productsrow = ibase_fetch_assoc($productsres)) {
+                    $articul = $productsrow['ARTICUL'];
+                    $productsnameres = ibase_query("select * from SHOP_PRODUCTS where ARTICUL = '$articul'",$db);
+                    $productsname = ibase_fetch_assoc($productsnameres);
+
+                    echo 'Артикул: ' . $articul.' название: '.$productsname['NAME'].'</p>';
+                }
+                if ($status == 'A') {
+                    ?>
+                    <p> Статус: <?php echo $OrderRow['STATUS']; ?>- оплачен - ожидает доставку</p>
+                    <form method="post" action="order_list.php">
+                        <input type="hidden" name="ORDER_ID" value="<?php echo $OrderRow['ORDER_ID']; ?>">
+                        <input type="submit" class="buttoin" value="Потвердить доставку">
+                    </form>
+                    <?php
+                } else if ($status == 'C') {
+                    ?>
+                    <p> Статус: <?php echo $OrderRow['STATUS']; ?>- ожидает оплату наличными - ожидает доставку</p>
+                    <form method="post" action="order_list.php">
+                        <input type="hidden" name="ORDER_ID" value="<?php echo $OrderRow['ORDER_ID']; ?>">
+                        <input type="hidden" name="operation" value="payment">
+                        <input type="hidden" name="paymentType" value="CP">
+                        <input type="submit" class="buttoin" value="Потвердить доставку и оплату">
+                    </form>
+                    <?php
+                } else {
+                    echo $status;
+                }
             }
 
             ?>

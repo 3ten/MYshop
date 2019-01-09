@@ -10,12 +10,14 @@ if ($_POST["operation"] == "ProductAdd") {
         $name = mb_convert_encoding($_POST["name"], "windows-1251", "UTF-8");
         $category = mb_convert_encoding($_POST["category"], "windows-1251", "UTF-8");
         $description = mb_convert_encoding($_POST["description"], "windows-1251", "UTF-8");
-        $path = 'img/' . basename($_POST['path']);
-        if (!file_exists($path)) {
-            $path = "img/default.jpg";
+        if ($_POST['path'] != 'undefined') {
+            $path = 'img/' . basename($_POST['path']);
+            $path = mb_convert_encoding($path, "windows-1251", "UTF-8");
+            $result = ibase_query("UPDATE or INSERT INTO SHOP_PRODUCTS (ARTICUL,NAME,PRICE,PHOTO_PATH,CATEGORY,DESCRIPTION) VALUES('$articul','$name','$price','$path','$category','$description')", $db);
+        } else {
+            $result = ibase_query("UPDATE or INSERT INTO SHOP_PRODUCTS (ARTICUL,NAME,PRICE,CATEGORY,DESCRIPTION) VALUES('$articul','$name','$price','$category','$description')", $db);
         }
-        $path = mb_convert_encoding($path, "windows-1251", "UTF-8");
-        $result = ibase_query("UPDATE or INSERT INTO SHOP_PRODUCTS (ARTICUL,NAME,PRICE,PHOTO_PATH,CATEGORY,DESCRIPTION) VALUES('$articul','$name','$price','$path','$category','$description')", $db);
+
         $DelOrderRes = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ARTICUL = '$articul'", $db);
 
     }

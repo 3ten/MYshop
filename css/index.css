@@ -31,5 +31,14 @@
 
 textarea {
     resize: none;
-  ;
+}
+
+.isordertext{
+   height: 50px;
+}
+.description{
+    word-wrap: break-word;
+    background:transparent;
+    border: 0px;
+    overflow: auto; /* Обрезаем все, что не помещается в область */
 }

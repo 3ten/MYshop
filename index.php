@@ -4,7 +4,7 @@ include("db.php");
 $res = ibase_query("select * from SHOP_CATEGORY_3TEN", $db);
 //$row = ibase_fetch_assoc($res);
 if (empty($_SESSION['SESSION'])) {
-    $_SESSION['SESSION'] = rand(100000, 999999);
+    $_SESSION['SESSION'] = rand(10000, 99999);
 }
 
 ?>
@@ -23,7 +23,7 @@ if (empty($_SESSION['SESSION'])) {
     <script src="js/jquery.min.js"></script>
     <script async src="js/main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" media="screen and (max-device-width:480px)" href="css/mobile.css"/>
+    <link rel="stylesheet" type="text/css" media="screen and (max-device-width:500px)" href="css/mobile.css"/>
 </head>
 
 <body>
@@ -31,8 +31,9 @@ if (empty($_SESSION['SESSION'])) {
 <div class="menu">
     <div class="row">
         <a href="order.php"><img class="logo" src="img/basket.png"></a>
-        <input type="text" placeholder="Поиск" id="search">
         <a href="admin.php"><img id="admin_logo" class="logo" src="img/admin.png"></a>
+        <input type="text" placeholder="Поиск" id="search">
+
     </div>
 </div>
 
@@ -73,12 +74,12 @@ if (empty($_SESSION['SESSION'])) {
                 $OrderRow = ibase_fetch_assoc($orderres);
                 //if ($articul != mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251")) {
                 if (empty($OrderRow["ARTICUL"])) {
-                    // $IsOrderText = "добавить в корзину";
+                    $IsOrderText = "нажмите чтобы посмотреть описание и добавть в корзину";
                     $IsOrder = "false";
                     $OrderClass = "col-sm-4";
                     $btntext = 'добавить';
                 } else {
-                    // $IsOrderText = "в корзине";
+                    $IsOrderText = "в корзине";
                     $IsOrder = "true";
                     $OrderClass = "col-sm-4 added";
                     $btntext = 'удалить';
@@ -90,11 +91,9 @@ if (empty($_SESSION['SESSION'])) {
                      data-name="<?php echo $name; ?>">
                     <img src="<?php echo $path ?>" class="img-fluid">
                     <h3><?php echo $name ?></h3>
-                    <p>нажмиете чтобы добавть в корзину</p>
+                    <p class="isordertext"> <?php echo $IsOrderText; ?></p>
                     <div id="<?php echo $articul; ?>des" class="des">
-                        <label>
-                            <textarea readonly class="form-control textarea"><?php echo $description; ?></textarea>
-                        </label><br>
+                        <p class="form-control description"><?php echo $description; ?></p>
                         <input type="button" id="<?php echo $articul; ?>btn" class="Obtn"
                                value="<?php echo $btntext; ?>">
                     </div>

@@ -1,12 +1,12 @@
 body {
     font: 16px/20px 'Ubuntu', sans-serif;
     overflow: auto;
-    background: linear-gradient(45deg, #0ca3d2, #35dcca) fixed;
+    //background: linear-gradient(45deg, #0ca3d2, #35dcca) fixed;
+    background: linear-gradient(45deg, #0ca3d2, #00ec8f) fixed;
 }
 
 h3 {
     font-weight: unset;
-    /*  margin-top: 10px;*/ /* в корзине что то не так */
 }
 
 .order {
@@ -28,8 +28,6 @@ h3 {
 
 .col-sm-4.added {
     background-color: rgba(25, 25, 25, 0.3) !important;
-    opacity: 0.75;
-
 }
 
 .col-sm-4 img {
@@ -86,6 +84,8 @@ h3 {
 
 .col-sm-4 h3 {
     height: 70px;
+    word-wrap: break-word;
+    overflow: auto; /* Обрезаем все, что не помещается в область */
 }
 
 .container {

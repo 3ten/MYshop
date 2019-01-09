@@ -17,12 +17,15 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
     <script src="js/jquery.min.js"></script>
     <script async src="js/main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" media="screen and (max-device-width:500px)" href="css/mobile.css"/>
 </head>
 <body>
 <div class="menu">
     <div class="row">
         <a href="index.php"> <img class="logo" src="img/shop.png"> </a>
+        <a href="order_tracking.php"> <img class="logo" src="img/deliveryicon.png"> </a>
         <input type="text" placeholder="Поиск" id="search">
+
     </div>
 </div>
 
@@ -55,7 +58,7 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
                 ?>
                 <div id="<?php echo $articul; ?>" class="col-sm-4" data-name="<?php echo $name; ?>">
                     <a class="Product_Order_dellBtn" id="<?php echo $articul; ?>DellBtn" style="color: white">x</a>
-                    <img src="<?php echo $path; ?>" class="img-fluid">
+                    <img src="<?php echo $path; ?>" id="<?php echo $articul; ?>orderIMG" class="img-fluid orderIMG">
                     <h3><?php echo $name; ?></h3>
                     <p><?php echo $price; ?> руб.</p>
                     количество: <input type="text"
@@ -81,8 +84,21 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
     </form>
 
 </div>
-
-
 </body>
+
+<script>
+    $(document).ready(function () {
+
+        $('.col-sm-4').click(function (event) {
+            let id = this.id + "orderIMG";
+            if (document.getElementById(id).style.display === 'inline') {
+                document.getElementById(id).style.display = 'none';
+            } else {
+                document.getElementById(id).style.display = 'inline';
+            }
+        });
+    });
+
+</script>
 </html>
 

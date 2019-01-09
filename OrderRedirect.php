@@ -1,4 +1,5 @@
 <?php
+session_start();
 $paymentType = $_POST['paymentType'];
 $targets = $_POST['targets'];
 $label = $_POST['label'];
@@ -10,10 +11,11 @@ $address = $_POST['address'];
 $delivery_time = $_POST['DT'];
 $date = date("d.m.Y h:m:s");
 include("db.php");
-$PaidOrder = ibase_query("update or insert into SHOP_PAIDORDER_LIST_3TEN values($label,-1,'$phone','$date','W',null,'-1','$address','$delivery_time',$sum) ", $db);
-
+$PaidOrder = ibase_query("update or insert into SHOP_PAIDORDER_LIST_3TEN values($label,-1,'$phone','$date','W',null,'-1','$address','$delivery_time',$sum,null) ", $db);
 if ($paymentType == "CP") {
     $PaidOrder = ibase_query("update SHOP_PAIDORDER_LIST_3TEN set STATUS = 'C'", $db);
+    $session = $_SESSION['SESSION'];
+    $PaidOrder = ibase_query("update SHOP_ORDER_3TEN set session = 'o$session' where ORDER_ID = '$label'", $db);
     header("Location: success.php");
 } else {
 
