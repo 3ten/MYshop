@@ -1,0 +1,44 @@
+.category {
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.descriptionMenu {
+    position: fixed;
+    background: #1c7430;
+    right: 0px;
+    height: 100%;
+    z-index: 1;
+}
+
+.des {
+    display: none;
+    padding: 0px 0px 5px;
+}
+
+.textarea {
+    background: transparent;
+    border: 0;
+    width: 236px
+}
+
+.Obtn {
+    width: 100%;
+    border: 0;
+    height: 35px;
+}
+
+textarea {
+    resize: none;
+}
+
+.isordertext{
+   height: 50px;
+}
+.description{
+    word-wrap: break-word;
+    background:transparent;
+    border: 0px;
+    overflow: auto; /* Обрезаем все, что не помещается в область */
+}

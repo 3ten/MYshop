@@ -63,7 +63,6 @@ var myfile_name;
 
 $(document).ready(function () {
 
-
     $('.dell').on('click', function (event) {
         $.ajax({
             type: 'POST',
@@ -78,68 +77,29 @@ $(document).ready(function () {
 
     $('.category_add').on('click', function (event) {
         let category = document.getElementById("category_add_txt").value;
+        if (category != "") {
+            $.ajax({
+                type: 'POST',
+                url: 'operations.php',
+                data: 'operation=category_add&category=' + category,
+                success: function (data) {
+                    alert("Категория добавлена");
+                }
+            });
+        } else alert("Введите категорию");
+    });
+
+    $('.CategoryDell').on('click', function (event) {
+        alert("");
+        let category = document.getElementById("CategoryDllSelect").value;
         $.ajax({
             type: 'POST',
             url: 'operations.php',
-            data: 'operation=category_add&category=' + category,
+            data: 'operation=category_dell&category=' + category,
             success: function (data) {
-                alert("Категория добавлена");
+                alert("Категория удалена");
             }
         });
-    });
-    //document.documentElement.clientHeight
-    //document.getElementById('id_00002').offsetHeight
-
-    let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
-    let children = $('#main').children();
-    let i;
-    if (children.length > elementSum) {
-        elementSum = elementSum * 3;
-    } else {
-        elementSum = children.length;
-    }
-
-    for (i = 0; i < elementSum; i++) {
-        children.eq(i).css({'display': 'inline'});
-    }
-
-
-    window.onscroll = function () {
-
-        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 300) {
-
-            if (children.length > (i + elementSum)) {
-                elementSum += i;
-            } else {
-                elementSum = children.length;
-            }
-
-            for (i; i < elementSum; i++) {
-
-                let currentElementId = children.eq(i).attr('id').replace(/id_/g, '');
-                let currentElement = document.getElementById(currentElementId);
-
-                let name = currentElement.dataset.name;
-                let searchText = document.getElementById('search').value;
-                if (name.toUpperCase().indexOf(searchText.toUpperCase()) === -1) {
-
-                } else {
-                    children.eq(i).css({'display': 'inline'});
-                }
-
-            }
-        }
-    };
-    let isCategoryOpened = false;
-    $(".test1").click(function () {
-
-        if (isCategoryOpened) {
-
-            document.getElementById('category').style.display = 'none';
-        } else {
-            document.getElementById('category').style.display = 'inline';
-        }
-        isCategoryOpened = !isCategoryOpened;
     });
 
     $(".Product_Order_dellBtn").click(function () {
@@ -156,21 +116,18 @@ $(document).ready(function () {
         });
 
     });
-
-    //
-
     $(".button").click(function () {
         let el = document.getElementById(this.id);
         // let name = el.dataset.name;
         let name = document.getElementById("id_" + this.id + "txt").value;
         let price = document.getElementById(this.id + "txt").value;
         let category = document.getElementById(this.id + "_select").value;
-        alert(category);
+        let description = document.getElementById("id_" + this.id + "description").value;
         if (price !== '') {
             $.ajax({
                 type: 'POST',
                 url: 'operations.php',
-                data: 'operation=ProductAdd&articul=' + this.id + '&name=' + name + '&price=' + price + '&path=' + myfile_name + '&category=' + category,
+                data: 'operation=ProductAdd&articul=' + this.id + '&name=' + name + '&price=' + price + '&path=' + myfile_name + '&category=' + category + '&description=' + description,
                 success: function (data) {
                     alert("Добавлено");
                     location.reload();
@@ -180,6 +137,59 @@ $(document).ready(function () {
             alert("введите цену");
         }
     });
+
+});
+
+/*******************************************************************************/
+let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
+let children = $('#main').children();
+let i;
+if (children.length > elementSum) {
+    elementSum = elementSum * 3;
+} else {
+    elementSum = children.length;
+}
+
+for (i = 0; i < elementSum; i++) {
+    children.eq(i).css({'display': 'inline'});
+}
+
+
+window.onscroll = function () {
+
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 300) {
+
+        if (children.length > (i + elementSum)) {
+            elementSum += i;
+        } else {
+            elementSum = children.length;
+        }
+
+        for (i; i < elementSum; i++) {
+
+            let currentElementId = children.eq(i).attr('id').replace(/id_/g, '');
+            let currentElement = document.getElementById(currentElementId);
+
+            let name = currentElement.dataset.name;
+            let searchText = document.getElementById('search').value;
+            if (name.toUpperCase().indexOf(searchText.toUpperCase()) === -1) {
+
+            } else {
+                children.eq(i).css({'display': 'inline'});
+            }
+        }
+    }
+};
+let isCategoryOpened = false;
+$(".test1").click(function () {
+
+    if (isCategoryOpened) {
+
+        document.getElementById('category').style.display = 'none';
+    } else {
+        document.getElementById('category').style.display = 'inline';
+    }
+    isCategoryOpened = !isCategoryOpened;
 });
 
 
@@ -221,7 +231,6 @@ $('.quantity').on('input', function () {
         data: 'operation=order_product_quantity_change&articul=' + this.id.replace(/quantity/g, '') + '&order_id=' + order_id + '&quantity=' + quantity,
         success: function (data) {
             //alert("Добавлено " + quantity + " " + order_id + " ");
-            location.reload();
         }
     });
 });

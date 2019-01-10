@@ -9,12 +9,15 @@ if ($_POST["operation"] == "ProductAdd") {
         $articul = mb_convert_encoding($_POST["articul"], "windows-1251", "UTF-8");
         $name = mb_convert_encoding($_POST["name"], "windows-1251", "UTF-8");
         $category = mb_convert_encoding($_POST["category"], "windows-1251", "UTF-8");
-        $path = 'img/' . basename($_POST['path']);
-        if (!file_exists($path)) {
-            $path = "img/default.jpg";
+        $description = mb_convert_encoding($_POST["description"], "windows-1251", "UTF-8");
+        if ($_POST['path'] != 'undefined') {
+            $path = 'img/' . basename($_POST['path']);
+            $path = mb_convert_encoding($path, "windows-1251", "UTF-8");
+            $result = ibase_query("UPDATE or INSERT INTO SHOP_PRODUCTS (ARTICUL,NAME,PRICE,PHOTO_PATH,CATEGORY,DESCRIPTION) VALUES('$articul','$name','$price','$path','$category','$description')", $db);
+        } else {
+            $result = ibase_query("UPDATE or INSERT INTO SHOP_PRODUCTS (ARTICUL,NAME,PRICE,CATEGORY,DESCRIPTION) VALUES('$articul','$name','$price','$category','$description')", $db);
         }
-        $path = mb_convert_encoding($path, "windows-1251", "UTF-8");
-        $result = ibase_query("UPDATE or INSERT INTO SHOP_PRODUCTS (ARTICUL,NAME,PRICE,PHOTO_PATH,CATEGORY) VALUES('$articul','$name','$price','$path','$category')", $db);
+
         $DelOrderRes = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ARTICUL = '$articul'", $db);
 
     }
@@ -35,7 +38,17 @@ if ($_POST["operation"] == "OrderAdd") {
         while ($id == mb_convert_encoding($shoprow["ID"], "UTF-8", "windows-1251")) {
             $id = mb_convert_encoding(rand(1000, 9999), "windows-1251", "UTF-8");
         }
-        $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID,ORDER_ID ) VALUES('$articul','$session','$id',gen_id(SHOP_ORDER_ID_GEN_3TEN,1))", $db);
+
+        $getorderid = ibase_query("select ORDER_ID from SHOP_ORDER_3TEN where SESSION  = '$session'", $db);
+        $order_idrow = ibase_fetch_assoc($getorderid);
+
+        $order_id = $order_idrow['ORDER_ID'];
+        if (empty($order_idrow['ORDER_ID'])) {
+            $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID,ORDER_ID ) VALUES('$articul','$session','$id',gen_id(SHOP_ORDER_ID_GEN_3TEN,1))", $db);
+        } else {
+            $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID,ORDER_ID ) VALUES('$articul','$session','$id',$order_id)", $db);
+        }
+
     }
 }
 
@@ -73,6 +86,14 @@ if ($_POST["operation"] == "category_add") {
     }
 }
 /************************************************************************************************************************************************************/
+if ($_POST["operation"] == "category_dell") {
+    include("db.php");
+    if (isset($_POST['category'])) {
+        $category = mb_convert_encoding($_POST['category'], "windows-1251", "UTF-8");
+        $result = ibase_query("DELETE FROM SHOP_CATEGORY_3TEN where CATEGORY = '$category'", $db);
+    }
+}
+/************************************************************************************************************************************************************/
 if ($_POST["operation"] == "order_product_quantity_change") {
     include("db.php");
     $order_id = $_POST["order_id"];
@@ -80,6 +101,34 @@ if ($_POST["operation"] == "order_product_quantity_change") {
     $quantity = $_POST["quantity"];
     $result = ibase_query("update shop_order_3ten set QUANTITY = $quantity where ARTICUL = '$articul' and ORDER_ID = $order_id", $db);
 
+}
+/************************************************************************************************************************************************************/
+if ($_POST["operation"] == "payment") {
+    include("db.php");
+
+    $price = 0;
+    $docheadRes = ibase_query("select * from SHOP_DOCHEAD_CREATOR($price,1,1,-1,14)", $db);
+    $docheadRow = ibase_fetch_assoc($docheadRes);
+    $dochead_id = $docheadRow['OUT_DOCHEAD'];
+
+    $order_id = $_POST['ORDER_ID'];
+    $res = ibase_query("select * from SHOP_ORDER_3TEN where ORDER_ID = $order_id ", $db);
+    while ($row = ibase_fetch_assoc($res)) {
+        $articul = $row['ARTICUL'];
+        $quantity = $row['QUANTITY'];
+        $docspecCreateRes = ibase_query("select * from SPEC_ADD_ARTICUL('$articul',1,1,$quantity,0,0,$dochead_id,1,1,1,'$articul',0, 0,null)", $db);
+        $docspecCreateRow = ibase_fetch_assoc($docspecCreateRes);
+
+        $PriceRes = ibase_query("select PRICE from SHOP_PRODUCTS where ARTICUL = '$articul'", $db);
+        $priceRow = ibase_fetch_assoc($PriceRes);
+        $PriceProd = $priceRow['PRICE'];
+        $updatedocspeacres = ibase_query("update DOCSPEC set PRICERUB = $PriceProd where ARTICUL = $articul  and ID_DOCHEAD = $dochead_id", $db);
+        $date = date("d.m.Y h:m:s");
+        $OrderKey = rand(10000, 99999);
+        $PaidOrder = ibase_query("update or insert into SHOP_PAIDORDER_LIST_3TEN(ORDER_ID,DOCHEAD,ORDER_TIME,STATUS,ORDER_KEY) values($order_id ,$dochead_id,'$date','D','$OrderKey')", $db);
+    }
+
+    $result = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ORDER_ID = '$order_id' ", $db);
 }
 /************************************************************************************************************************************************************/
 ?>

@@ -25,10 +25,12 @@
 
 .button, .dell {
     border: 0px;
+    margin: 10px 0px 0px;
 }
 
 .col-sm-4 {
     display: none;
+    text-align: left;
 }
 
 .form-control {
@@ -47,9 +49,18 @@ textarea {
     resize: none;
 }
 
-.text-input{
-    margin:100px 100px 0px;
+.text-input {
+    margin: 100px 100px 0px;
 }
-#category{
+
+#category {
     display: none;
+}
+
+.button {
+    width: 100%;
+}
+
+.button.re, .dell {
+    width: 49%;
 }

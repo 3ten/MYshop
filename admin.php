@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+if (empty($_SESSION['NAME'])) {
+    header("Location: login.php");
+}
 include("db.php");
 $res = ibase_query("select articul, name from CARDSCLA WHERE CLASSIF > -1", $db);
 //$row = ibase_fetch_assoc($res);
@@ -30,6 +34,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" type="text/css" media="screen and (max-device-width:500px)" href="css/mobile.css"/>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
@@ -46,10 +51,22 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
     </div>
 </div>
 <div class="row">
-    <label id="category">
-        <input type="text" class="text-input" id="category_add_txt">
-        <a class="category_add"><img src="img/category_add.png"></a>
-    </label>
+    <div id="category">
+        <label>
+            <input type="text" class="text-input" id="category_add_txt" placeholder="Введите категорию">
+            <a class="category_add"><img src="img/category_add.png"></a>
+        </label><br>
+        <label>
+            <select id="CategoryDllSelect">
+                <?php
+                for ($i = 0; $i < count($category); $i++) {
+                    echo "<option selected value='$category[$i]'>" . $category[$i] . "</option>";
+                }
+                ?>
+            </select>
+        </label>
+        <input type="button" class="CategoryDell" value="удалить">
+    </div>
 </div>
 
 
@@ -58,14 +75,17 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
         <?php
         while (@$row = ibase_fetch_assoc($res)) {
             $price = null;
+            $description = '';
             $articul = $row['ARTICUL'];
             $result = ibase_query("select * from SHOP_PRODUCTS where ARTICUL ='$articul'", $db);
             $shoprow = ibase_fetch_assoc($result);
             $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
             if (!empty($shoprow["ARTICUL"])) {
                 $name = mb_convert_encoding($shoprow["NAME"], "UTF-8", "windows-1251");
+                $description = mb_convert_encoding($shoprow["DESCRIPTION"], "UTF-8", "windows-1251");
                 $price = mb_convert_encoding($shoprow["PRICE"], "UTF-8", "windows-1251");
                 $path = mb_convert_encoding($shoprow["PHOTO_PATH"], "UTF-8", "windows-1251");
+                $productCategory = mb_convert_encoding($shoprow["CATEGORY"], "UTF-8", "windows-1251");
             } else {
                 $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
                 $path = "img/default.jpg";
@@ -86,19 +106,28 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                     <label for="id_<?php echo $articul; ?>txt"></label><textarea id="id_<?php echo $articul; ?>txt"
                                                                                  placeholder="Введите название продукта"
                                                                                  class="form-control"><?php echo $name; ?></textarea>
+                    <label for="id_<?php echo $articul; ?>description"></label><textarea
+                            id="id_<?php echo $articul; ?>description"
+                            placeholder="Введите описание продукта"
+                            class="form-control"><?php echo $description; ?></textarea>
                 </div>
-                <label>
+                категория: <label>
                     <select id="<?php echo $articul; ?>_select">
                         <?php
                         for ($i = 0; $i < count($category); $i++) {
-                            echo "<option value='$category[$i]'>" . $category[$i] . "</option>";
+                            if ($category[$i] == $productCategory) {
+                                echo "<option selected value='$category[$i]'>" . $category[$i] . "</option>";
+                            } else {
+                                echo "<option value='$category[$i]'>" . $category[$i] . "</option>";
+                            }
                         }
+                        $productCategory = "";
                         ?>
                     </select>
                 </label>
                 <div class="form-group">
-                    <input type="text" id="<?php echo $articul; ?>txt" class="priceText" placeholder="Введите цену"
-                           value="<?php echo $price; ?>">
+                    цена:<input type="text" id="<?php echo $articul; ?>txt" class="priceText" placeholder="Введите цену"
+                                value="<?php echo $price; ?>"> <br>
                     <?php
                     if (empty(mb_convert_encoding($shoprow["ARTICUL"], "UTF-8", "windows-1251"))) {
                         $InShop = "false";
@@ -112,7 +141,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                         ?>
                         <input type="button" id="<?php echo $articul; ?>" data-name="<?php echo $name; ?>"
                                data-price="<?php echo $price; ?>"
-                               data-inshop="<?php echo $InShop; ?>" class="button" value="Обновить">
+                               data-inshop="<?php echo $InShop; ?>" class="button re" value="Обновить">
                         <input type="button" id="<?php echo $articul; ?>" class="dell" value="удалить">
                         <?php
                     }

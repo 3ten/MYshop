@@ -1,10 +1,10 @@
 <?php
 session_start();
 include("db.php");
-$res = ibase_query("select * from SHOP_PRODUCTS", $db);
+$res = ibase_query("select * from SHOP_CATEGORY_3TEN", $db);
 //$row = ibase_fetch_assoc($res);
 if (empty($_SESSION['SESSION'])) {
-    $_SESSION['SESSION'] = rand(100000, 999999);
+    $_SESSION['SESSION'] = rand(10000, 99999);
 }
 
 ?>
@@ -17,12 +17,13 @@ if (empty($_SESSION['SESSION'])) {
 
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
 
     <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
     <script async src="js/main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="stylesheet" type="text/css" media="screen and (max-device-width:500px)" href="css/mobile.css"/>
 </head>
 
 <body>
@@ -30,65 +31,97 @@ if (empty($_SESSION['SESSION'])) {
 <div class="menu">
     <div class="row">
         <a href="order.php"><img class="logo" src="img/basket.png"></a>
+        <a href="admin.php"><img id="admin_logo" class="logo" src="img/admin.png"></a>
         <input type="text" placeholder="Поиск" id="search">
-        <a href="admin.php"><img class="logo" src="img/admin.png"></a>
+
     </div>
 </div>
 
+
 <div class="container">
-    <div class="row order" id="main">
-        <?php
-        while (@$row = ibase_fetch_assoc($res)) {
-            $articul = $row['ARTICUL'];
-            $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
-            $price = mb_convert_encoding($row['PRICE'], "UTF-8", "windows-1251");
-            $category = mb_convert_encoding($row['CATEGORY'], "UTF-8", "windows-1251");
-            $session = $_SESSION['SESSION'];
-            $path = mb_convert_encoding($row['PHOTO_PATH'], "UTF-8", "windows-1251");
-            if (!file_exists($path)) {
-                $path = "img/default.jpg";
-            }
-            $orderres = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session' and ARTICUL = '$articul'", $db);
-            $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
-            $OrderRow = ibase_fetch_assoc($orderres);
-            //if ($articul != mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251")) {
-            if (empty($OrderRow["ARTICUL"])) {
-                // $IsOrderText = "добавить в корзину";
-                $IsOrder = "false";
-                $OrderClass = "col-sm-4";
-            } else {
-                // $IsOrderText = "в корзине";
-                $IsOrder = "true";
-                $OrderClass = "col-sm-4 added";
+
+
+    <?php
+    while (@$CategoryRow = ibase_fetch_assoc($res)) {
+        $MainCategory = $CategoryRow['CATEGORY'];
+        $ProductRes = ibase_query("select * from SHOP_PRODUCTS where CATEGORY ='$MainCategory'", $db);
+
+        $checkRes = ibase_query("select * from SHOP_PRODUCTS where CATEGORY ='$MainCategory'", $db);
+        $category = mb_convert_encoding($CategoryRow['CATEGORY'], "UTF-8", "windows-1251");
+
+        $checkRow = ibase_fetch_assoc($checkRes);
+        if (!empty($checkRow['ARTICUL'])) {
+            echo '<div class="category" ><a>' . $category . '</a></div>';
+        }
+
+        ?>
+        <div class="row order" id="main">
+            <?php
+            while (@$row = ibase_fetch_assoc($ProductRes)) {
+                $description = '';
+                $articul = $row['ARTICUL'];
+                $name = mb_convert_encoding($row['NAME'], "UTF-8", "windows-1251");
+                $price = mb_convert_encoding($row['PRICE'], "UTF-8", "windows-1251");
+                $category = mb_convert_encoding($row['CATEGORY'], "UTF-8", "windows-1251");
+                $description = mb_convert_encoding($row['DESCRIPTION'], "UTF-8", "windows-1251");
+                $session = $_SESSION['SESSION'];
+                $path = mb_convert_encoding($row['PHOTO_PATH'], "UTF-8", "windows-1251");
+                if (!file_exists($path)) {
+                    $path = "img/default.jpg";
+                }
+                $orderres = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session' and ARTICUL = '$articul'", $db);
+                $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
+                $OrderRow = ibase_fetch_assoc($orderres);
+                //if ($articul != mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251")) {
+                if (empty($OrderRow["ARTICUL"])) {
+                    $IsOrderText = "нажмите чтобы посмотреть описание и добавть в корзину";
+                    $IsOrder = "false";
+                    $OrderClass = "col-sm-4";
+                    $btntext = 'добавить';
+                } else {
+                    $IsOrderText = "в корзине";
+                    $IsOrder = "true";
+                    $OrderClass = "col-sm-4 added";
+                    $btntext = 'удалить';
+                }
+                ?>
+
+                <div id="<?php echo $articul ?>" class="<?php echo $OrderClass; ?>"
+                     data-isorder="<?php echo $IsOrder ?>"
+                     data-name="<?php echo $name; ?>">
+                    <img src="<?php echo $path ?>" class="img-fluid">
+                    <h3><?php echo $name ?></h3>
+                    <p class="isordertext"> <?php echo $IsOrderText; ?></p>
+                    <div id="<?php echo $articul; ?>des" class="des">
+                        <p class="form-control description"><?php echo $description; ?></p>
+                        <input type="button" id="<?php echo $articul; ?>btn" class="Obtn"
+                               value="<?php echo $btntext; ?>">
+                    </div>
+
+                    <p><strong><?php echo $price ?> руб.</strong></p>
+                </div>
+                <?php
             }
             ?>
-
-            <div id="<?php echo $articul ?>" class="<?php echo $OrderClass; ?>" data-isorder="<?php echo $IsOrder ?>"
-                 data-name="<?php echo $name; ?>">
-                <img src="<?php echo $path ?>" class="img-fluid">
-                <h3><?php echo $name ?></h3>
-                <p>Здесь, может быть, стоит разместить описание товара</p>
-                <p>TESTCategory:<?php echo $category; ?></p>
-                <p><strong><?php echo $price ?> руб.</strong></p>
-            </div>
-            <?php
-        }
-        ?>
-    </div>
+        </div>
+        <?php
+    }
+    ?>
 </div>
 </body>
 
 <script>
     $(document).ready(function () {
-        $('.col-sm-4').click(function () {
 
-            var el = document.getElementById(this.id);
+        $('.Obtn').click(function (event) {
+            let id = this.id.replace(/btn/g, '');
+            var el = document.getElementById(id);
             var IsOrder = el.dataset.isorder;
             if (IsOrder === "true") {
                 $.ajax({
                     type: 'POST',
                     url: 'operations.php',
-                    data: 'operation=OrderDell&articul=' + this.id,
+                    data: 'operation=OrderDell&articul=' + id,
                     success: function (data) {
                         alert("Удалено");
                         location.reload();
@@ -98,7 +131,7 @@ if (empty($_SESSION['SESSION'])) {
                 $.ajax({
                     type: 'POST',
                     url: 'operations.php',
-                    data: 'operation=OrderAdd&articul=' + this.id,
+                    data: 'operation=OrderAdd&articul=' + id,
                     success: function (data) {
                         alert("Добавлено");
                         location.reload();
@@ -106,7 +139,27 @@ if (empty($_SESSION['SESSION'])) {
                 });
             }
         });
+        let isClicked = false;
+        $('.textarea').click(function (event) {
+            isClicked = true;
+        });
+        $('.col-sm-4').click(function (event) {
+            if (isClicked === false) {
+                if (document.getElementById(this.id + 'des').style.display === 'block') {
+                    document.getElementById(this.id + 'des').style.display = 'none';
+                } else {
+                    document.getElementById(this.id + 'des').style.display = 'block';
+                }
+            } else {
+                isClicked = false;
+            }
+
+
+        });
+
+
     });
+
 
 </script>
 

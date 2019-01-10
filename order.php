@@ -15,15 +15,17 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/order.css">
     <script src="js/jquery.min.js"></script>
-    <script src="js/popup.js"></script>
     <script async src="js/main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" media="screen and (max-device-width:500px)" href="css/mobile.css"/>
 </head>
 <body>
 <div class="menu">
     <div class="row">
         <a href="index.php"> <img class="logo" src="img/shop.png"> </a>
+        <a href="order_tracking.php"> <img class="logo" src="img/deliveryicon.png"> </a>
         <input type="text" placeholder="Поиск" id="search">
+
     </div>
 </div>
 
@@ -56,14 +58,14 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
                 ?>
                 <div id="<?php echo $articul; ?>" class="col-sm-4" data-name="<?php echo $name; ?>">
                     <a class="Product_Order_dellBtn" id="<?php echo $articul; ?>DellBtn" style="color: white">x</a>
-                    <img src="<?php echo $path; ?>" class="img-fluid">
+                    <img src="<?php echo $path; ?>" id="<?php echo $articul; ?>orderIMG" class="img-fluid orderIMG">
                     <h3><?php echo $name; ?></h3>
                     <p><?php echo $price; ?> руб.</p>
-                    <input type="text"
-                           id="<?php echo $articul; ?>quantity"
-                           class="quantity" placeholder="количество"
-                           value="<?php echo $quantity; ?>"
-                           data-orderid="<?php echo $order_id; ?>"
+                    количество: <input type="text"
+                                       id="<?php echo $articul; ?>quantity"
+                                       class="quantity" placeholder="количество"
+                                       value="<?php echo $quantity; ?>"
+                                       data-orderid="<?php echo $order_id; ?>"
                     >
                 </div>
 
@@ -73,38 +75,30 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
         }
         ?>
     </div>
+    <form method="post" action="order_payment.php">
+        <label>
+            <input type="text" name="order_id" value="<?php echo $order_id; ?>" hidden/>
+        </label>
+        <input id="paymentBtn" class="btn" type="submit" value="Оплатить">
 
+    </form>
 
-    <input id="button" class="button" type="submit" value="Оплатить">
 </div>
-
-<div class="container">
-    <div class="row">
-
-        <div id="popupContact">
-            <a id="popupContactClose">x</a>
-            <h1>Ваш заказ<br>на сумму <?php echo $sum; ?> рублей</h1>
-            <p id="contactArea">
-            <form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
-                <input type="hidden" name="receiver" value="410016725577528">
-                <input type="hidden" name="quickpay-form" value="shop">
-                <input type="hidden" name="targets" value="Заказ №<?php echo $order_id; ?>">
-                <input type="hidden" name="label" value="<?php echo $order_id; ?>">
-                <input type="hidden" name="sum" value="<?php echo $sum; ?>" data-type="number">
-                <input type="hidden" name="need-phone" value="+7"><br>
-                <label><input type="radio" name="paymentType" value="PC">Яндекс.Деньгами</label><br>
-                <label><input type="radio" name="paymentType" value="AC">Банковской картой</label> <br>
-                <input type="hidden" name="successURL" value="http://212.17.28.36:88:33888/success.php">
-                <input type="submit" value="Оплатить">
-            </form>
-            </p>
-        </div>
-        <div id="backgroundPopup"></div>
-
-    </div>
-</div>
-
-
 </body>
+
+<script>
+    $(document).ready(function () {
+
+        $('.col-sm-4').click(function (event) {
+            let id = this.id + "orderIMG";
+            if (document.getElementById(id).style.display === 'inline') {
+                document.getElementById(id).style.display = 'none';
+            } else {
+                document.getElementById(id).style.display = 'inline';
+            }
+        });
+    });
+
+</script>
 </html>
 
