@@ -69,8 +69,8 @@ $OrderRes = ibase_query("select * from SHOP_PAIDORDER_LIST_3TEN", $db);
                     $articul = $productsrow['ARTICUL'];
                     $productsnameres = ibase_query("select * from SHOP_PRODUCTS where ARTICUL = '$articul'",$db);
                     $productsname = ibase_fetch_assoc($productsnameres);
-
-                    echo 'Артикул: ' . $articul.' название: '.$productsname['NAME'].'</p>';
+$name = mb_convert_encoding($productsname['NAME'], "UTF-8", "windows-1251");
+                    echo 'Артикул: ' . $articul.' название: '.$name.'</p>';
                 }
                 if ($status == 'A') {
                     ?>

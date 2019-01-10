@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 $paymentType = $_POST['paymentType'];
 $targets = $_POST['targets'];
 $label = $_POST['label'];
