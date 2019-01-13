@@ -7,9 +7,9 @@
 
 @media screen and (max-device-width:350px){
     .logo{
-        width: 65%;
+        width: 60%;
     }
     #search{
-        width: 150px
+        width: 40%;
     }
 }

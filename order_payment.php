@@ -56,6 +56,7 @@ function GetSum($order_id, $db)
             <label><input class="radio" type="radio" name="paymentType" value="CP">Наличными</label> <br><br>
             <input type="submit" class="button" value="Оплатить">
         </form>
+        <p>*бесплатная доставка производится только по поселку Новониколаевский</p>
     </div>
 
 </div>
