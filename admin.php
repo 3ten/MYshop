@@ -50,23 +50,21 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
         <a href="#" class="test1"><img id="category_add_btn" class="logo" src="img/down_menu_arrow.png"></a>
     </div>
 </div>
-<div class="row">
-    <div id="category">
-        <label>
-            <input type="text" class="text-input" id="category_add_txt" placeholder="Введите категорию">
-            <a class="category_add"><img src="img/category_add.png"></a>
-        </label><br>
-        <label>
-            <select id="CategoryDllSelect">
-                <?php
-                for ($i = 0; $i < count($category); $i++) {
-                    echo "<option selected value='$category[$i]'>" . $category[$i] . "</option>";
-                }
-                ?>
-            </select>
-        </label>
-        <input type="button" class="CategoryDell" value="удалить">
-    </div>
+<div id="category">
+    <label class="cadd">
+        <input type="text" class="text-input" id="category_add_txt" placeholder="Введите категорию">
+        <input type="button" class="category_add" value="добавить">
+    </label>
+    <label class="cdell">
+        <select id="CategoryDllSelect">
+            <?php
+            for ($i = 0; $i < count($category); $i++) {
+                echo "<option selected value='$category[$i]'>" . $category[$i] . "</option>";
+            }
+            ?>
+        </select>
+    </label>
+    <input type="button" class="CategoryDell" value="удалить">
 </div>
 
 

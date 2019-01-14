@@ -50,7 +50,7 @@ textarea {
 }
 
 .text-input {
-    margin: 100px 100px 0px;
+    margin: 100px 0px 0px;
 }
 
 #category {
@@ -63,4 +63,7 @@ textarea {
 
 .button.re, .dell {
     width: 49%;
+}
+.cadd{
+    width: 100%;
 }

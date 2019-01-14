@@ -42,3 +42,6 @@ textarea {
     border: 0px;
     overflow: auto; /* Обрезаем все, что не помещается в область */
 }
+.category{
+    width: 100%;
+}

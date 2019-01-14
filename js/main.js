@@ -180,16 +180,14 @@ window.onscroll = function () {
         }
     }
 };
-let isCategoryOpened = false;
+
 $(".test1").click(function () {
 
-    if (isCategoryOpened) {
-
+    if (document.getElementById('category').style.display !== 'none') {
         document.getElementById('category').style.display = 'none';
     } else {
-        document.getElementById('category').style.display = 'inline';
+        document.getElementById('category').style.display = 'inline-block';
     }
-    isCategoryOpened = !isCategoryOpened;
 });
 
 

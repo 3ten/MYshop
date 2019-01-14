@@ -40,23 +40,24 @@ if (empty($_SESSION['SESSION'])) {
 
 <div class="container">
 
+    <div class="row order" id="main">
+        <?php
+        while (@$CategoryRow = ibase_fetch_assoc($res)) {
+            $MainCategory = $CategoryRow['CATEGORY'];
+            $ProductRes = ibase_query("select * from SHOP_PRODUCTS where CATEGORY ='$MainCategory'", $db);
 
-    <?php
-    while (@$CategoryRow = ibase_fetch_assoc($res)) {
-        $MainCategory = $CategoryRow['CATEGORY'];
-        $ProductRes = ibase_query("select * from SHOP_PRODUCTS where CATEGORY ='$MainCategory'", $db);
+            $checkRes = ibase_query("select * from SHOP_PRODUCTS where CATEGORY ='$MainCategory'", $db);
+            $category = mb_convert_encoding($CategoryRow['CATEGORY'], "UTF-8", "windows-1251");
 
-        $checkRes = ibase_query("select * from SHOP_PRODUCTS where CATEGORY ='$MainCategory'", $db);
-        $category = mb_convert_encoding($CategoryRow['CATEGORY'], "UTF-8", "windows-1251");
+            $checkRow = ibase_fetch_assoc($checkRes);
 
-        $checkRow = ibase_fetch_assoc($checkRes);
-        if (!empty($checkRow['ARTICUL'])) {
-            echo '<div class="category" ><a>' . $category . '</a></div>';
-        }
 
-        ?>
-        <div class="row order" id="main">
+            ?>
+
             <?php
+            if (!empty($checkRow['ARTICUL'])) {
+                echo '<div class="category" id="id_category"><a>' . $category . '</a></div>';
+            }
             while (@$row = ibase_fetch_assoc($ProductRes)) {
                 $description = '';
                 $articul = $row['ARTICUL'];
@@ -89,7 +90,9 @@ if (empty($_SESSION['SESSION'])) {
                 <div id="<?php echo $articul ?>" class="<?php echo $OrderClass; ?>"
                      data-isorder="<?php echo $IsOrder ?>"
                      data-name="<?php echo $name; ?>">
-                    <img src="<?php echo $path ?>" class="img-fluid">
+                    <div class="imgbox">
+                        <img src="<?php echo $path ?>" class="img-fluid">
+                    </div>
                     <h3><?php echo $name ?></h3>
                     <p class="isordertext"> <?php echo $IsOrderText; ?></p>
                     <div id="<?php echo $articul; ?>des" class="des">
@@ -103,10 +106,11 @@ if (empty($_SESSION['SESSION'])) {
                 <?php
             }
             ?>
-        </div>
-        <?php
-    }
-    ?>
+
+            <?php
+        }
+        ?>
+    </div>
 </div>
 </body>
 
