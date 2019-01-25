@@ -1,15 +1,20 @@
-@media screen and (max-device-width:500px){
+@media screen and (max-device-width: 500px) {
     .col-sm-4 {
         max-width: 500px;
     }
 
 }
 
-@media screen and (max-device-width:450px){
-    .logo{
+@media screen and (max-device-width: 450px) {
+    .logo {
         width: 60%;
     }
-    #search{
+
+    #search {
         width: 40%;
+    }
+
+    .product_menu {
+        margin: 41px 0px 0px;
     }
 }

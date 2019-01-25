@@ -33,11 +33,13 @@ if (empty($_SESSION['SESSION'])) {
         <a href="order.php"><img class="logo" src="img/basket.png"></a>
         <a href="admin.php"><img id="admin_logo" class="logo" src="img/admin.png"></a>
         <input type="text" placeholder="Поиск" id="search">
-
     </div>
 </div>
 <div class="product_menu">
-    da
+    <img src="img/default.jpg" id="product_menuPhoto" class="img-fluid">
+    <h3 id="product_menuName"></h3>
+    <input type="button" id="" class="orderAddBtn"
+           value="test">
 </div>
 
 <div class="container">
@@ -95,9 +97,9 @@ if (empty($_SESSION['SESSION'])) {
                      data-isorder="<?php echo $IsOrder ?>"
                      data-name="<?php echo $name; ?>">
                     <div class="imgbox">
-                        <img src="<?php echo $path ?>" class="img-fluid">
+                        <img id="<?php echo $articul; ?>img" src="<?php echo $path ?>" class="img-fluid">
                     </div>
-                    <h3><?php echo $name ?></h3>
+                    <h3 id="<?php echo $articul; ?>name"><?php echo $name ?></h3>
 
                     <?php
                     while ($asrtRow = ibase_fetch_assoc($GetAsrtRes)) {
@@ -160,6 +162,12 @@ if (empty($_SESSION['SESSION'])) {
             isClicked = true;
         });
         $('.col-sm-4').click(function (event) {
+
+            let menu_PhotoPath = document.getElementById(this.id + 'img').src;
+            document.getElementById('product_menuPhoto').src = menu_PhotoPath;
+            let menu_name = document.getElementById(this.id + 'name').innerText;
+            document.getElementById('product_menuName').innerText = menu_name;
+
             if (isClicked === false) {
                 if (document.getElementById(this.id + 'des').style.display === 'block') {
                     document.getElementById(this.id + 'des').style.display = 'none';

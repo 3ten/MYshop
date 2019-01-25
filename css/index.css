@@ -33,15 +33,38 @@ textarea {
     resize: none;
 }
 
-.isordertext{
-   height: 50px;
+.isordertext {
+    height: 50px;
 }
-.description{
+
+.description {
     word-wrap: break-word;
-    background:transparent;
+    background: transparent;
     border: 0px;
     overflow: auto; /* Обрезаем все, что не помещается в область */
 }
-.category{
+
+.category {
     width: 100%;
+}
+
+.product_menu {
+    margin: 60px 0px 0px;
+    max-width: 260px;
+    position: fixed;
+    right: 0px;
+    height: 100%;
+    background-color: rgba(25, 25, 25, 0.38) !important;
+    z-index: 1;
+}
+
+.orderAddBtn {
+    width: 100%;
+    border: none;
+    height: 35px
+}
+
+.orderAddBtn:hover {
+    background: #d1d0d0;
+    cursor: pointer;
 }
