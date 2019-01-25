@@ -36,7 +36,9 @@ if (empty($_SESSION['SESSION'])) {
 
     </div>
 </div>
-
+<div class="product_menu">
+    da
+</div>
 
 <div class="container">
 
