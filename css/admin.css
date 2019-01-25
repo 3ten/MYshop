@@ -64,6 +64,34 @@ textarea {
 .button.re, .dell {
     width: 49%;
 }
-.cadd{
+
+.cadd {
     width: 100%;
+}
+
+.edit_button {
+    width: 100%;
+    margin: 10px 0px 0px 0px;
+    border: none;
+}
+
+.editBlock {
+    display: none;
+}
+
+.asrt {
+
+    display: inline-block;
+
+}
+
+.asrtText {
+    background: #c8c8c899;
+    margin: 0px 5px 0px;
+    border: 1px solid black;
+}
+
+.asrtText:hover {
+    background: #dedbdb;
+
 }

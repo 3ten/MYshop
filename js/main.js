@@ -59,10 +59,30 @@ var myfile_name;
     });
 
 })(jQuery);
-/*******************************************************************************/
+/************************************************************************************************************************/
 
 $(document).ready(function () {
 
+    $(".checkbox").click(function () {
+        if ($(this).is(':checked')) {
+            document.getElementById(this.id.replace(/checkbox/g, '') + 'asrtQuantity').style.display = 'inline-block';
+        } else {
+            document.getElementById(this.id.replace(/checkbox/g, '') + 'asrtQuantity').style.display = 'none';
+        }
+    });
+
+
+    $(".edit_button").click(function () {
+        if (document.getElementById('id_' + this.id.replace(/edit/g, '') + 'img').style.display !== 'none') {
+            document.getElementById('id_' + this.id.replace(/edit/g, '') + 'img').style.display = 'none';
+            document.getElementById(this.id.replace(/edit/g, '') + 'editBlock').style.display = 'inline-block';
+        } else {
+            document.getElementById('id_' + this.id.replace(/edit/g, '') + 'img').style.display = 'inline-block';
+            document.getElementById(this.id.replace(/edit/g, '') + 'editBlock').style.display = 'none';
+        }
+
+    });
+    /* удаление товара с сайта */
     $('.dell').on('click', function (event) {
         $.ajax({
             type: 'POST',
@@ -74,7 +94,7 @@ $(document).ready(function () {
             }
         });
     });
-
+    /* добавление категории*/
     $('.category_add').on('click', function (event) {
         let category = document.getElementById("category_add_txt").value;
         if (category != "") {
@@ -88,7 +108,7 @@ $(document).ready(function () {
             });
         } else alert("Введите категорию");
     });
-
+    /* удаление категории*/
     $('.CategoryDell').on('click', function (event) {
         alert("");
         let category = document.getElementById("CategoryDllSelect").value;
@@ -101,7 +121,7 @@ $(document).ready(function () {
             }
         });
     });
-
+    /* удаление закза из корзины*/
     $(".Product_Order_dellBtn").click(function () {
         let articul = this.id.replace(/DellBtn/g, '');
         let id = this.id;
@@ -116,14 +136,31 @@ $(document).ready(function () {
         });
 
     });
+    /* добовление товара на сайт*/
     $(".button").click(function () {
-        let el = document.getElementById(this.id);
-        // let name = el.dataset.name;
-        let name = document.getElementById("id_" + this.id + "txt").value;
         let price = document.getElementById(this.id + "txt").value;
-        let category = document.getElementById(this.id + "_select").value;
-        let description = document.getElementById("id_" + this.id + "description").value;
         if (price !== '') {
+            let el = document.getElementById(this.id);
+            let name = document.getElementById("id_" + this.id + "txt").value;
+            let category = document.getElementById(this.id + "_select").value;
+            let description = document.getElementById("id_" + this.id + "description").value;
+
+            let checks = document.getElementsByName(this.id + 'checkBoxName');
+            if (checks) {
+                for (i = 0; i < checks.length; i++) {
+                    let asrtName = checks[i].value;
+                    let asrtQuantity = document.getElementById(checks[i].id.replace(/checkbox/g, 'asrtQuantity')).value;
+                    if (checks[i].checked) {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'operations.php',
+                            data: 'operation=ProductAsrtAdd&articul=' + this.id + '&name=' + asrtName + '&quantity=' + asrtQuantity,
+                            success: function (data) {
+                            }
+                        });
+                    }
+                }
+            }
             $.ajax({
                 type: 'POST',
                 url: 'operations.php',
@@ -133,14 +170,13 @@ $(document).ready(function () {
                     location.reload();
                 }
             });
+
         } else {
             alert("введите цену");
         }
     });
-
 });
 
-/*******************************************************************************/
 let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
 let children = $('#main').children();
 let i;
@@ -181,6 +217,7 @@ window.onscroll = function () {
     }
 };
 
+
 $(".test1").click(function () {
 
     if (document.getElementById('category').style.display !== 'none') {
@@ -193,7 +230,6 @@ $(".test1").click(function () {
 
 $('#search').on('input', function () {
 
-    /********************************************/
     let children = $('#main').children();
     let currentElement, currentElementId, name, searchText, counter = 0;
     let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
@@ -216,9 +252,8 @@ $('#search').on('input', function () {
         }
 
     }
-    /********************************************/
 });
-
+/*изменение количества товара*/
 $('.quantity').on('input', function () {
     // alert( this.id.replace(/quantity/g, ''));
     let quantity = document.getElementById(this.id).value;

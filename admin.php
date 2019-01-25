@@ -92,6 +92,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                 $path = "img/default.jpg";
             }
             ?>
+            <!--Главный блок-->
             <div class="col-sm-4" id="id_<? echo $articul ?>">
                 <div class="wrapper">
                     <div class="form-group">
@@ -99,37 +100,59 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                     </div>
                     <div class="ajax-reply"></div>
                 </div>
-                <img src="<?php echo $path; ?>" class="img-fluid">
-                <div class="form-group">
-                    <label for="id_<?php echo $articul; ?>txt"></label><textarea id="id_<?php echo $articul; ?>txt"
-                                                                                 placeholder="Введите название продукта"
-                                                                                 class="form-control"><?php echo $name; ?></textarea>
+                <img src="<?php echo $path; ?>" id="id_<?php echo $articul; ?>img" class="img-fluid">
+
+
+                <label for="id_<?php echo $articul; ?>txt"></label><textarea id="id_<?php echo $articul; ?>txt"
+                                                                             placeholder="Введите название продукта"
+                                                                             class="form-control"><?php echo $name; ?></textarea>
+                <div id="<?php echo $articul; ?>editBlock" class="editBlock">
                     <label for="id_<?php echo $articul; ?>description"></label><textarea
                             id="id_<?php echo $articul; ?>description"
                             placeholder="Введите описание продукта"
                             class="form-control"><?php echo $description; ?></textarea>
-                </div>
-                категория: <label>
-                    <select id="<?php echo $articul; ?>_select">
-                        <?php
-                        for ($i = 0; $i < count($category); $i++) {
-                            if ($category[$i] == $productCategory) {
-                                echo "<option selected value='$category[$i]'>" . $category[$i] . "</option>";
-                            } else {
-                                echo "<option value='$category[$i]'>" . $category[$i] . "</option>";
+
+
+                    категория: <label>
+                        <select id="<?php echo $articul; ?>_select" class=" ">
+                            <?php
+                            for ($i = 0; $i < count($category); $i++) {
+                                if ($category[$i] == $productCategory) {
+                                    echo "<option selected value='$category[$i]'>" . $category[$i] . "</option>";
+                                } else {
+                                    echo "<option value='$category[$i]'>" . $category[$i] . "</option>";
+                                }
                             }
-                        }
-                        $productCategory = "";
-                        ?>
-                    </select>
-                </label>
+                            $productCategory = "";
+                            ?>
+                        </select>
+                    </label>
+                    ассортимент: <br>
+
+                    <?php
+                    $srtres = ibase_query("select * from CARDASRT where ARTICUL ='$articul' ");
+                    while ($srtrow = ibase_fetch_assoc($srtres)) {
+                        $namesrt = mb_convert_encoding($srtrow['NAME'], "UTF-8", "windows-1251");
+                        $asrt = mb_convert_encoding($srtrow['ASRT'], "UTF-8", "windows-1251");
+                        // echo $namesrt;
+                        echo "<label><input id='" . $articul . $asrt . "checkbox' class='checkbox' type='checkbox' name='" . $articul . "checkBoxName' value='$namesrt'>$namesrt</label>";
+                        echo "<label><input id='" . $articul . $asrt . "asrtQuantity' type='text' name='1' value='' placeholder='количество' style='display: none'></label>";
+                    }
+                    //$namesrt = null;
+                    ?>
+
+                    <br>
+                    цена:<input type="text" id="<?php echo $articul; ?>txt" class="priceText inputbox"
+                                placeholder="Введите цену"
+                                value="<?php echo $price; ?>">
+                </div>
                 <div class="form-group">
-                    цена:<input type="text" id="<?php echo $articul; ?>txt" class="priceText" placeholder="Введите цену"
-                                value="<?php echo $price; ?>"> <br>
                     <?php
                     if (empty(mb_convert_encoding($shoprow["ARTICUL"], "UTF-8", "windows-1251"))) {
                         $InShop = "false";
                         ?>
+                        <input type="button" id="<?php echo $articul; ?>edit" class="edit_button" value="редактировать">
+
                         <input type="button" id="<?php echo $articul; ?>" data-name="<?php echo $name; ?>"
                                data-price="<?php echo $price; ?>"
                                data-inshop="<?php echo $InShop; ?>" class="button" value="добавить">
@@ -146,6 +169,8 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                     ?>
                 </div>
             </div>
+
+            <!-- Конец главного блока-->
         <?php } ?>
     </div>
 </body>

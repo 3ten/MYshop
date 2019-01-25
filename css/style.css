@@ -1,8 +1,11 @@
 body {
     font: 16px/20px 'Ubuntu', sans-serif;
     overflow: auto;
-    //background: linear-gradient(45deg, #0ca3d2, #35dcca) fixed;
-    background: linear-gradient(45deg, #0ca3d2, #00ec8f) fixed;
+   /* background: linear-gradient(45deg, #0ca3d2, #00ec8f) fixed; */
+    background: linear-gradient(45deg, #0c67d2, #00ec8f)  no-repeat fixed;
+}
+html, body {
+    height: 100%;
 }
 
 h3 {
@@ -95,3 +98,4 @@ h3 {
 #admin_logo {
     text-align: right;
 }
+

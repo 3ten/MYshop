@@ -23,7 +23,15 @@ if ($_POST["operation"] == "ProductAdd") {
     }
 }
 /************************************************************************************************************************************************************/
+if ($_POST["operation"] == "ProductAsrtAdd") {
+    include('db.php');
+    $asrtName = mb_convert_encoding($_POST['name'], "windows-1251", "UTF-8");
+    $asrtQuantity = mb_convert_encoding($_POST['quantity'], "windows-1251", "UTF-8");
+    $asrtArticul = mb_convert_encoding($_POST['articul'], "windows-1251", "UTF-8");
+    $addAsrtRes = ibase_query("UPDATE or INSERT INTO SHOP_ASRT_3TEN VALUES('$asrtArticul',$asrtQuantity,'$asrtName')", $db);
+}
 
+/************************************************************************************************************************************************************/
 if ($_POST["operation"] == "OrderAdd") {
     include("db.php");
     if (isset($_POST['articul']) && isset($_SESSION['SESSION'])) {

@@ -70,6 +70,8 @@ if (empty($_SESSION['SESSION'])) {
                 if (!file_exists($path)) {
                     $path = "img/default.jpg";
                 }
+                $GetAsrtRes = ibase_query("select * from SHOP_ASRT_3TEN WHERE ARTICUL = '$articul'");
+
                 $orderres = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session' and ARTICUL = '$articul'", $db);
                 $articul = mb_convert_encoding($row['ARTICUL'], "UTF-8", "windows-1251");
                 $OrderRow = ibase_fetch_assoc($orderres);
@@ -94,6 +96,14 @@ if (empty($_SESSION['SESSION'])) {
                         <img src="<?php echo $path ?>" class="img-fluid">
                     </div>
                     <h3><?php echo $name ?></h3>
+
+                    <?php
+                    while ($asrtRow = ibase_fetch_assoc($GetAsrtRes)) {
+                        $asrtName = mb_convert_encoding($asrtRow['ASRT_NAME'], "UTF-8", "windows-1251");;
+                        echo "<div class='asrt'><a class='asrtText'>$asrtName</a></div>";
+                    }
+                    ?>
+
                     <p class="isordertext"> <?php echo $IsOrderText; ?></p>
                     <div id="<?php echo $articul; ?>des" class="des">
                         <p class="form-control description"><?php echo $description; ?></p>
@@ -157,15 +167,7 @@ if (empty($_SESSION['SESSION'])) {
             } else {
                 isClicked = false;
             }
-
-
         });
-
-
     });
-
-
 </script>
-
-
 </html>
