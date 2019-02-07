@@ -68,3 +68,11 @@ textarea {
     background: #d1d0d0;
     cursor: pointer;
 }
+
+.product_menu {
+    display: none;
+}
+
+#product_menu {
+    display: none;
+}

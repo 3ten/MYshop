@@ -17,6 +17,13 @@ function GetSum($order_id, $db)
         $sumrow = ibase_fetch_assoc($sumres);
         $quantity = mb_convert_encoding($orderrow['QUANTITY'], "UTF-8", "windows-1251");
         $price = mb_convert_encoding($sumrow['PRICE'], "UTF-8", "windows-1251");
+        if ($orderrow['ASRT'] != null) {
+            $asrt = $orderrow['ASRT'];
+            $asrtQuantitySQL = ibase_query("select * from SHOP_ASRT_3TEN where ASRT = '$asrt' and ARTICUL = '$articul'", $db);
+            $asrtQuantity = ibase_fetch_assoc($asrtQuantitySQL);
+            $price = $asrtQuantity['ASRT_QUANTITY'] * (int)$price;
+        }
+
         $sum += (int)$quantity * (int)$price;
         //$sum++;
     }
@@ -46,7 +53,7 @@ function GetSum($order_id, $db)
             адрес(улица,д,кв):<br> <input type="text" name="address" placeholder="адрес(улица,д,кв)" class="text"
                                           required><br><br>
             время доставки:<br> <input type="text" name="DT" placeholder="время доставки" class="text"
-                                          required><br><br>
+                                       required><br><br>
             <input type="hidden" name="targets" value="Заказ №<?php echo $order_id; ?>">
             <input type="hidden" name="label" value="<?php echo $order_id; ?>">
             <input type="hidden" name="sum" value="<?php echo GetSum($order_id, $db); ?>" data-type="number">

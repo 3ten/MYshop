@@ -51,18 +51,35 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
                 $name = mb_convert_encoding($product['NAME'], "UTF-8", "windows-1251");
                 $price = mb_convert_encoding($product['PRICE'], "UTF-8", "windows-1251");
                 $path = mb_convert_encoding($product['PHOTO_PATH'], "UTF-8", "windows-1251");
+                if ($row['ASRT'] != null) {
+                    $asrt = $row['ASRT'];
+                    $asrtRes = ibase_query("select * from SHOP_ASRT_3TEN where ASRT = '$asrt' and ARTICUL = '$articul'", $db);
+                    $GetAsrt = ibase_fetch_assoc($asrtRes);
+                    $quantityAsrt = $GetAsrt['ASRT_QUANTITY'];
+
+                    $price = $price * $quantityAsrt;
+                } else {
+                    $asrt = null;
+                }
+
 
                 if (!file_exists($path)) {
                     $path = "img/default.jpg";
                 }
+
+
                 ?>
-                <div id="<?php echo $articul; ?>" class="col-sm-4" data-name="<?php echo $name; ?>">
+
+                <div id="<?php echo $articul . $asrt ?>" class="col-sm-4" data-name="<?php echo $name; ?>">
                     <a class="Product_Order_dellBtn" id="<?php echo $articul; ?>DellBtn" style="color: white">x</a>
-                    <img src="<?php echo $path; ?>" id="<?php echo $articul; ?>orderIMG" class="img-fluid orderIMG">
+                    <img src="<?php echo $path; ?>" id="<?php echo $articul . $asrt; ?>orderIMG"
+                         class="img-fluid orderIMG">
                     <h3><?php echo $name; ?></h3>
                     <p><?php echo $price; ?> руб.</p>
                     количество: <input type="number"
-                                       id="<?php echo $articul; ?>quantity"
+                                       id="<?php echo $articul . $asrt; ?>quantity"
+                                       data-articul="<?php echo $articul; ?>"
+                                       data-asrt="<?php echo $asrt; ?>"
                                        class="quantity" placeholder="количество"
                                        value="<?php echo $quantity; ?>"
                                        data-orderid="<?php echo $order_id; ?>"

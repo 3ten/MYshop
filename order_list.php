@@ -67,10 +67,11 @@ $OrderRes = ibase_query("select * from SHOP_PAIDORDER_LIST_3TEN", $db);
                 echo ' <p>заказ:<br>';
                 while ($productsrow = ibase_fetch_assoc($productsres)) {
                     $articul = $productsrow['ARTICUL'];
-                    $productsnameres = ibase_query("select * from SHOP_PRODUCTS where ARTICUL = '$articul'",$db);
+                    $productsnameres = ibase_query("select * from SHOP_PRODUCTS where ARTICUL = '$articul'", $db);
                     $productsname = ibase_fetch_assoc($productsnameres);
-$name = mb_convert_encoding($productsname['NAME'], "UTF-8", "windows-1251");
-                    echo 'Артикул: ' . $articul.' название: '.$name.'</p>';
+                    $name = mb_convert_encoding($productsname['NAME'], "UTF-8", "windows-1251");
+                    $asrt = mb_convert_encoding($productsrow['ASRT_NAME'], "UTF-8", "windows-1251");
+                    echo 'Артикул: ' . $articul . ' название: ' . $name . '</p>';
                 }
                 if ($status == 'A') {
                     ?>

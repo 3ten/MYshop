@@ -35,16 +35,20 @@ if (empty($_SESSION['SESSION'])) {
         <input type="text" placeholder="Поиск" id="search">
     </div>
 </div>
-<div class="product_menu">
+<div class="product_menu" id="product_menu" style="display: none">
     <img src="img/default.jpg" id="product_menuPhoto" class="img-fluid">
     <h3 id="product_menuName"></h3>
-    <input type="button" id="" class="orderAddBtn"
-           value="test">
+    <div id="product_menuAsrtBox"></div>
+
+    <input type="button" id="1" class="Obtn" value="добавить">
+
+
 </div>
 
 <div class="container">
 
     <div class="row order" id="main">
+
         <?php
         while (@$CategoryRow = ibase_fetch_assoc($res)) {
             $MainCategory = $CategoryRow['CATEGORY'];
@@ -54,8 +58,6 @@ if (empty($_SESSION['SESSION'])) {
             $category = mb_convert_encoding($CategoryRow['CATEGORY'], "UTF-8", "windows-1251");
 
             $checkRow = ibase_fetch_assoc($checkRes);
-
-
             ?>
 
             <?php
@@ -101,18 +103,22 @@ if (empty($_SESSION['SESSION'])) {
                     </div>
                     <h3 id="<?php echo $articul; ?>name"><?php echo $name ?></h3>
 
-                    <?php
-                    while ($asrtRow = ibase_fetch_assoc($GetAsrtRes)) {
-                        $asrtName = mb_convert_encoding($asrtRow['ASRT_NAME'], "UTF-8", "windows-1251");;
-                        echo "<div class='asrt'><a class='asrtText'>$asrtName</a></div>";
-                    }
-                    ?>
 
                     <p class="isordertext"> <?php echo $IsOrderText; ?></p>
                     <div id="<?php echo $articul; ?>des" class="des">
+                        <div class="<?php echo $articul; ?>asrtBox" id="id_<?php echo $articul; ?>asrtBox">
+                            <?php
+                            while ($asrtRow = ibase_fetch_assoc($GetAsrtRes)) {
+                                $asrtName = mb_convert_encoding($asrtRow['ASRT_NAME'], "UTF-8", "windows-1251");
+                                $asrt = mb_convert_encoding($asrtRow['ASRT'], "UTF-8", "windows-1251");
+                                echo "<div id='" . $articul . "' data-asrt='" . $asrt . "' class='asrtText'>$asrtName</div>";
+                            }
+                            ?>
+                        </div>
+
                         <p class="form-control description"><?php echo $description; ?></p>
-                        <input type="button" id="<?php echo $articul; ?>btn" class="Obtn"
-                               value="<?php echo $btntext; ?>">
+                        <!-- <input type="button" id="<?php echo $articul; ?>btn" class="Obtn"
+                               value="<?php echo $btntext; ?>"> -->
                     </div>
 
                     <p><strong><?php echo $price ?> руб.</strong></p>
@@ -132,52 +138,124 @@ if (empty($_SESSION['SESSION'])) {
     $(document).ready(function () {
 
         $('.Obtn').click(function (event) {
-            let id = this.id.replace(/btn/g, '');
+            let id = document.getElementsByClassName('Obtn').id.replace(/btn/g, '');
             var el = document.getElementById(id);
             var IsOrder = el.dataset.isorder;
-            if (IsOrder === "true") {
-                $.ajax({
-                    type: 'POST',
-                    url: 'operations.php',
-                    data: 'operation=OrderDell&articul=' + id,
-                    success: function (data) {
-                        alert("Удалено");
-                        location.reload();
+            let AsrtCheck = document.getElementsByName(id + 'checkbox');
+            if (AsrtCheck[0]) {
+                for (let i = 0; i < AsrtCheck.length; i++) {
+                    if (IsOrder === "true") {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'operations.php',
+                            data: 'operation=OrderDell&articul=' + id,
+                            success: function (data) {
+                                alert("Удалено");
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: 'operations.php',
+                            data: 'operation=OrderAdd&articul=' + id + '&asrt=' + AsrtCheck[i].dataset.asrt,
+                            success: function (data) {
+                                alert("Добавлено");
+                                location.reload();
+                            }
+                        });
                     }
-                });
-            } else {
-                $.ajax({
-                    type: 'POST',
-                    url: 'operations.php',
-                    data: 'operation=OrderAdd&articul=' + id,
-                    success: function (data) {
-                        alert("Добавлено");
-                        location.reload();
-                    }
-                });
+                }
             }
+            else {
+                if (IsOrder === "true") {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'operations.php',
+                        data: 'operation=OrderDell&articul=' + id,
+                        success: function (data) {
+                            alert("Удалено");
+                            location.reload();
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'operations.php',
+                        data: 'operation=OrderAdd&articul=' + id,
+                        success: function (data) {
+                            alert("Добавлено");
+                            location.reload();
+                        }
+                    });
+                }
+            }
+
         });
         let isClicked = false;
         $('.textarea').click(function (event) {
             isClicked = true;
         });
         $('.col-sm-4').click(function (event) {
+            let blockID = this.id;
+            if (document.getElementById('product_menu').style.display === 'none') {
+                document.getElementById('product_menu').style.display = 'inline-block';
 
-            let menu_PhotoPath = document.getElementById(this.id + 'img').src;
-            document.getElementById('product_menuPhoto').src = menu_PhotoPath;
-            let menu_name = document.getElementById(this.id + 'name').innerText;
-            document.getElementById('product_menuName').innerText = menu_name;
+                /* формирование меню товара */
+                document.getElementById('product_menuPhoto').src = document.getElementById(this.id + 'img').src;
+                document.getElementById('product_menuName').innerText = document.getElementById(this.id + 'name').innerText;
+                document.getElementsByClassName('Obtn').id = blockID + 'btn';
 
-            if (isClicked === false) {
-                if (document.getElementById(this.id + 'des').style.display === 'block') {
-                    document.getElementById(this.id + 'des').style.display = 'none';
+                if (document.getElementById(blockID).dataset.isorder === "true") {
+                    $(".Obtn").val("удалить");
                 } else {
-                    document.getElementById(this.id + 'des').style.display = 'block';
+                    $(".Obtn").val("добавить");
                 }
+
+                let asrtID = document.getElementById('id_' + blockID + 'asrtBox');
+                let asrtBoxCh = $(asrtID).children();
+                for (let i = 0; i < asrtBoxCh.length; i++) {
+
+                    let astrLabel = document.createElement('label');
+                    astrLabel.className = 'asrtLabel';
+                    astrLabel.innerText = asrtBoxCh[i].innerText;
+                    astrLabel.appendChild(astrEl);
+                    document.getElementById('product_menuAsrtBox').appendChild(astrLabel);
+
+                    let astrEl = document.createElement('input');
+                    astrEl.type = 'checkbox';
+                    astrEl.id = asrtBoxCh[i].innerText;
+                    astrEl.className = 'asrtCheckbox';
+                    astrEl.dataset.asrt = asrtBoxCh[i].dataset.asrt;
+                    astrEl.name = blockID + 'checkbox';
+
+                }
+
+                /* формирование меню товара */
+                if (isClicked === false) {
+                    if (document.getElementById(this.id + 'des').style.display === 'block') {
+                        document.getElementById(this.id + 'des').style.display = 'none';
+
+                    } else {
+                        //       document.getElementById(this.id + 'des').style.display = 'block';
+                    }
+                } else {
+                    isClicked = false;
+                }
+
             } else {
-                isClicked = false;
+                let elements = document.getElementsByClassName('asrtLabel');
+                let i = 0;
+                while (elements.length > 0) {
+                    elements[0].remove();
+                }
+                document.getElementById('product_menu').style.display = 'none';
+
             }
+
+
         });
-    });
+    })
+    ;
 </script>
 </html>

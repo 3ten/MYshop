@@ -135,7 +135,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                         $namesrt = mb_convert_encoding($srtrow['NAME'], "UTF-8", "windows-1251");
                         $asrt = mb_convert_encoding($srtrow['ASRT'], "UTF-8", "windows-1251");
                         // echo $namesrt;
-                        echo "<label><input id='" . $articul . $asrt . "checkbox' class='checkbox' type='checkbox' name='" . $articul . "checkBoxName' value='$namesrt'>$namesrt</label>";
+                        echo "<label><input id='" . $articul . $asrt . "checkbox' class='checkbox' type='checkbox' name='" . $articul . "checkBoxName' data-asrt='" . $asrt . "' value='$namesrt'>$namesrt</label>";
                         echo "<label><input id='" . $articul . $asrt . "asrtQuantity' type='text' name='1' value='' placeholder='количество' style='display: none'></label>";
                     }
                     //$namesrt = null;

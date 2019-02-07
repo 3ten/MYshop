@@ -149,13 +149,15 @@ $(document).ready(function () {
             if (checks) {
                 for (i = 0; i < checks.length; i++) {
                     let asrtName = checks[i].value;
+                    let asrt = checks[i].dataset.asrt;
                     let asrtQuantity = document.getElementById(checks[i].id.replace(/checkbox/g, 'asrtQuantity')).value;
                     if (checks[i].checked) {
                         $.ajax({
                             type: 'POST',
                             url: 'operations.php',
-                            data: 'operation=ProductAsrtAdd&articul=' + this.id + '&name=' + asrtName + '&quantity=' + asrtQuantity,
+                            data: 'operation=ProductAsrtAdd&articul=' + this.id + '&name=' + asrtName + '&quantity=' + asrtQuantity + '&asrt=' + asrt,
                             success: function (data) {
+                                console.log(data);
                             }
                         });
                     }
@@ -167,7 +169,7 @@ $(document).ready(function () {
                 data: 'operation=ProductAdd&articul=' + this.id + '&name=' + name + '&price=' + price + '&path=' + myfile_name + '&category=' + category + '&description=' + description,
                 success: function (data) {
                     alert("Добавлено");
-                    location.reload();
+                    // location.reload();
                 }
             });
 
@@ -256,12 +258,13 @@ $('#search').on('input', function () {
 /*изменение количества товара*/
 $('.quantity').on('input', function () {
     // alert( this.id.replace(/quantity/g, ''));
-    let quantity = document.getElementById(this.id).value;
-    let order_id = document.getElementById(this.id).dataset.orderid;
+    let element = document.getElementById(this.id);
+    let quantity = element.value;
+    let order_id = element.dataset.orderid;
     $.ajax({
         type: 'POST',
         url: 'operations.php',
-        data: 'operation=order_product_quantity_change&articul=' + this.id.replace(/quantity/g, '') + '&order_id=' + order_id + '&quantity=' + quantity,
+        data: 'operation=order_product_quantity_change&articul=' + element.dataset.articul + '&order_id=' + order_id + '&quantity=' + quantity + '&asrt=' + element.dataset.asrt,
         success: function (data) {
             //alert("Добавлено " + quantity + " " + order_id + " ");
         }

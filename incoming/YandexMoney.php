@@ -27,11 +27,24 @@ while ($row = ibase_fetch_assoc($res)) {
     $articul = $row['ARTICUL'];
     $price = $_POST['amount'];
     $quantity = $row['QUANTITY'];
-    $docspecCreateRes = ibase_query("select * from SPEC_ADD_ARTICUL('$articul',1,1,$quantity,0,0,$dochead_id,1,1,1,'$articul',0, 0,null)", $db);
-    $docspecCreateRow = ibase_fetch_assoc($docspecCreateRes);
+
 
     $PriceRes = ibase_query("select PRICE from SHOP_PRODUCTS where ARTICUL = '$articul'", $db);
     $priceRow = ibase_fetch_assoc($PriceRes);
+    if ($row['ASRT'] != null) {
+        $asrt = $row['ASRT'];
+        $asrtQuantitySQL = ibase_query("select * from SHOP_ASRT_3TEN where ASRT = '$asrt' and ARTICUL = '$articul'", $db);
+        $asrtQuantity = ibase_fetch_assoc($asrtQuantitySQL);
+        $price = $asrtQuantity['ASRT_QUANTITY'] * (int)$price;
+
+        $docspecCreateSQL = ibase_query("select * from SPEC_ASRT_ADD($dochead_id,'$articul',$asrt,$quantity,0,0,0,0)", $db);
+        $docspecCreate = ibase_fetch_assoc($docspecCreateSQL);
+
+    } else {
+        $docspecCreateRes = ibase_query("select * from SPEC_ADD_ARTICUL('$articul',1,1,$quantity,0,0,$dochead_id,1,1,1,'$articul',0, 0,null)", $db);
+        $docspecCreateRow = ibase_fetch_assoc($docspecCreateRes);
+    }
+
     $PriceProd = $priceRow['PRICE'];
     $PriceProd = $PriceProd * 0.95;
     $updatedocspeacres = ibase_query("update DOCSPEC set PRICERUB = $PriceProd where ARTICUL = $articul  and ID_DOCHEAD = $dochead_id", $db);
@@ -45,3 +58,4 @@ while ($row = ibase_fetch_assoc($res)) {
 
 $result = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ORDER_ID = '$order_id'", $db);
 ?>
+

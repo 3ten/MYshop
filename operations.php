@@ -28,7 +28,8 @@ if ($_POST["operation"] == "ProductAsrtAdd") {
     $asrtName = mb_convert_encoding($_POST['name'], "windows-1251", "UTF-8");
     $asrtQuantity = mb_convert_encoding($_POST['quantity'], "windows-1251", "UTF-8");
     $asrtArticul = mb_convert_encoding($_POST['articul'], "windows-1251", "UTF-8");
-    $addAsrtRes = ibase_query("UPDATE or INSERT INTO SHOP_ASRT_3TEN VALUES('$asrtArticul',$asrtQuantity,'$asrtName')", $db);
+    $asrt= mb_convert_encoding($_POST['asrt'], "windows-1251", "UTF-8");
+    $addAsrtRes = ibase_query("UPDATE or INSERT INTO SHOP_ASRT_3TEN VALUES('$asrtArticul',$asrtQuantity,'$asrtName',$asrt)", $db);
 }
 
 /************************************************************************************************************************************************************/
@@ -38,7 +39,7 @@ if ($_POST["operation"] == "OrderAdd") {
 
         $articul = mb_convert_encoding($_POST['articul'], "windows-1251", "UTF-8");
         $session = mb_convert_encoding($_SESSION['SESSION'], "windows-1251", "UTF-8");
-
+        $asrtOrder = mb_convert_encoding($_POST['asrt'], "windows-1251", "UTF-8");
         $id = mb_convert_encoding(rand(1000, 9999), "windows-1251", "UTF-8");
         $result = ibase_query("select * from SHOP_PRODUCTS where ARTICUL ='$id'", $db);
         $shoprow = ibase_fetch_assoc($result);
@@ -52,9 +53,9 @@ if ($_POST["operation"] == "OrderAdd") {
 
         $order_id = $order_idrow['ORDER_ID'];
         if (empty($order_idrow['ORDER_ID'])) {
-            $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID,ORDER_ID ) VALUES('$articul','$session','$id',gen_id(SHOP_ORDER_ID_GEN_3TEN,1))", $db);
+            $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID,ORDER_ID,ASRT ) VALUES('$articul','$session','$id',gen_id(SHOP_ORDER_ID_GEN_3TEN,1),'$asrtOrder')", $db);
         } else {
-            $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID,ORDER_ID ) VALUES('$articul','$session','$id',$order_id)", $db);
+            $result = ibase_query("UPDATE OR INSERT INTO SHOP_ORDER_3TEN (ARTICUL,SESSION,ID,ORDER_ID,ASRT ) VALUES('$articul','$session','$id',$order_id,'$asrtOrder')", $db);
         }
 
     }
@@ -107,7 +108,8 @@ if ($_POST["operation"] == "order_product_quantity_change") {
     $order_id = $_POST["order_id"];
     $articul = $_POST["articul"];
     $quantity = $_POST["quantity"];
-    $result = ibase_query("update shop_order_3ten set QUANTITY = $quantity where ARTICUL = '$articul' and ORDER_ID = $order_id", $db);
+    $asrt = $_POST["asrt"];
+    $result = ibase_query("update shop_order_3ten set QUANTITY = $quantity where ARTICUL = '$articul' and ORDER_ID = $order_id and ASRT = $asrt", $db);
 
 }
 /************************************************************************************************************************************************************/

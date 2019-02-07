@@ -30,7 +30,7 @@ if ($paymentType == "CP") {
         <input type="hidden" name="label" value="<?php echo $label; ?>">
         <input type="hidden" name="sum" value="<?php echo $sum; ?>" data-type="number">
         <label><input type="hidden" name="paymentType" value="<?php echo $paymentType; ?>"></label>
-        <input type="hidden" name="successURL" value="http://derkor.ru:33888/shop/success.php">
+        <input type="hidden" name="successURL" value="http://derkor.ru/shop/success.php">
     </form>
     </html>
 
