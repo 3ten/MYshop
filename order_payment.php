@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "db.php";
 
 if (empty($_POST['order_id'])) exit("добавте товар в корзину чтобы оплатить");
@@ -7,10 +8,15 @@ $order_id = $_POST['order_id'];
 ?>
 
 <?php
+$login = $_SESSION['LOGIN'];
+$GetUserData_SQL = ibase_query("select * from SHOP_USERS_3TEN where LOGIN = '$login'", $db);
+$GetUserData = ibase_fetch_assoc($GetUserData_SQL);
 function GetSum($order_id, $db)
 {
     $sum = 0;
+
     $orderres = ibase_query("select * from SHOP_ORDER_3TEN where ORDER_ID = $order_id", $db);
+
     while ($orderrow = ibase_fetch_assoc($orderres)) {
         $articul = $orderrow['ARTICUL'];
         $sumres = ibase_query("select PRICE from SHOP_PRODUCTS where ARTICUL = '$articul'", $db);
@@ -33,6 +39,7 @@ function GetSum($order_id, $db)
 ?>
 <html>
 <head>
+    <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
@@ -43,27 +50,38 @@ function GetSum($order_id, $db)
 
 
 <div class="container">
-    <div class="col-sm-4" align="center">
-        <h1>Ваш заказ<br>на сумму <?php echo GetSum($order_id, $db); ?> рублей</h1>
-        <form method="POST" action="OrderRedirect.php">
-            номер телефона:<br> <input type="text" name="phone" placeholder="введите номер" class="text"
-                                       required><br><br>
-            город(населенный пункт):<br> <input type="text" name="city" placeholder="город(населенный пункт)"
-                                                class="text" required><br><br>
-            адрес(улица,д,кв):<br> <input type="text" name="address" placeholder="адрес(улица,д,кв)" class="text"
-                                          required><br><br>
-            время доставки:<br> <input type="text" name="DT" placeholder="время доставки" class="text"
-                                       required><br><br>
-            <input type="hidden" name="targets" value="Заказ №<?php echo $order_id; ?>">
-            <input type="hidden" name="label" value="<?php echo $order_id; ?>">
-            <input type="hidden" name="sum" value="<?php echo GetSum($order_id, $db); ?>" data-type="number">
-            <label><input class="radio" type="radio" name="paymentType"
-                          value="PC">Яндекс.Деньгами</label><br><br>
-            <label><input class="radio" type="radio" name="paymentType" value="AC">Банковской картой</label> <br><br>
-            <label><input class="radio" type="radio" name="paymentType" value="CP">Наличными</label> <br><br>
-            <input type="submit" class="button" value="Оплатить">
-        </form>
-        <p>*бесплатная доставка производится только по поселку Новониколаевский</p>
+    <div class="col-12" align="center">
+        <div class="block">
+            <h1>Ваш заказ<br>на сумму <?php echo GetSum($order_id, $db); ?> рублей</h1>
+            <form method="POST" action="OrderRedirect.php">
+                <?php if (empty($_SESSION['NAME'])) { ?>
+                    ваше имя(ФИО):<br>
+                    <input type="text" name="clientName" placeholder="введите ваше ФИО" class="text"
+                           value="<?php echo mb_convert_encoding($GetUserData['LOGIN'], "UTF-8", "windows-1251"); ?>"
+                           required><br><br>
+                    номер телефона:<br>
+                    <input type="text" name="phone" placeholder="введите номер" class="text"
+                           value="<?php echo mb_convert_encoding( $GetUserData['NUMBER'], "UTF-8", "windows-1251"); ?>" required><br><br>
+                    город(населенный пункт):<br>
+                    <input type="text" name="city" placeholder="город(населенный пункт)" class="text"
+                           value="<?php echo mb_convert_encoding( $GetUserData['CITY'], "UTF-8", "windows-1251"); ?>" required><br><br>
+                    адрес(улица,д,кв):<br>
+                    <input type="text" name="address" placeholder="адрес(улица,д,кв)" class="text"
+                           value="<?php echo mb_convert_encoding($GetUserData['ADDRESS'], "UTF-8", "windows-1251"); ?>" required><br><br>
+                <?php } ?>
+                время доставки(день,время):<br>
+                <input type="text" name="DT" placeholder="время доставки" class="text" required><br><br>
+                комментарий к заказу:<br>
+                <textarea name="comment" placeholder="комментарий к заказу" class="text comment"></textarea><br><br>
+
+
+                <input type="hidden" name="order_id" value="<?php echo $order_id; ?>">
+                <input type="hidden" name="sum" value="<?php echo GetSum($order_id, $db); ?>" data-type="number">
+                <input type="submit" class="button" value="Заказать">
+            </form>
+            <p>*бесплатная доставка производится только по поселку Новониколаевский</p>
+            <p>*оплата при доставке</p>
+        </div>
     </div>
 
 </div>

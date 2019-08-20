@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (empty($_SESSION['NAME'])) {
+if ($_SESSION['ROLE']!= '0') {
     header("Location: login.php");
 }
 include("db.php");
@@ -14,95 +14,88 @@ include("db.php");
 
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/order.css">
+    <!--<link rel="stylesheet" href="css/order.css">-->
+    <link rel="stylesheet" href="css/order_list.css">
 
     <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 </head>
-</html>
-<?php
-if (!empty($_POST['ORDER_ID'])) {
-    if ($_POST['paymentType'] = 'CP') {
-
-
-    } else {
-        $order_id = $_POST['ORDER_ID'];
-        $PaidOrder = ibase_query("update SHOP_PAIDORDER_LIST_3TEN set STATUS = 'D' where ORDER_ID = $order_id", $db);
-    }
-
-}
-$OrderRes = ibase_query("select * from SHOP_PAIDORDER_LIST_3TEN", $db);
-
-
-?>
-<html>
 <body>
+<div class="bg"></div>
 <div class="container">
 
     <?php
-    while ($OrderRow = ibase_fetch_assoc($OrderRes)) {
-        $status = mb_convert_encoding($OrderRow['STATUS'], "windows-1251", "UTF-8");
-        ?>
-        <div class="col-sm-4">
-            <?php
+    $OrderWSD_SQL = ibase_query("select * from SHOP_PAIDORDER_LIST_3TEN where STATUS ='D' order by ORDER_ID", $db);
+    $OrderWSP_SQL = ibase_query("select * from SHOP_PAIDORDER_LIST_3TEN where STATUS ='P' order by ORDER_ID", $db);
+    $OrderWSC_SQL = ibase_query("select * from SHOP_PAIDORDER_LIST_3TEN where STATUS ='C' order by ORDER_ID", $db);
 
-            if ($OrderRow['STATUS'] == 'D') {
-                $orderId = $OrderRow['ORDER_ID'];
-                echo "заказ № $orderId оплачен";
-            } else if ($status != 'W') {
-                ?>
-                <p> номер заказа: <?php echo $OrderRow['ORDER_ID']; ?> </p>
-                <p> номер клиента: <?php echo $OrderRow['CLIENT_NUMBER']; ?> </p>
-                <p> время закза: <?php echo $OrderRow['ORDER_TIME']; ?> </p>
-                <p> почта клиента: <?php echo $OrderRow['EMAIL']; ?> </p>
-                <p> ключ клиента: <?php echo $OrderRow['ORDER_KEY']; ?> </p>
-                <p>   <?php echo $OrderRow['COMMENT']; ?> </p>
-                <p> время заказа: <?php echo $OrderRow['DELIVERY_TIME']; ?> </p>
-                <p> сумма заказа: <?php echo $OrderRow['ORDER_SUM']; ?> </p>
-                <?php
-                $orderId = $OrderRow['ORDER_ID'];
-                $productsres = ibase_query("select * from SHOP_ORDER_3TEN where ORDER_ID = $orderId", $db);
-                echo ' <p>заказ:<br>';
-                while ($productsrow = ibase_fetch_assoc($productsres)) {
-                    $articul = $productsrow['ARTICUL'];
-                    $productsnameres = ibase_query("select * from SHOP_PRODUCTS where ARTICUL = '$articul'", $db);
-                    $productsname = ibase_fetch_assoc($productsnameres);
-                    $name = mb_convert_encoding($productsname['NAME'], "UTF-8", "windows-1251");
-                    $asrt = mb_convert_encoding($productsrow['ASRT_NAME'], "UTF-8", "windows-1251");
-                    echo 'Артикул: ' . $articul . ' название: ' . $name . '</p>';
-                }
-                if ($status == 'A') {
-                    ?>
-                    <p> Статус: <?php echo $OrderRow['STATUS']; ?>- оплачен - ожидает доставку</p>
-                    <form method="post" action="order_list.php">
-                        <input type="hidden" name="ORDER_ID" value="<?php echo $OrderRow['ORDER_ID']; ?>">
-                        <input type="submit" class="buttoin" value="Потвердить доставку">
-                    </form>
-                    <?php
-                } else if ($status == 'C') {
-                    ?>
-                    <p> Статус: <?php echo $OrderRow['STATUS']; ?>- ожидает оплату наличными - ожидает доставку</p>
-                    <form method="post" action="order_list.php">
-                        <input type="hidden" name="ORDER_ID" value="<?php echo $OrderRow['ORDER_ID']; ?>">
-                        <input type="hidden" name="operation" value="payment">
-                        <input type="hidden" name="paymentType" value="CP">
-                        <input type="submit" class="buttoin" value="Потвердить доставку и оплату">
-                    </form>
-                    <?php
-                } else {
-                    echo $status;
-                }
-            }
+    $status = mb_convert_encoding($OrderRow['STATUS'], "windows-1251", "UTF-8");
+    ?>
 
-            ?>
+
+    <div class="col-12 orderBox notReservation">
+        <h3>заказы</h3>
+        <div class="col-12 notReservation">
+            <div class="row">
+                <div class="col-4"><strong>время заказа:</strong></div>
+                <div class="col-4"><strong>время доставки:</strong></div>
+                <div class="col-4"><strong>сумма заказа:</strong></div>
+            </div>
         </div>
 
-
         <?php
-    }
-    ?>
+        while ($OrderWSC = ibase_fetch_assoc($OrderWSC_SQL)) {
+            $order_id = $OrderWSC['ORDER_ID'];
+            ?>
+            <div class="orderHead" id="<?php echo $order_id; ?>">
+                <div class="row">
+                    <div class="col-4"><?php echo mb_convert_encoding($OrderWSC['ORDER_TIME'], "UTF-8", "windows-1251"); ?></div>
+                    <div class="col-4"><?php echo mb_convert_encoding($OrderWSC['DELIVERY_TIME'], "UTF-8", "windows-1251"); ?> </div>
+                    <div class="col-4"><?php echo mb_convert_encoding($OrderWSC['ORDER_SUM'], "UTF-8", "windows-1251"); ?>
+                        руб.
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+
+    <br>
+    <div class="col-12 orderBox">
+        <h3>завершенные заказы</h3>
+        <div class="Done col-12">
+            <div class="row">
+                <div class="col-4"><strong>номер заказа:</strong></div>
+                <div class="col-4"><strong>время заказа:</strong></div>
+                <div class="col-4"><strong>сумма заказа:</strong></div>
+            </div>
+        </div>
+        <?php
+        while ($OrderWSD = ibase_fetch_assoc($OrderWSD_SQL)) {
+            $order_id = $OrderWSD['ORDER_ID'];
+            ?>
+            <div class="orderHead" id="<?php echo $order_id; ?>">
+                <div class="row">
+                    <div class="col-4"><?php echo $OrderWSD['ORDER_ID']; ?></div>
+                    <div class="col-4"><?php echo $OrderWSD['ORDER_TIME']; ?></div>
+                    <div class="col-4"><?php echo $OrderWSD['ORDER_SUM']; ?> Руб.</div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+
+
 </div>
 </body>
 </html>
+<script language="JavaScript">
+    $(document).ready(function () {
+        $('.orderHead').click(function (event) {
+            let order_id = this.id;
+            document.location.href = 'orderspec.php?order=' + order_id;
+        });
+
+    });
+</script>
+

@@ -9,7 +9,9 @@ session_start();
         <link rel="stylesheet" href="css/order_payment.css">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
-    </html>
+    <body>
+    <div class="bg"></div>
+    в разработке
 <?php
 
 ?>

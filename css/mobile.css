@@ -1,20 +1,43 @@
 @media screen and (max-device-width: 500px) {
-    .col-sm-4 {
-        max-width: 500px;
+    .product_menu {
+        margin: 0px 0px 0px;
+        max-width: 100%;
+        width: 100%;
+        position: fixed;
+        right: 0px;
+        height: 100%;
+        background-color: rgba(25, 25, 25, 0.7) !important;
+        z-index: 10;
     }
 
+    .product_menu_close {
+        width: 100%;
+        height: 35px;
+        border: none;
+        background-color: rgba(213, 213, 213, 1) !important;
+    }
 }
 
-@media screen and (max-device-width: 450px) {
+@media screen and (max-device-width: 400px) {
     .logo {
         width: 60%;
+    }
+
+    .imgBtn {
+        width: 15%;
     }
 
     #search {
         width: 40%;
     }
 
-    .product_menu {
-        margin: 41px 0px 0px;
+    #product_menuPhoto {
+        max-height: 220px;
     }
+
+    .photoBack {
+        text-align: center;
+
+    }
+
 }

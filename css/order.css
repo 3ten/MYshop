@@ -6,6 +6,8 @@
 
 .pagename {
     text-align: center;
+    padding: 60px 0px 0px 0px;
+
 }
 
 .col-sm-4 {
@@ -15,11 +17,10 @@
 
 .col-sm-4 h3 {
     word-wrap: break-word;
-    overflow: auto; /* Обрезаем все, что не помещается в область */
+    overflow: auto; /* ÐžÐ±Ñ€ÐµÐ·Ð°ÐµÐ¼ Ð²ÑÐµ, Ñ‡Ñ‚Ð¾ Ð½Ðµ Ð¿Ð¾Ð¼ÐµÑ‰Ð°ÐµÑ‚ÑÑ Ð² Ð¾Ð±Ð»Ð°ÑÑ‚ÑŒ */
 }
 
 /********************/
-
 
 .Product_Order_dellBtn {
     color: white;
@@ -38,4 +39,12 @@
 
 .orderIMG {
     display: none;
+}
+
+.container {
+    padding: 10px 0px;
+}
+
+.orderBox {
+    background-color: rgba(25, 25, 25, 0.38) !important;
 }

@@ -1,14 +1,22 @@
+
 body {
     font: 16px/20px 'Ubuntu', sans-serif;
     overflow: auto;
 
-    /*  background: linear-gradient(45deg, #0ca3d2, #00ec8f) fixed;*/
-    background: linear-gradient(45deg, #0c67d2, #00ec8f) no-repeat fixed;
+    /* Местоположение фоновой картинки */
+    background-image: url("../img/mainfon.jpg");
+    /* Фоновое изображение выровнено по центру в горизонтальной и вертикальной плоскостях */
+    background-position: center center;
+    /* Фон не повторяется */
+    background-repeat: no-repeat;
+    /* Фон зафиксирован в области просмотра и потому не двигается, когда высота контента превышает высоту изображения */
+    background-attachment: fixed;
+    /* Это свойство заставляет фон менять масштаб при изменении размеров содержащего его контейнера*/
+    background-size: cover;
+    /* Цвет фона, который будет отображаться при загрузке фоновой картинки*/
+    background-color: rgb(161, 136, 116);
 }
 
-html, body {
-    height: 100%;
-}
 
 h3 {
     font-weight: unset;
@@ -21,29 +29,31 @@ h3 {
     margin-bottom: 16px;
 }
 
-.col-sm-4 {
+.productBox {
+
     text-align: center;
-    border: 1px rgba(0, 0, 0, 0.05) solid;
-    padding: 10px;
-    background-color: rgba(99, 96, 96, 0.1);
-    margin: 10px;
+    border: 1px rgba(0, 0, 0, 0.09) solid;
+    padding: 7px;
+    /*background-color: rgba(99, 96, 96, 0.15);*/
+    background-color: rgba(206, 206, 206, 0.38);
+    margin: 10px 0px;
     cursor: pointer;
-    max-width: 260px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
-.col-sm-4.added {
+.productBox.added {
     background-color: rgba(25, 25, 25, 0.3) !important;
 }
 
-.col-sm-4 img {
+.productBox img {
     /* min-height: 200px; */ /* Искажаются пропорции изображения */
     max-height: 200px;
 }
 
-.col-sm-4:hover {
+.productBox:hover {
     /* background: linear-gradient(to bottom right, rgba(50, 50, 50, 0.5), rgba(100, 100, 100, 0.1)); */
     background-color: rgba(0, 0, 0, 0.25);
-    transition: linear 0.1s;
+    transition: linear 0.15s;
 }
 
 #search {
@@ -69,10 +79,18 @@ h3 {
     border-bottom: 2px solid rgba(255, 255, 255, 0.95);
 }
 
-.logo {
-    width: 85%;
-    padding: 1px;
-    margin-left: 4px;
+.menu_logo {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.menu a {
+    padding: 5px;
+}
+
+.menu_logo:hover {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.95);
+    transition: linear 0.15s;
 }
 
 .row {
@@ -80,14 +98,14 @@ h3 {
 }
 
 .menu {
-    background: rgba(0, 0, 0, 0.5); /* rgba(255, 255, 255, 0.5); */
+    background: rgba(0, 0, 0, 0.6); /* rgba(255, 255, 255, 0.5); */
     position: fixed;
     width: 100%;
-    z-index: 1;
+    z-index: 10;
     vertical-align: middle;
 }
 
-.col-sm-4 h3 {
+.productBox h3 {
     height: 70px;
     word-wrap: break-word;
     overflow: auto; /* Обрезаем все, что не помещается в область */
@@ -101,3 +119,20 @@ h3 {
     text-align: right;
 }
 
+.text {
+    color: rgb(7, 7, 7);
+}
+
+@media only screen and (max-width: 767px) {
+    body {
+        background-image: url(../img/mobile_fon.jpg);
+        background-repeat: repeat;
+        background-size: 70%;
+        background-color: rgb(152, 82, 55);
+    }
+
+    .productBox:hover {
+        /* background: linear-gradient(to bottom right, rgba(50, 50, 50, 0.5), rgba(100, 100, 100, 0.1)); */
+        background-color: rgba(206, 206, 206, 0.38);
+    }
+}

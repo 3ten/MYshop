@@ -84,13 +84,14 @@ $(document).ready(function () {
     });
     /* удаление товара с сайта */
     $('.dell').on('click', function (event) {
+        let blockId = this.id;
         $.ajax({
             type: 'POST',
             url: 'operations.php',
-            data: 'operation=ProductDell&articul=' + this.id,
+            data: 'operation=ProductDell&articul=' + blockId,
             success: function (data) {
                 alert("Удалено");
-                location.reload();
+                document.getElementById('id_' + blockId).remove();
             }
         });
     });
@@ -123,60 +124,27 @@ $(document).ready(function () {
     });
     /* удаление закза из корзины*/
     $(".Product_Order_dellBtn").click(function () {
-        let articul = this.id.replace(/DellBtn/g, '');
-        let id = this.id;
+        let DelEl = document.getElementById(this.id.replace(/DellBtn/g, ''));
+        let articul = DelEl.dataset.articul;
+
+        let asrt = DelEl.dataset.asrt;
+
+        if (asrt === undefined) {
+            asrt = 'null';
+        }
+
         $.ajax({
             type: 'POST',
             url: 'operations.php',
-            data: 'operation=OrderDell&articul=' + articul,
+            data: 'operation=OrderDell&articul=' + articul + '&asrt=' + asrt,
             success: function (data) {
                 alert("Удалено");
-                document.getElementById(articul).style.display = 'none'
+                document.getElementById(DelEl.id).style.display = 'none'
             }
         });
 
     });
-    /* добовление товара на сайт*/
-    $(".button").click(function () {
-        let price = document.getElementById(this.id + "txt").value;
-        if (price !== '') {
-            let el = document.getElementById(this.id);
-            let name = document.getElementById("id_" + this.id + "txt").value;
-            let category = document.getElementById(this.id + "_select").value;
-            let description = document.getElementById("id_" + this.id + "description").value;
 
-            let checks = document.getElementsByName(this.id + 'checkBoxName');
-            if (checks) {
-                for (i = 0; i < checks.length; i++) {
-                    let asrtName = checks[i].value;
-                    let asrt = checks[i].dataset.asrt;
-                    let asrtQuantity = document.getElementById(checks[i].id.replace(/checkbox/g, 'asrtQuantity')).value;
-                    if (checks[i].checked) {
-                        $.ajax({
-                            type: 'POST',
-                            url: 'operations.php',
-                            data: 'operation=ProductAsrtAdd&articul=' + this.id + '&name=' + asrtName + '&quantity=' + asrtQuantity + '&asrt=' + asrt,
-                            success: function (data) {
-                                console.log(data);
-                            }
-                        });
-                    }
-                }
-            }
-            $.ajax({
-                type: 'POST',
-                url: 'operations.php',
-                data: 'operation=ProductAdd&articul=' + this.id + '&name=' + name + '&price=' + price + '&path=' + myfile_name + '&category=' + category + '&description=' + description,
-                success: function (data) {
-                    alert("Добавлено");
-                    // location.reload();
-                }
-            });
-
-        } else {
-            alert("введите цену");
-        }
-    });
 });
 
 let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
@@ -219,14 +187,80 @@ window.onscroll = function () {
     }
 };
 
+$("#ShowOnlyInShop").click(function () {
+    if (document.getElementById('ShowOnlyInShop').checked) {
+        let children = $('#main').children();
+        let currentElement, currentElementId, name, searchText, counter = 0;
+        let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
 
-$(".test1").click(function () {
+        for (let i = 0; i < children.length; i++) {
+            currentElementId = children.eq(i).attr('id').replace(/id_/g, '');
+            currentElement = document.getElementById(currentElementId);
+            if (currentElement) {
+                name = currentElement.dataset.name;
+                searchText = document.getElementById('search').value;
+                if (currentElement.dataset.inshop === 'false') {
+                    children.eq(i).css('display', 'none');
+                } else {
+                    if (counter <= elementSum * 3) {
+                        children.eq(i).css({'display': 'inline'});
+                        counter++;
+                    }
+                }
+            }
+
+        }
+    } else {
+        let children = $('#main').children();
+        let currentElement, currentElementId, name, searchText, counter = 0;
+        let elementSum = ~~(document.documentElement.clientHeight / 500) + 2;
+
+        for (let i = 0; i < children.length; i++) {
+            currentElementId = children.eq(i).attr('id').replace(/id_/g, '');
+            currentElement = document.getElementById(currentElementId);
+            if (currentElement) {
+                name = currentElement.dataset.name;
+                searchText = document.getElementById('search').value;
+                if ((name.toUpperCase().indexOf(searchText.toUpperCase()) === -1) && currentElement.dataset.inshop === 'false') {
+                    children.eq(i).css('display', 'none');
+                } else {
+
+                    if (counter <= elementSum * 3) {
+                        children.eq(i).css({'display': 'inline'});
+                        counter++;
+                    }
+                }
+            }
+
+        }
+    }
+
+
+});
+
+
+$(".category_add_btn").click(function () {
 
     if (document.getElementById('category').style.display !== 'none') {
         document.getElementById('category').style.display = 'none';
     } else {
         document.getElementById('category').style.display = 'inline-block';
     }
+});
+
+$(".acceptBtn").click(function () {
+    alert("ok");
+
+    let order_id = document.getElementById('id_acceptBtn').dataset.orderid;
+    $.ajax({
+        type: 'POST',
+        url: 'operations.php',
+        data: 'operation=payment&ORDER_ID=' + order_id,
+        success: function (data) {
+            console.log(data);
+
+        }
+    });
 });
 
 
@@ -242,10 +276,11 @@ $('#search').on('input', function () {
         if (currentElement) {
             name = currentElement.dataset.name;
             searchText = document.getElementById('search').value;
-            if (name.toUpperCase().indexOf(searchText.toUpperCase()) === -1) {
-                children.eq(i).css('display', 'none');
-            } else {
+            if ((name.toUpperCase().indexOf(searchText.toUpperCase()) === -1) && currentElement.dataset.inshop === 'false') {
+                children.eq(i).css("display", "none");
 
+
+            } else {
                 if (counter <= elementSum * 3) {
                     children.eq(i).css({'display': 'inline'});
                     counter++;
@@ -254,19 +289,4 @@ $('#search').on('input', function () {
         }
 
     }
-});
-/*изменение количества товара*/
-$('.quantity').on('input', function () {
-    // alert( this.id.replace(/quantity/g, ''));
-    let element = document.getElementById(this.id);
-    let quantity = element.value;
-    let order_id = element.dataset.orderid;
-    $.ajax({
-        type: 'POST',
-        url: 'operations.php',
-        data: 'operation=order_product_quantity_change&articul=' + element.dataset.articul + '&order_id=' + order_id + '&quantity=' + quantity + '&asrt=' + element.dataset.asrt,
-        success: function (data) {
-            //alert("Добавлено " + quantity + " " + order_id + " ");
-        }
-    });
 });

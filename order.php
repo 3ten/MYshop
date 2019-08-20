@@ -11,6 +11,16 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
 <head>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <link href="fontawesome/css/all.css" rel="stylesheet">
+    <script defer src="fontawesome/js/all.js"></script>
+    <link href="fontawesome/css/fontawesome.css" rel="stylesheet">
+    <link href="fontawesome/css/brands.css" rel="stylesheet">
+    <link href="/fontawesome/css/solid.css" rel="stylesheet">
+    <script defer src="fontawesome/js/brands.js"></script>
+    <script defer src="fontawesome/js/solid.js"></script>
+    <script defer src="fontawesome/js/fontawesome.js"></script>
+
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/order.css">
@@ -20,10 +30,11 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
     <link rel="stylesheet" type="text/css" media="screen and (max-device-width:500px)" href="css/mobile.css"/>
 </head>
 <body>
+<div class="bg"></div>
 <div class="menu">
     <div class="row">
-        <a href="index.php"> <img class="logo" src="img/shop.png"> </a>
-        <a href="order_tracking.php"> <img class="logo" src="img/deliveryicon.png"> </a>
+        <a href="index.php"><span class="menu_logo"><i class="fas fa-store-alt fa-3x"></i></span></a>
+        <a href="order_tracking.php"> <span class="menu_logo" ><i class="fas fa-truck fa-3x"></i></span></a>
         <input type="text" placeholder="Поиск" id="search">
 
     </div>
@@ -70,17 +81,30 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
 
                 ?>
 
-                <div id="<?php echo $articul . $asrt ?>" class="col-sm-4" data-name="<?php echo $name; ?>">
-                    <a class="Product_Order_dellBtn" id="<?php echo $articul; ?>DellBtn" style="color: white">x</a>
+                <div id="<?php echo $articul . $asrt ?>"
+                     class="col-sm-3 col-xs-12 productBox" data-name="<?php echo $name; ?>"
+                     data-articul="<?php echo $articul; ?>"
+                     data-asrt="<?php echo $asrt; ?>">
+
+                    <a class="Product_Order_dellBtn"
+                       id="<?php echo $articul . $asrt; ?>DellBtn"
+                       data-articul="<?php echo $articul; ?>"
+                       data-asrt="<?php echo $asrt; ?>"
+                       style="color: white">x</a>
+
                     <img src="<?php echo $path; ?>" id="<?php echo $articul . $asrt; ?>orderIMG"
                          class="img-fluid orderIMG">
-                    <h3><?php echo $name; ?></h3>
+
+                    <h3><?php echo $name;
+                        if ($GetAsrt['ASRT_NAME'] != null) {
+                            echo ' ' . mb_convert_encoding($GetAsrt['ASRT_NAME'], "UTF-8", "windows-1251");;
+                        }; ?></h3>
                     <p><?php echo $price; ?> руб.</p>
                     количество: <input type="number"
                                        id="<?php echo $articul . $asrt; ?>quantity"
+                                       class="quantity" placeholder="количество"
                                        data-articul="<?php echo $articul; ?>"
                                        data-asrt="<?php echo $asrt; ?>"
-                                       class="quantity" placeholder="количество"
                                        value="<?php echo $quantity; ?>"
                                        data-orderid="<?php echo $order_id; ?>"
                     >
@@ -105,13 +129,30 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
 
 <script>
     $(document).ready(function () {
+        /*изменение количества товара*/
+        $('.quantity').on('input', function () {
+            // alert( this.id.replace(/quantity/g, ''));
+            let element = document.getElementById(this.id);
+            let quantity = element.value;
+            let order_id = element.dataset.orderid;
+            console.log('operation=order_product_quantity_change&articul=' + element.dataset.articul + '&order_id=' + order_id + '&quantity=' + quantity + '&asrt=' + element.dataset.asrt);
+            $.ajax({
+                type: 'POST',
+                url: 'operations.php',
+                data: 'operation=order_product_quantity_change&articul=' + element.dataset.articul + '&order_id=' + order_id + '&quantity=' + quantity + '&asrt=' + element.dataset.asrt,
+                success: function (data) {
+                    console.log("Добавлено " + quantity + " " + order_id + " "+data);
+                }
+            });
+        });
+
 
         $('.col-sm-4').click(function (event) {
             let id = this.id + "orderIMG";
             if (document.getElementById(id).style.display === 'inline') {
                 document.getElementById(id).style.display = 'none';
             } else {
-                document.getElementById(id).style.display = 'inline';
+                // document.getElementById(id).style.display = 'inline';
             }
         });
     });

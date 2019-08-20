@@ -1,3 +1,57 @@
 .col-sm-4 {
     text-align: left;
 }
+
+.DocumentCreatebtn {
+    width: 100%;
+    border: none;
+}
+
+.orderBox {
+    /*background-color: rgba(99, 96, 96, 0.1);*/
+    background-color: rgba(255, 255, 255, 0.38) !important;
+    text-align: center;
+}
+
+.orderHead {
+    background-color: rgba(99, 96, 96, 0.1);
+
+    padding: 10px 0px 15px 0px;
+    margin: 4px 0px 4px 0px;
+    border-radius: 5px;
+}
+
+.orderHead:hover {
+    background-color: rgba(99, 96, 96, 0.4);
+}
+
+.orderBox {
+    padding: 10px 0px 10px 0px;
+}
+
+.prodDesc {
+    background-color: rgba(99, 96, 96, 0.1);
+    padding: 10px 0px 15px 0px;
+    margin: 4px 0px 4px 0px;
+    border-radius: 5px;
+}
+
+.clientInfo {
+    padding: 10px 0px 10px 0px;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.infoBox {
+    padding: 10px 0px 10px 0px;
+    background-color: rgba(255, 255, 255, 0.38) !important;
+}
+
+.acceptBtn {
+    border: none;
+}
+
+.comment{
+    background:#f8f9fa00;
+    border:none;
+    width:100%;
+}

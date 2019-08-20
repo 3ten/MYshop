@@ -1,7 +1,7 @@
 <?php
 echo "заказ успешно произведен, ожидайте доставки";
 echo '<br>';
-echo date("d.m.Y h:m:s");
+echo date("d.m.Y G:i:s");
 echo '<br>';
 ?>
 <html>

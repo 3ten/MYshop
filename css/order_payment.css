@@ -1,6 +1,7 @@
 body {
     font: 16px/20px 'Ubuntu', sans-serif;
-    background: linear-gradient(45deg, #0ca3d2, #35dcca) fixed;
+    background: url("../img/mainfon.jpg") no-repeat fixed;
+    background-size: cover;
 }
 
 .col-sm-4 {
@@ -15,11 +16,11 @@ body {
     margin-top: -315px; /*Смещаем блок на половину высоты вверх*/
     background: #ececec;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-
     border-radius: 7px;
 }
 
 .button {
+    width:100%;
     padding: 15px 72px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -31,11 +32,12 @@ body {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
-.textbox {
+.text {
+    Width: 100%;
     padding: 5px 5px;
     border-radius: 5px;
     border: solid 2px #dddddd;
-    box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);
+
 }
 
 .row {
@@ -45,5 +47,18 @@ body {
 }
 
 h1 {
+    font-size: 25pt;
     line-height: 1em;
+}
+
+.block{
+    background: #ececec;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    display:inline-block;
+    border-radius: 7px;
+    padding: 20px;
+}
+.comment{
+    width: 100%;
+    padding: 0px 0px 100px 2px;
 }

@@ -16,6 +16,11 @@ if ($_POST['sha1_hash'] !== $hash or $_POST['codepro'] === true or $_POST['unacc
 }
 
 $price = $_POST['amount'];
+$order_id = $_POST['label'];
+$OrderKey = rand(10000, 99999);
+$date = date("d.m.Y h:m:s");
+$PaidOrder = ibase_query("update or insert into SHOP_PAIDORDER_LIST_3TEN(ORDER_ID,DOCHEAD,ORDER_TIME,STATUS,ORDER_KEY) values($order_id ,-1,'$date','P','$OrderKey')", $db);
+/*
 $docheadRes = ibase_query("select * from SHOP_DOCHEAD_CREATOR($price,1,1,-1,14)", $db);
 $docheadRow = ibase_fetch_assoc($docheadRes);
 $dochead_id = $docheadRow['OUT_DOCHEAD'];
@@ -37,8 +42,7 @@ while ($row = ibase_fetch_assoc($res)) {
         $asrtQuantity = ibase_fetch_assoc($asrtQuantitySQL);
         $price = $asrtQuantity['ASRT_QUANTITY'] * (int)$price;
 
-        $docspecCreateSQL = ibase_query("select * from SPEC_ASRT_ADD($dochead_id,'$articul',$asrt,$quantity,0,0,0,0)", $db);
-        $docspecCreate = ibase_fetch_assoc($docspecCreateSQL);
+        $docspecCreateSQL = ibase_query("execute procedure SPEC_ASRT_ADD($dochead_id,'$articul',$asrt,$quantity,0,0,0,0)", $db);
 
     } else {
         $docspecCreateRes = ibase_query("select * from SPEC_ADD_ARTICUL('$articul',1,1,$quantity,0,0,$dochead_id,1,1,1,'$articul',0, 0,null)", $db);
@@ -57,5 +61,6 @@ while ($row = ibase_fetch_assoc($res)) {
 }
 
 $result = ibase_query("DELETE FROM SHOP_ORDER_3TEN WHERE ORDER_ID = '$order_id'", $db);
+*/
 ?>
 

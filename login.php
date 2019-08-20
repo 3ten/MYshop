@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('db.php');
 if (($_POST["login"] != null) && ($_POST["pass"] != null)) {
 
     $login = $_POST["login"];
@@ -11,9 +12,21 @@ if (($_POST["login"] != null) && ($_POST["pass"] != null)) {
     $login = trim($login);
     $password = trim($password);
 
-    if ($login == "admin" && $password == "farmshop") {
-        $_SESSION['NAME'] = 'admin';
-        header("Location: admin.php");
+    if ($login != "" && $password != "") {
+        $loginCheckSQL = ibase_query("select * from SHOP_PASSWORD_3TEN where LOGIN ='$login' ", $db);
+        $loginCheck = ibase_fetch_assoc($loginCheckSQL);
+        if ($loginCheck['LOGIN'] == $login && sha1($password) == $loginCheck['PASSWORD']) {
+            $loginInfoSQL = ibase_query("select * from SHOP_USERS_3TEN where LOGIN ='$login' ", $db);
+            $loginInfo = ibase_fetch_assoc($loginInfoSQL);
+            $_SESSION['LOGIN'] = $login;
+            $_SESSION['ROLE'] = $loginInfo['ROLE'];
+            $_SESSION['ID'] = $loginInfo['ID'];
+            $_SESSION['SESSION'] =$loginInfo['ID'];
+            header("Location: home.php");
+        } else{
+            exit ("Извините, введённый вами login или пароль неверный.");
+        }
+
     } else {
         exit ("Извините, введённый вами login или пароль неверный.");
     }
@@ -23,7 +36,6 @@ if (($_POST["login"] != null) && ($_POST["pass"] != null)) {
 
 <html>
 <head>
-    <title>Admin panel</title>
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/login.css">
     <script src="js/jquery.min.js"></script>
