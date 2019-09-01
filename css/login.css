@@ -1,16 +1,12 @@
 body {
     font: 16px/20px 'Lucida Grande', Tahoma, Verdana, sans-serif;
-    background: linear-gradient(45deg, #0ca3d2, #35dcca) fixed;
+    /*background: linear-gradient(45deg, #0ca3d2, #35dcca) fixed;*/
 }
 
-.col-sm-4 {
+.loginBox {
 
-    width: 250px;
-    height: 250px;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -125px 0 0 -125px;
+    top: 35%;
     background: #ececec;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     padding: 5px;
@@ -18,19 +14,24 @@ body {
 }
 
 .button {
+    width: 50%;
+    margin: 10px 0px 0px;
     padding: 15px 72px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border: none;
 }
-
+.reg{
+    padding: 15px 52px;
+}
 .button:hover {
     cursor: pointer;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .textbox {
-    padding: 5px 5px;
+
+    padding: 5px 5px 0px 0px;
     border-radius: 5px;
     border: solid 2px #dddddd;
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.5);

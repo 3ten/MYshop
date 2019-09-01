@@ -5,23 +5,65 @@
     padding: 20px;
 }
 
+.container-fluid {
+    padding: 80px 0px 0px;
+}
+
 .text {
     width: 100%;
     padding: 5px 5px;
     border-radius: 5px;
     border: solid 2px #dddddd;
 }
-.textLabel{
-    width:100%;
+
+.textLabel {
+    width: 100%;
 }
+
 .button {
-    width:100%;
+    width: 100%;
     padding: 15px 72px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border: none;
 }
+
 .button:hover {
     cursor: pointer;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.pagesBox {
+    border: solid 2px #dddddd;
+    text-align: center;
+    padding: 10px;
+    /*background-color: rgba(99, 96, 96, 0.15);*/
+    background-color: rgba(206, 206, 206, 0.38);
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+.pagesBox_logo {
+
+    color: rgba(107, 107, 107, 0.95);
+}
+
+a {
+    text-decoration: none !important;
+}
+.buttons{
+    padding: 0px 0px 30px 0px;
+}
+.menu a {
+    padding: 5px;
+}
+
+.pagesBox_logo:hover {
+    cursor: pointer;
+    color: rgba(169, 169, 169, 0.95);
+    transition: linear 0.05s;
+}
+.navbtn{
+    margin: 0px 0px 15px 0px;
 }

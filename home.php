@@ -50,18 +50,48 @@ $phone = mb_convert_encoding($GetUsersInfo['NUMBER'], "UTF-8", "windows-1251");
 <div class="menu">
     <div class="row">
         <a href="index.php"><span class="menu_logo"><i class="fas fa-store-alt fa-3x"></i></span></a>
+        <a href="order_tracking.php"> <span class="menu_logo"><i class="fas fa-truck fa-3x"></i></span></a>
         <?php if ($_SESSION['ROLE'] == '0') { ?>
             <a href="admin.php"><span class="menu_logo"><i class="fas fa-user-cog fa-3x"></i></span></a>
+            <a href="order_list.php"><span class="menu_logo"><i class="fas fa-clipboard-list fa-3x"></i></span></a>
         <?php } ?>
     </div>
 </div>
 
-<div class="container">
+<div class="container-fluid">
+    <div class="row buttons justify-content-md-center">
+        <div class="col-6 col-md-2 navbtn">
+            <a href="index.php">
+                <span class="pagesBox_logo"><div class="pagesBox col-12"><p><i
+                                    class="fas fa-store-alt fa-3x"></i></p> <b>В магазин</b></div></span>
+            </a>
+        </div>
+        <div class="col-6 col-md-2 navbtn">
+            <a href="order_tracking.php">
+                <span class="pagesBox_logo"><div class="pagesBox col-12"><p><i class="fas fa-truck fa-3x"></i></p><b>отследить заказ</b></div></span>
+            </a>
+        </div>
+        <?php if ($_SESSION['ROLE'] == '0') { ?>
+            <div class="col-6 col-md-2 navbtn">
+                <a href="admin.php">
+                    <span class="pagesBox_logo"><div class="pagesBox col-12"><p><i
+                                        class="fas fa-user-cog fa-3x"></i></p><b>Добавить товар</b></div></span>
+                </a>
+            </div>
+            <div class="col-6 col-md-2 navbtn">
+                <a href="order_list.php">
+                    <span class="pagesBox_logo"><div class="pagesBox col-12"><p><i
+                                        class="fas fa-clipboard-list fa-3x"></i></p><b>Список заказов</b> </div></span>
+                </a>
+            </div>
+        <?php } ?>
+    </div>
+
+
     <div class="row">
-        <div class="col-xs-12 col-sm-6 offset-sm-3 ">
+        <div class="col-sm-12 col-md-6 offset-md-3 col-xl-4 offset-xl-4">
             <div class="col-12 main">
                 <b>Ваши данные</b><br>
-
                 <b>ФИО</b>
                 <div class="row">
                     <label for="name" class="textLabel">

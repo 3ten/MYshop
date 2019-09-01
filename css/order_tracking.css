@@ -1,0 +1,20 @@
+.container-fluid {
+    padding: 58px 0px 0px;
+}
+
+.body {
+    background-color: rgba(255, 255, 255, 0.62) !important;
+    text-align: center;
+    /*background-color: rgba(99, 96, 96, 0.1);*/
+    padding: 10px 0px 10px 0px;
+}
+.orderHead{
+    background-color: rgba(99, 96, 96, 0.17);
+    padding: 10px 0px 15px 0px;
+    margin: 4px 0px 4px 0px;
+    border-radius: 5px;
+
+}
+.orderHead:hover {
+    background-color: rgba(99, 96, 96, 0.4);
+}

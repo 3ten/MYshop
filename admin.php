@@ -61,8 +61,8 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
     <div class="row">
         <a href="index.php"><span class="menu_logo"><i class="fas fa-store-alt fa-3x"></i></span></a>
         <input type="text" placeholder="Поиск" oninput="searchInput(this, '.mainBox')" id="search">
-        <a class="imgBtn"><span class="menu_logo" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-toolbox fa-3x"></i></span></a>
-        <a href="order_list.php"><span class="menu_logo"><i class="fas fa-clipboard-list fa-3x"></i></span></a>
+        <a class="imgBtn"><span class="menu_logo" data-toggle="modal" data-target="#exampleModalCenter"><i
+                        class="fas fa-toolbox fa-3x"></i></span></a>
     </div>
 </div>
 

@@ -6,13 +6,11 @@ $res = ibase_query("select * from SHOP_CATEGORY_3TEN", $db);
 if (empty($_SESSION['SESSION'])) {
     $_SESSION['SESSION'] = rand(10000, 99999);
 }
-
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-
     <!--Запрет масштабирования-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no"/>
     <title>Derkor</title>
@@ -32,20 +30,18 @@ if (empty($_SESSION['SESSION'])) {
     <script defer src="fontawesome/js/solid.js"></script>
     <script defer src="fontawesome/js/fontawesome.js"></script>
 
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/index.css">
-
-    <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/popper.min.js"></script>
-    <!--    <script async src="js/main.js"></script>-->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
     <script src="js/search.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" media="screen and (max-device-width:500px)" href="css/mobile.css"/>
-</head>
 
+</head>
 <body>
 <div class="bg"></div>
 <div class="menu">
@@ -66,18 +62,13 @@ if (empty($_SESSION['SESSION'])) {
             <h3 id="product_menuName"></h3>
             <div id="description_box_menu"></div>
         </div>
-
         <div id="product_menuAsrtBox"></div>
     </div>
-
     <input type="button" id="1" class="Obtn" value="добавить в корзину">
 </div>
 
-
 <div class="container">
-
     <div class="row order" id="main">
-
         <?php
         while (@$CategoryRow = ibase_fetch_assoc($res)) {
             $MainCategory = $CategoryRow['CATEGORY'];
@@ -112,7 +103,7 @@ if (empty($_SESSION['SESSION'])) {
                 $OrderRow = ibase_fetch_assoc($orderres);
                 //if ($articul != mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251")) {
                 if (empty($OrderRow["ARTICUL"])) {
-                    $IsOrderText = "нажмите чтобы посмотреть описание и добавть в корзину";
+                    $IsOrderText = "не добавлено";
                     $IsOrder = "false";
                     $OrderClass = "";
                     $btntext = 'добавить';
@@ -123,16 +114,15 @@ if (empty($_SESSION['SESSION'])) {
                     $btntext = 'удалить';
                 }
                 ?>
-
-                <div id="id_<?php echo $articul ?>" class="mainBox col-sm-3 col-xs-12">
+                <div id="id_<?php echo $articul ?>" class="mainBox col-sm-3 col-xs-12 d-none d-md-block">
                     <div id="<?php echo $articul ?>"
                          class="productBox<?php echo $OrderClass; ?>"
                          data-isorder="<?php echo $IsOrder ?>"
                          data-name="<?php echo $name; ?>">
                         <div class="imgbox">
-                            <img id="<?php echo $articul; ?>img" src="<?php echo $path ?>" class="img-fluid">
+                            <img id="<?php echo $articul; ?>img" src="<?php echo $path ?>" class="img-fluid mainImg">
                         </div>
-                        <h3 id="<?php echo $articul; ?>name" class="text"><?php echo $name ?></h3>
+                        <h3 id="<?php echo $articul; ?>name" class="text scrollbar"><?php echo $name ?></h3>
                         <p class="isordertext text"> <?php echo $IsOrderText; ?></p>
                         <div id="<?php echo $articul; ?>des" class="des">
                             <div class="<?php echo $articul; ?>asrtBox" id="id_<?php echo $articul; ?>asrtBox">
@@ -150,18 +140,50 @@ if (empty($_SESSION['SESSION'])) {
                         <p class="text"><strong><?php echo $price ?> руб.</strong></p>
                     </div>
                 </div>
-                <?php
-            }
-            ?>
 
-            <?php
-        }
-        ?>
+
+                <div id="id_<?php echo $articul ?>" class="mainMobileBox col-sm-3 col-xs-12 d-md-none d-block">
+                    <div id="<?php echo $articul ?>"
+                         class="productBox<?php echo $OrderClass; ?>"
+                         data-isorder="<?php echo $IsOrder ?>"
+                         data-name="<?php echo $name; ?>">
+                        <div class="container-fluid p-0 m-0">
+                            <div class="row p-0 m-0">
+                                <div class="imgbox col-5">
+                                    <img id="<?php echo $articul; ?>img" src="<?php echo $path ?>"
+                                         class="img-fluid mainImg">
+                                </div>
+                                <h3 id="<?php echo $articul; ?>name"
+                                    class="text scrollbar col-7"><?php echo $name ?></h3>
+                            </div>
+                            <div class="row">
+                                <p class="isordertext text col-6"> <?php echo $IsOrderText; ?></p>
+                                <div id="<?php echo $articul; ?>des" class="des">
+                                    <div class="<?php echo $articul; ?>asrtBox" id="id_<?php echo $articul; ?>asrtBox">
+                                        <?php
+                                        while ($asrtRow = ibase_fetch_assoc($GetAsrtRes)) {
+                                            $asrtName = mb_convert_encoding($asrtRow['ASRT_NAME'], "UTF-8", "windows-1251");
+                                            $asrt = mb_convert_encoding($asrtRow['ASRT'], "UTF-8", "windows-1251");
+                                            echo "<div id='" . $articul . "' data-asrt='" . $asrt . "' class='asrtText'>$asrtName</div>";
+                                        }
+                                        ?>
+                                    </div>
+                                    <div id="<?php echo $articul; ?>description" class="description"
+                                         data-description="<?php echo $description; ?>"></div>
+                                </div>
+                                <p class="text"><strong><?php echo $price ?> руб.</strong></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            <?php } ?>
+        <?php } ?>
     </div>
 </div>
-
 </body>
-
 <script>
     $(document).ready(function () {
 
@@ -278,8 +300,6 @@ if (empty($_SESSION['SESSION'])) {
             }
 
             /* формирование меню товара */
-
-
             document.getElementById('product_menuPhoto').src = document.getElementById(blockID + 'img').src;
             document.getElementById('product_menuName').innerText = document.getElementById(blockID + 'name').innerText;
             document.getElementsByClassName('Obtn').id = blockID + 'btn';
@@ -318,7 +338,6 @@ if (empty($_SESSION['SESSION'])) {
                 document.getElementById('product_menuAsrtBox').appendChild(astrLabel);
 
             }
-
             /* формирование меню товара */
 
             if (isClicked === false) {
@@ -331,10 +350,7 @@ if (empty($_SESSION['SESSION'])) {
             } else {
                 isClicked = false;
             }
-
-
         });
-    })
-    ;
+    });
 </script>
 </html>

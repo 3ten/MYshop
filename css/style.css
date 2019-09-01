@@ -3,20 +3,22 @@ body {
     font: 16px/20px 'Ubuntu', sans-serif;
     overflow: auto;
 
-    /* Местоположение фоновой картинки */
-    background-image: url("../img/mainfon.jpg");
-    /* Фоновое изображение выровнено по центру в горизонтальной и вертикальной плоскостях */
-    background-position: center center;
-    /* Фон не повторяется */
-    background-repeat: no-repeat;
-    /* Фон зафиксирован в области просмотра и потому не двигается, когда высота контента превышает высоту изображения */
-    background-attachment: fixed;
-    /* Это свойство заставляет фон менять масштаб при изменении размеров содержащего его контейнера*/
-    background-size: cover;
-    /* Цвет фона, который будет отображаться при загрузке фоновой картинки*/
-    background-color: rgb(161, 136, 116);
-}
+    /*background-image: url("../img/mainfon.jpg");*/
+    background-image: url("../img/89517.jpg");
 
+    background-position: center center;
+
+    background-repeat: no-repeat;
+
+
+    background-attachment: fixed;
+
+    background-size: cover;
+
+    background-color: rgb(221, 237, 211);
+
+
+}
 
 h3 {
     font-weight: unset;
@@ -25,20 +27,19 @@ h3 {
 .order {
     display: flex;
     justify-content: center;
-    /*align-items: center;*/ /*блоки разного размера*/
+    /*align-items: center;*/ /*Ð±Ð»Ð¾ÐºÐ¸ Ñ€Ð°Ð·Ð½Ð¾Ð³Ð¾ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð°*/
     margin-bottom: 16px;
 }
 
 .productBox {
-
     text-align: center;
-    border: 1px rgba(0, 0, 0, 0.09) solid;
-    padding: 7px;
+    padding: 0px 0px 1px 0px;
     /*background-color: rgba(99, 96, 96, 0.15);*/
     background-color: rgba(206, 206, 206, 0.38);
     margin: 10px 0px;
     cursor: pointer;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
 }
 
 .productBox.added {
@@ -46,8 +47,9 @@ h3 {
 }
 
 .productBox img {
-    /* min-height: 200px; */ /* Искажаются пропорции изображения */
-    max-height: 200px;
+    border-radius: 10px;
+    /* min-height: 200px; */ /* Ð˜ÑÐºÐ°Ð¶Ð°ÑŽÑ‚ÑÑ Ð¿Ñ€Ð¾Ð¿Ð¾Ñ€Ñ†Ð¸Ð¸ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ */
+
 }
 
 .productBox:hover {
@@ -106,13 +108,13 @@ h3 {
 }
 
 .productBox h3 {
-    height: 70px;
+    height: 65px;
     word-wrap: break-word;
-    overflow: auto; /* Обрезаем все, что не помещается в область */
+    overflow: auto; /* ÐžÐ±Ñ€ÐµÐ·Ð°ÐµÐ¼ Ð²ÑÐµ, Ñ‡Ñ‚Ð¾ Ð½Ðµ Ð¿Ð¾Ð¼ÐµÑ‰Ð°ÐµÑ‚ÑÑ Ð² Ð¾Ð±Ð»Ð°ÑÑ‚ÑŒ */
 }
 
 .container {
-    padding: 80px 0px;
+    padding: 80px 0px 0px;
 }
 
 #admin_logo {
@@ -124,15 +126,19 @@ h3 {
 }
 
 @media only screen and (max-width: 767px) {
-    body {
-        background-image: url(../img/mobile_fon.jpg);
-        background-repeat: repeat;
-        background-size: 70%;
-        background-color: rgb(152, 82, 55);
-    }
 
+
+    body{
+        background-image: none;
+        background-color: #e3e6df;
+    }
     .productBox:hover {
         /* background: linear-gradient(to bottom right, rgba(50, 50, 50, 0.5), rgba(100, 100, 100, 0.1)); */
         background-color: rgba(206, 206, 206, 0.38);
     }
 }
+
+
+
+
+

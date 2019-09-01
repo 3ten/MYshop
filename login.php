@@ -21,9 +21,9 @@ if (($_POST["login"] != null) && ($_POST["pass"] != null)) {
             $_SESSION['LOGIN'] = $login;
             $_SESSION['ROLE'] = $loginInfo['ROLE'];
             $_SESSION['ID'] = $loginInfo['ID'];
-            $_SESSION['SESSION'] =$loginInfo['ID'];
+            $_SESSION['SESSION'] = $loginInfo['ID'];
             header("Location: home.php");
-        } else{
+        } else {
             exit ("Извините, введённый вами login или пароль неверный.");
         }
 
@@ -37,6 +37,7 @@ if (($_POST["login"] != null) && ($_POST["pass"] != null)) {
 <html>
 <head>
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
     <script src="js/jquery.min.js"></script>
     <meta charset="utf-8">
@@ -46,17 +47,35 @@ if (($_POST["login"] != null) && ($_POST["pass"] != null)) {
 <body>
 
 <div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            <form action="login.php" method="post">
+
+    <div class="col-sm-5 offset-sm-1 loginBox">
+        <form id="loginForm" action="login.php" method="post"> </form>
+            <div class="row">
                 <h3>Login</h3>
-                <p><input class="textbox" name="login"></p>
+            </div>
+            <div class="row">
+                <input class="textbox form-control" form="loginForm" name="login">
+            </div>
+            <div class="row">
                 <h3>Password</h3>
-                <p><input class="textbox" type="password" name="pass"></p>
-                <p><input class="button" type="submit" value="Войти"></p>
-            </form>
-        </div>
+            </div>
+            <div class="row">
+                <input class="textbox form-control" type="password" form="loginForm"  name="pass">
+            </div>
+
+            <div class="row btn">
+                <input class="button" type="submit" form="loginForm" value="Войти">
+                <button onclick="MyLocation()" class="button reg">регистрация</button>
+            </div>
+
+
     </div>
 </div>
+<SCRIPT>
+    function MyLocation() {
+       // alert('fs');
+        document.location.href = "reg.php";
+    }
+</SCRIPT>
 </body>
 </html>
