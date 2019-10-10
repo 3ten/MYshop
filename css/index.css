@@ -141,3 +141,10 @@ textarea {
 .scrollbar::-webkit-scrollbar-thumb:active {
     background: linear-gradient(left, #22ADD4, #1E98BA);
 }
+.imgbox.imgmob{
+    padding:0px 15px 0px 0px;
+}
+
+.prodInf{
+    padding: 5px 0px 5px 0px;
+}

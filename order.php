@@ -34,7 +34,7 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
 <div class="menu">
     <div class="row">
         <a href="index.php"><span class="menu_logo"><i class="fas fa-store-alt fa-3x"></i></span></a>
-        <a href="order_tracking.php"> <span class="menu_logo" ><i class="fas fa-truck fa-3x"></i></span></a>
+        <a href="order_tracking.php"> <span class="menu_logo"><i class="fas fa-truck fa-3x"></i></span></a>
         <input type="text" placeholder="Поиск" id="search">
 
     </div>
@@ -80,36 +80,36 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
 
 
                 ?>
+                <div id="id_<?php echo $articul ?>" class="mainBox col-sm-3 col-xs-12 d-none d-md-block">
+                    <div id="<?php echo $articul . $asrt ?>"
+                         class="col-12 productBox" data-name="<?php echo $name; ?>"
+                         data-articul="<?php echo $articul; ?>"
+                         data-asrt="<?php echo $asrt; ?>">
 
-                <div id="<?php echo $articul . $asrt ?>"
-                     class="col-sm-3 col-xs-12 productBox" data-name="<?php echo $name; ?>"
-                     data-articul="<?php echo $articul; ?>"
-                     data-asrt="<?php echo $asrt; ?>">
+                        <a class="Product_Order_dellBtn"
+                           id="<?php echo $articul . $asrt; ?>DellBtn"
+                           data-articul="<?php echo $articul; ?>"
+                           data-asrt="<?php echo $asrt; ?>"
+                           style="color: white">x</a>
 
-                    <a class="Product_Order_dellBtn"
-                       id="<?php echo $articul . $asrt; ?>DellBtn"
-                       data-articul="<?php echo $articul; ?>"
-                       data-asrt="<?php echo $asrt; ?>"
-                       style="color: white">x</a>
+                        <img src="<?php echo $path; ?>" id="<?php echo $articul . $asrt; ?>orderIMG"
+                             class="img-fluid orderIMG">
 
-                    <img src="<?php echo $path; ?>" id="<?php echo $articul . $asrt; ?>orderIMG"
-                         class="img-fluid orderIMG">
-
-                    <h3><?php echo $name;
-                        if ($GetAsrt['ASRT_NAME'] != null) {
-                            echo ' ' . mb_convert_encoding($GetAsrt['ASRT_NAME'], "UTF-8", "windows-1251");;
-                        }; ?></h3>
-                    <p><?php echo $price; ?> руб.</p>
-                    количество: <input type="number"
-                                       id="<?php echo $articul . $asrt; ?>quantity"
-                                       class="quantity" placeholder="количество"
-                                       data-articul="<?php echo $articul; ?>"
-                                       data-asrt="<?php echo $asrt; ?>"
-                                       value="<?php echo $quantity; ?>"
-                                       data-orderid="<?php echo $order_id; ?>"
-                    >
+                       <h3 class="text scrollbar"><?php echo $name;
+                                if ($GetAsrt['ASRT_NAME'] != null) {
+                                    echo ' ' . mb_convert_encoding($GetAsrt['ASRT_NAME'], "UTF-8", "windows-1251");;
+                                }; ?></h3>
+                        <p><?php echo $price; ?> руб.</p>
+                        количество: <input type="number"
+                                           id="<?php echo $articul . $asrt; ?>quantity"
+                                           class="quantity" placeholder="количество"
+                                           data-articul="<?php echo $articul; ?>"
+                                           data-asrt="<?php echo $asrt; ?>"
+                                           value="<?php echo $quantity; ?>"
+                                           data-orderid="<?php echo $order_id; ?>"
+                        >
+                    </div>
                 </div>
-
                 <?php
                 $sum += (int)$price * (int)$quantity;
             }
@@ -141,7 +141,7 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
                 url: 'operations.php',
                 data: 'operation=order_product_quantity_change&articul=' + element.dataset.articul + '&order_id=' + order_id + '&quantity=' + quantity + '&asrt=' + element.dataset.asrt,
                 success: function (data) {
-                    console.log("Добавлено " + quantity + " " + order_id + " "+data);
+                    console.log("Добавлено " + quantity + " " + order_id + " " + data);
                 }
             });
         });

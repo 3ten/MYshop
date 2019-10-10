@@ -48,3 +48,31 @@
 .orderBox {
     background-color: rgba(25, 25, 25, 0.38) !important;
 }
+
+/**  STYLE 11 */
+.scrollbar::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: linear-gradient(left, #fff, #e4e4e4);
+    border: 1px solid #aaa;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(left, #22ADD4, #1E98BA);
+}
+.imgbox.imgmob{
+    padding:0px 15px 0px 0px;
+}
+
+.prodInf{
+    padding: 5px 0px 5px 0px;
+}

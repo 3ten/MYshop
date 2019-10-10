@@ -137,7 +137,7 @@ if (empty($_SESSION['SESSION'])) {
                             <div id="<?php echo $articul; ?>description" class="description"
                                  data-description="<?php echo $description; ?>"></div>
                         </div>
-                        <p class="text"><strong><?php echo $price ?> руб.</strong></p>
+                        <div class="text"><strong><?php echo $price ?> руб.</strong></div>
                     </div>
                 </div>
 
@@ -147,32 +147,31 @@ if (empty($_SESSION['SESSION'])) {
                          class="productBox<?php echo $OrderClass; ?>"
                          data-isorder="<?php echo $IsOrder ?>"
                          data-name="<?php echo $name; ?>">
-                        <div class="container-fluid p-0 m-0">
-                            <div class="row p-0 m-0">
-                                <div class="imgbox col-5">
-                                    <img id="<?php echo $articul; ?>img" src="<?php echo $path ?>"
-                                         class="img-fluid mainImg">
-                                </div>
-                                <h3 id="<?php echo $articul; ?>name"
-                                    class="text scrollbar col-7"><?php echo $name ?></h3>
+
+                        <div class="row">
+                            <div class="imgbox imgmob col-5">
+                                <img id="<?php echo $articul; ?>img" src="<?php echo $path ?>"
+                                     class="img-fluid mainImg">
                             </div>
-                            <div class="row">
-                                <p class="isordertext text col-6"> <?php echo $IsOrderText; ?></p>
-                                <div id="<?php echo $articul; ?>des" class="des">
-                                    <div class="<?php echo $articul; ?>asrtBox" id="id_<?php echo $articul; ?>asrtBox">
-                                        <?php
-                                        while ($asrtRow = ibase_fetch_assoc($GetAsrtRes)) {
-                                            $asrtName = mb_convert_encoding($asrtRow['ASRT_NAME'], "UTF-8", "windows-1251");
-                                            $asrt = mb_convert_encoding($asrtRow['ASRT'], "UTF-8", "windows-1251");
-                                            echo "<div id='" . $articul . "' data-asrt='" . $asrt . "' class='asrtText'>$asrtName</div>";
-                                        }
-                                        ?>
-                                    </div>
-                                    <div id="<?php echo $articul; ?>description" class="description"
-                                         data-description="<?php echo $description; ?>"></div>
+                            <h3 id="<?php echo $articul; ?>name"
+                                class="text scrollbar col-7"><?php echo $name ?></h3>
+                        </div>
+                        <div class="row prodInf">
+                            <div class="isordertext text col-5"> <?php echo $IsOrderText; ?></div>
+                            <div id="<?php echo $articul; ?>des" class="des">
+                                <div class="<?php echo $articul; ?>asrtBox" id="id_<?php echo $articul; ?>asrtBox">
+                                    <?php
+                                    while ($asrtRow = ibase_fetch_assoc($GetAsrtRes)) {
+                                        $asrtName = mb_convert_encoding($asrtRow['ASRT_NAME'], "UTF-8", "windows-1251");
+                                        $asrt = mb_convert_encoding($asrtRow['ASRT'], "UTF-8", "windows-1251");
+                                        echo "<div id='" . $articul . "' data-asrt='" . $asrt . "' class='asrtText'>$asrtName</div>";
+                                    }
+                                    ?>
                                 </div>
-                                <p class="text"><strong><?php echo $price ?> руб.</strong></p>
+                                <div id="<?php echo $articul; ?>description" class="description"
+                                     data-description="<?php echo $description; ?>"></div>
                             </div>
+                            <div class="text price col-7"><strong><?php echo $price ?> руб.</strong></div>
                         </div>
 
                     </div>
@@ -258,7 +257,8 @@ if (empty($_SESSION['SESSION'])) {
                             data: 'operation=OrderAdd&articul=' + id + '&asrt=null',
                             success: function (data) {
                                 alert("Добавлено");
-                                location.reload();
+                                console.log(data);
+                                //location.reload();
                             }
                         });
                     }
