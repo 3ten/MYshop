@@ -12,6 +12,15 @@ include("db.php");
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
+    <link href="fontawesome/css/all.css" rel="stylesheet">
+    <script defer src="fontawesome/js/all.js"></script>
+    <link href="fontawesome/css/fontawesome.css" rel="stylesheet">
+    <link href="fontawesome/css/brands.css" rel="stylesheet">
+    <link href="/fontawesome/css/solid.css" rel="stylesheet">
+    <script defer src="fontawesome/js/brands.js"></script>
+    <script defer src="fontawesome/js/solid.js"></script>
+    <script defer src="fontawesome/js/fontawesome.js"></script>
+
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <!--<link rel="stylesheet" href="css/order.css">-->
@@ -23,6 +32,7 @@ include("db.php");
 
 </head>
 <body>
+<?php require_once('template/menu.php') ?>
 <div class="bg"></div>
 <div class="container">
 

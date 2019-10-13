@@ -31,14 +31,15 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
 </head>
 <body>
 <div class="bg"></div>
-<div class="menu">
+<!-- <div class="menu">
     <div class="row">
         <a href="index.php"><span class="menu_logo"><i class="fas fa-store-alt fa-3x"></i></span></a>
         <a href="order_tracking.php"> <span class="menu_logo"><i class="fas fa-truck fa-3x"></i></span></a>
         <input type="text" placeholder="Поиск" id="search">
 
     </div>
-</div>
+</div> -->
+<?php require_once('template/menu.php') ?>
 
 <div class="pagename">
     <h3>Корзина</h3>

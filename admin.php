@@ -57,14 +57,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
 </head>
 <body>
 <div class="bg"></div>
-<div class="menu">
-    <div class="row">
-        <a href="index.php"><span class="menu_logo"><i class="fas fa-store-alt fa-3x"></i></span></a>
-        <input type="text" placeholder="Поиск" oninput="searchInput(this, '.mainBox')" id="search">
-        <a class="imgBtn"><span class="menu_logo" data-toggle="modal" data-target="#exampleModalCenter"><i
-                        class="fas fa-toolbox fa-3x"></i></span></a>
-    </div>
-</div>
+<?php require_once('template/menu.php') ?>
 
 
 <!-- Modal -->
@@ -115,6 +108,8 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
 
 
 <div class="container">
+    <a class="imgBtn"><span class="menu_logo" data-toggle="modal" data-target="#exampleModalCenter"><i
+                            class="fas fa-toolbox fa-3x"></i></span></a>
     <div class="row" id="main">
         <?php
         while (@$row = ibase_fetch_assoc($res)) {

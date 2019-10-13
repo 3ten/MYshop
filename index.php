@@ -44,14 +44,7 @@ if (empty($_SESSION['SESSION'])) {
 </head>
 <body>
 <div class="bg"></div>
-<div class="menu">
-    <div class="row">
-        <a href="order.php"><span class="menu_logo"><i class="fas fa-shopping-basket fa-3x"></i></span></a>
-        <a href="home.php"><span class="menu_logo"><i class="fas fa-user-circle fa-3x"></i></span></a>
-        <input type="text" placeholder="Поиск" oninput="searchInput(this, '.mainBox')" id="search">
-    </div>
-</div>
-
+<?php require_once('template/menu.php') ?>
 <div class="product_menu" id="product_menu" style="display: none">
     <button class="product_menu_close" value="закрыть">свернуть</button>
     <div id="product_info_menu">

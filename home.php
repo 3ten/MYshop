@@ -47,16 +47,7 @@ $phone = mb_convert_encoding($GetUsersInfo['NUMBER'], "UTF-8", "windows-1251");
 
 <body>
 <div class="bg"></div>
-<div class="menu">
-    <div class="row">
-        <a href="index.php"><span class="menu_logo"><i class="fas fa-store-alt fa-3x"></i></span></a>
-        <a href="order_tracking.php"> <span class="menu_logo"><i class="fas fa-truck fa-3x"></i></span></a>
-        <?php if ($_SESSION['ROLE'] == '0') { ?>
-            <a href="admin.php"><span class="menu_logo"><i class="fas fa-user-cog fa-3x"></i></span></a>
-            <a href="order_list.php"><span class="menu_logo"><i class="fas fa-clipboard-list fa-3x"></i></span></a>
-        <?php } ?>
-    </div>
-</div>
+<?php require_once('template/menu.php') ?>
 
 <div class="container-fluid">
     <div class="row buttons justify-content-md-center">

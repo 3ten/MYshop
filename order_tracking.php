@@ -70,13 +70,7 @@ include("db.php");
     </script>
 </head>
 <body>
-<div class="menu">
-    <div class="row">
-        <a href="index.php"><span class="menu_logo"><i class="fas fa-store-alt fa-3x"></i></span></a>
-        <a href="order.php"><span class="menu_logo"><i class="fas fa-shopping-basket fa-3x"></i></span></a>
-        <a href="home.php"><span class="menu_logo"><i class="fas fa-user-circle fa-3x"></i></span></a>
-    </div>
-</div>
+<?php require_once('template/menu.php') ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 orderList">
