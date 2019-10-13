@@ -4,6 +4,7 @@ session_start();
 if ($_SESSION['ROLE'] != '0') {
     header("Location: login.php");
 }
+
 include("db.php");
 $res = ibase_query("select articul, name from CARDSCLA WHERE classif = '2122'", $db);
 //$res = ibase_query("select articul, name from CARDSCLA WHERE CLASSIF > -1", $db);

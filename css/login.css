@@ -4,9 +4,6 @@ body {
 }
 
 .loginBox {
-
-    position: absolute;
-    top: 35%;
     background: #ececec;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     padding: 5px;

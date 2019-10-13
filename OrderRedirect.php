@@ -21,7 +21,7 @@ include("db.php");
 $PaidOrder = ibase_query("update or insert into SHOP_PAIDORDER_LIST_3TEN values($order_idWin,-1,'$dateWin',$sum,'C','$delivery_timeWin','$phoneWin','$clientNameWin','$addressWin','$emailWin','$commentWin','-1') ", $db);
 $session = $_SESSION['SESSION'];
 $PaidOrder = ibase_query("update SHOP_ORDER_3TEN set session = 'o$session' where ORDER_ID = '$order_id'", $db);
-header("Location: success.php");
+header("Location: order_tracking.php");
 
 
 ?>
