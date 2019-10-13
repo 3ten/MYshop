@@ -12,6 +12,13 @@ if (!empty($_POST['login']) && !empty($_POST['pass']) && !empty($_POST['passChec
             $pass = sha1($pass);
             $loginAddSQL = ibase_query("insert into SHOP_USERS_3TEN(ID,LOGIN,ROLE) values (gen_id(SHOP_USER_ID_GEN_3TEN,1),'$login',1)", $db);
             $loginPassAddSQL = ibase_query("insert into SHOP_PASSWORD_3TEN values (gen_id(SHOP_USER_ID_GEN_3TEN,0),'$login','$pass')", $db);
+
+            $loginInfoSQL = ibase_query("select * from SHOP_USERS_3TEN where LOGIN ='$login' ", $db);
+            $loginInfo = ibase_fetch_assoc($loginInfoSQL);
+            $_SESSION['LOGIN'] = $login;
+            $_SESSION['ROLE'] = $loginInfo['ROLE'];
+            $_SESSION['ID'] = $loginInfo['ID'];
+            $_SESSION['SESSION'] = $loginInfo['ID'];
             header("Location: home.php");
         } else {
             echo 'такой логин уже сушествует';

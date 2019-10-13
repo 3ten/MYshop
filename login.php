@@ -33,7 +33,7 @@ if (($_POST["login"] != null) && ($_POST["pass"] != null)) {
 
 }
 ?>
-
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
@@ -46,9 +46,9 @@ if (($_POST["login"] != null) && ($_POST["pass"] != null)) {
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
 
-    <div class="col-sm-5 offset-sm-1 loginBox">
+    <div class="col-sm-4 offset-sm-4 col-12 offset-0 loginBox">
         <form id="loginForm" action="login.php" method="post"> </form>
             <div class="row">
                 <h3>Login</h3>
@@ -64,11 +64,9 @@ if (($_POST["login"] != null) && ($_POST["pass"] != null)) {
             </div>
 
             <div class="row btn">
-                <input class="button" type="submit" form="loginForm" value="Войти">
-                <button onclick="MyLocation()" class="button reg">регистрация</button>
+                <input class="button col-6" type="submit" form="loginForm" value="Войти">
+                <button onclick="MyLocation()" class="button reg col-6">регистрация</button>
             </div>
-
-
     </div>
 </div>
 <SCRIPT>

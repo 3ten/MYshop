@@ -60,9 +60,11 @@ if (empty($_SESSION['SESSION'])) {
     <input type="button" id="1" class="Obtn" value="добавить в корзину">
 </div>
 
+
 <div class="container">
     <div class="row order" id="main">
         <?php
+
         while (@$CategoryRow = ibase_fetch_assoc($res)) {
             $MainCategory = $CategoryRow['CATEGORY'];
             $ProductRes = ibase_query("select * from SHOP_PRODUCTS where CATEGORY ='$MainCategory'", $db);
@@ -166,11 +168,8 @@ if (empty($_SESSION['SESSION'])) {
                             </div>
                             <div class="text price col-7"><strong><?php echo $price ?> руб.</strong></div>
                         </div>
-
                     </div>
                 </div>
-
-
             <?php } ?>
         <?php } ?>
     </div>
@@ -192,8 +191,8 @@ if (empty($_SESSION['SESSION'])) {
 
         $('.Obtn').click(function (event) {
             let id = document.getElementsByClassName('Obtn').id.replace(/btn/g, '');
-            var el = document.getElementById(id);
-            var IsOrder = el.dataset.isorder;
+            let el = document.getElementById(id);
+            let  IsOrder = el.dataset.isorder;
             let AsrtCheck = document.getElementsByName(id + 'checkbox');
 
             if (IsOrder === "true") {
@@ -202,8 +201,15 @@ if (empty($_SESSION['SESSION'])) {
                     url: 'operations.php',
                     data: 'operation=OrderDell&articul=' + id,
                     success: function (data) {
-                        alert("Удалено");
-                        location.reload();
+                        let prodBlock = document.getElementById(id);
+                        let re = /(\w+)added(\w+)/,
+                            str = prodBlock.className;
+                        let newClass = str.replace("added", "");
+                        prodBlock.className = newClass;
+                        let orderText = prodBlock.querySelector('.isordertext');
+                        orderText.innerText = "не добавлено";
+                        el.dataset.isorder = "false";
+                        document.getElementById('product_menu').style.display = 'none';
                     }
                 });
             } else {
@@ -256,6 +262,12 @@ if (empty($_SESSION['SESSION'])) {
                         });
                     }
                 }
+                let prodBlock = document.getElementById(id);
+                prodBlock.className += " added";
+                let orderText = prodBlock.querySelector('.isordertext');
+                orderText.innerText = "в корзине";
+                el.dataset.isorder = "true";
+                document.getElementById('product_menu').style.display = 'none';
             }
 
         });
