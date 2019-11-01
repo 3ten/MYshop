@@ -16,10 +16,15 @@ $res = ibase_query("select * from SHOP_ORDER_3TEN where SESSION ='$session'", $d
     <script defer src="fontawesome/js/all.js"></script>
     <link href="fontawesome/css/fontawesome.css" rel="stylesheet">
     <link href="fontawesome/css/brands.css" rel="stylesheet">
-    <link href="/fontawesome/css/solid.css" rel="stylesheet">
+    <link href="fontawesome/css/solid.css" rel="stylesheet">
     <script defer src="fontawesome/js/brands.js"></script>
     <script defer src="fontawesome/js/solid.js"></script>
     <script defer src="fontawesome/js/fontawesome.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
 
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">

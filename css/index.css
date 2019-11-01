@@ -3,6 +3,7 @@
     font-weight: bold;
     font-size: 30px;
     z-index: 1;
+    margin:10px;
 }
 
 .descriptionMenu {
@@ -142,9 +143,13 @@ textarea {
     background: linear-gradient(left, #22ADD4, #1E98BA);
 }
 .imgbox.imgmob{
-    padding:0px 15px 0px 0px;
+    padding:5px ;
+}
+.text.prodName{
+    height: 85px;
+    font: 22px/25px 'Ubuntu', sans-serif;
 }
 
-.prodInf{
-    padding: 5px 0px 5px 0px;
+.mainBox{
+    display: block;
 }

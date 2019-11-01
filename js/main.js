@@ -2,63 +2,64 @@ var files_path;
 var myfile_name;
 
 
-(function ($) {
-
-    var files; // переменная. будет содержать данные файлов
-
-// заполняем переменную данными файлов, при изменении значения file поля
-    $('input[type=file]').on('change', function () {
-        files = this.files;
-        myfile_name = this.value;
-    });
-
-    $('.button').on('click', function (event) {
-
-        event.stopPropagation(); // остановка всех текущих JS событий
-        event.preventDefault();  // остановка дефолтного события для текущего элемента - клик для <a> тега
-
-        // ничего не делаем если files пустой
-        if (typeof files == 'undefined') return;
-
-        // создадим данные файлов в подходящем для отправки формате
-        var data = new FormData();
-        $.each(files, function (key, value) {
-            data.append(key, value);
-        });
-
-        // добавим переменную идентификатор запроса
-        data.append('my_file_upload', 1);
-
-        // AJAX запрос
-        $.ajax({
-            url: './imgeadd.php',
-            type: 'POST',
-            data: data,
-            cache: false,
-            dataType: 'json',
-            // отключаем обработку передаваемых данных, пусть передаются как есть
-            processData: false,
-            // отключаем установку заголовка типа запроса. Так jQuery скажет серверу что это строковой запрос
-            contentType: false,
-            // функция успешного ответа сервера
-            success: function (respond, status, jqXHR) {
-                // Ок
-                if (typeof respond.error === 'undefined') {
-
-                }
-                // error
-                else {
-                    console.log('ОШИБКА: ' + respond.error);
-                }
-            },
-            // функция ошибки ответа сервера
-            error: function (jqXHR, status, errorThrown) {
-                console.log('ОШИБКА AJAX Запроса: ' + status, jqXHR);
-            }
-        });
-    });
-
-})(jQuery);
+// (function ($) {
+//
+//     var files; // переменная. будет содержать данные файлов
+//
+// // заполняем переменную данными файлов, при изменении значения file поля
+//     $('input[type=file]').on('change', function () {
+//         files = this.files;
+//         myfile_name = this.value;
+//     });
+//
+//     $('.button').on('click', function (event) {
+//
+//         event.stopPropagation(); // остановка всех текущих JS событий
+//         event.preventDefault();  // остановка дефолтного события для текущего элемента - клик для <a> тега
+//
+//         // ничего не делаем если files пустой
+//         if (typeof files == 'undefined') return;
+//
+//         // создадим данные файлов в подходящем для отправки формате
+//         var data = new FormData();
+//         $.each(files, function (key, value) {
+//             data.append(key, value);
+//         });
+//
+//         // добавим переменную идентификатор запроса
+//         data.append('my_file_upload', 1);
+//
+//         // AJAX запрос
+//         $.ajax({
+//             url: './imgeadd.php',
+//             type: 'POST',
+//             data: data,
+//             cache: false,
+//             dataType: 'json',
+//             // отключаем обработку передаваемых данных, пусть передаются как есть
+//             processData: false,
+//             // отключаем установку заголовка типа запроса. Так jQuery скажет серверу что это строковой запрос
+//             contentType: false,
+//             // функция успешного ответа сервера
+//             success: function (respond, status, jqXHR) {
+//                 // Ок
+//                 console.log('fsdf');
+//                 if (typeof respond.error === 'undefined') {
+//
+//                 }
+//                 // error
+//                 else {
+//                     console.log('ОШИБКА: ' + respond.error);
+//                 }
+//             },
+//             // функция ошибки ответа сервера
+//             error: function (jqXHR, status, errorThrown) {
+//                 console.log('ОШИБКА AJAX Запроса: ' + status, jqXHR);
+//             }
+//         });
+//     });
+//
+// })(jQuery);
 /************************************************************************************************************************/
 
 $(document).ready(function () {

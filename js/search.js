@@ -16,18 +16,22 @@
 let DocDisplay;
 
 async function searchInput(search, block) {
+
     let doc_text,
         search_text = search.value;
     $(block).each(function () {
+
         let doc = this;
         if (getComputedStyle(doc, null).display !== 'none') {
             DocDisplay = getComputedStyle(doc, null).display;
         }
         doc_text = doc.textContent;
         if (doc_text.toUpperCase().indexOf(search_text.toUpperCase()) === -1) {
-            doc.style.display = 'none';
+            console.log(doc);
+
+            doc.hidden=true;
         } else {
-            doc.style.display = DocDisplay;
+            doc.hidden = false;
         }
     });
 }

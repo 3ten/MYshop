@@ -45,6 +45,7 @@ function GetSum($order_id, $db)
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/order_payment.css">
 
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
@@ -54,21 +55,24 @@ function GetSum($order_id, $db)
         <div class="block">
             <h1>Ваш заказ<br>на сумму <?php echo GetSum($order_id, $db); ?> рублей</h1>
             <form method="POST" action="OrderRedirect.php">
-                <?php if (empty($_SESSION['NAME'])) { ?>
-                    ваше имя(ФИО):<br>
+
+                <div  <?php if (!empty($_SESSION['LOGIN'])) echo "hidden"; ?>>ваше имя(ФИО):<br>
                     <input type="text" name="clientName" placeholder="введите ваше ФИО" class="text"
                            value="<?php echo mb_convert_encoding($GetUserData['LOGIN'], "UTF-8", "windows-1251"); ?>"
-                           required><br><br>
+                           required ><br><br>
                     номер телефона:<br>
                     <input type="text" name="phone" placeholder="введите номер" class="text"
-                           value="<?php echo mb_convert_encoding( $GetUserData['NUMBER'], "UTF-8", "windows-1251"); ?>" required><br><br>
+                           value="<?php echo mb_convert_encoding($GetUserData['NUMBER'], "UTF-8", "windows-1251"); ?>"
+                           required><br><br>
                     город(населенный пункт):<br>
                     <input type="text" name="city" placeholder="город(населенный пункт)" class="text"
-                           value="<?php echo mb_convert_encoding( $GetUserData['CITY'], "UTF-8", "windows-1251"); ?>" required><br><br>
+                           value="<?php echo mb_convert_encoding($GetUserData['CITY'], "UTF-8", "windows-1251"); ?>"
+                           required><br><br>
                     адрес(улица,д,кв):<br>
                     <input type="text" name="address" placeholder="адрес(улица,д,кв)" class="text"
-                           value="<?php echo mb_convert_encoding($GetUserData['ADDRESS'], "UTF-8", "windows-1251"); ?>" required><br><br>
-                <?php } ?>
+                           value="<?php echo mb_convert_encoding($GetUserData['ADDRESS'], "UTF-8", "windows-1251"); ?>"
+                           required><br><br>
+                </div>
                 время доставки(день,время):<br>
                 <input type="text" name="DT" placeholder="время доставки" class="text" required><br><br>
                 комментарий к заказу:<br>

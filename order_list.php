@@ -21,6 +21,9 @@ include("db.php");
     <script defer src="fontawesome/js/solid.js"></script>
     <script defer src="fontawesome/js/fontawesome.js"></script>
 
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/popper.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
     <!--<link rel="stylesheet" href="css/order.css">-->

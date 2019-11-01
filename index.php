@@ -1,5 +1,6 @@
 <?php
 session_start();
+//echo phpinfo();
 include("db.php");
 $res = ibase_query("select * from SHOP_CATEGORY_3TEN", $db);
 //$row = ibase_fetch_assoc($res);
@@ -25,7 +26,7 @@ if (empty($_SESSION['SESSION'])) {
     <script defer src="fontawesome/js/all.js"></script>
     <link href="fontawesome/css/fontawesome.css" rel="stylesheet">
     <link href="fontawesome/css/brands.css" rel="stylesheet">
-    <link href="/fontawesome/css/solid.css" rel="stylesheet">
+    <link href="fontawesome/css/solid.css" rel="stylesheet">
     <script defer src="fontawesome/js/brands.js"></script>
     <script defer src="fontawesome/js/solid.js"></script>
     <script defer src="fontawesome/js/fontawesome.js"></script>
@@ -98,7 +99,7 @@ if (empty($_SESSION['SESSION'])) {
                 $OrderRow = ibase_fetch_assoc($orderres);
                 //if ($articul != mb_convert_encoding($OrderRow["ARTICUL"], "UTF-8", "windows-1251")) {
                 if (empty($OrderRow["ARTICUL"])) {
-                    $IsOrderText = "не добавлено";
+                    $IsOrderText = "добавить";
                     $IsOrder = "false";
                     $OrderClass = "";
                     $btntext = 'добавить';
@@ -137,7 +138,7 @@ if (empty($_SESSION['SESSION'])) {
                 </div>
 
 
-                <div id="id_<?php echo $articul ?>" class="mainMobileBox col-sm-3 col-xs-12 d-md-none d-block">
+                <div id="id_<?php echo $articul ?>" class="mainMobileBox col-sm-3 col-xs-12 d-md-none d-block mainBox">
                     <div id="<?php echo $articul ?>"
                          class="productBox<?php echo $OrderClass; ?>"
                          data-isorder="<?php echo $IsOrder ?>"
@@ -148,11 +149,21 @@ if (empty($_SESSION['SESSION'])) {
                                 <img id="<?php echo $articul; ?>img" src="<?php echo $path ?>"
                                      class="img-fluid mainImg">
                             </div>
-                            <h3 id="<?php echo $articul; ?>name"
-                                class="text scrollbar col-7"><?php echo $name ?></h3>
+                            <div class="col-7 m-0 p-0">
+                                <div class="row m-0 p-0">
+                                    <h3 id="<?php echo $articul; ?>name"
+                                        class="text prodName scrollbar col-12"><?php echo $name ?></h3>
+                                </div>
+                                <div class="row">
+                                    <div class="text price col-6"><strong><?php echo $price ?> руб.</strong></div>
+                                    <div class="isordertext text col-6">
+                                        <?php echo $IsOrderText; ?></div>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="row prodInf">
-                            <div class="isordertext text col-5"> <?php echo $IsOrderText; ?></div>
+
                             <div id="<?php echo $articul; ?>des" class="des">
                                 <div class="<?php echo $articul; ?>asrtBox" id="id_<?php echo $articul; ?>asrtBox">
                                     <?php
@@ -166,7 +177,7 @@ if (empty($_SESSION['SESSION'])) {
                                 <div id="<?php echo $articul; ?>description" class="description"
                                      data-description="<?php echo $description; ?>"></div>
                             </div>
-                            <div class="text price col-7"><strong><?php echo $price ?> руб.</strong></div>
+
                         </div>
                     </div>
                 </div>
@@ -192,7 +203,7 @@ if (empty($_SESSION['SESSION'])) {
         $('.Obtn').click(function (event) {
             let id = document.getElementsByClassName('Obtn').id.replace(/btn/g, '');
             let el = document.getElementById(id);
-            let  IsOrder = el.dataset.isorder;
+            let IsOrder = el.dataset.isorder;
             let AsrtCheck = document.getElementsByName(id + 'checkbox');
 
             if (IsOrder === "true") {
@@ -207,7 +218,7 @@ if (empty($_SESSION['SESSION'])) {
                         let newClass = str.replace("added", "");
                         prodBlock.className = newClass;
                         let orderText = prodBlock.querySelector('.isordertext');
-                        orderText.innerText = "не добавлено";
+                        orderText.innerText = "добавить";
                         el.dataset.isorder = "false";
                         document.getElementById('product_menu').style.display = 'none';
                     }

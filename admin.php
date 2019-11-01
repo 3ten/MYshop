@@ -7,7 +7,6 @@ if ($_SESSION['ROLE'] != '0') {
 
 include("db.php");
 $res = ibase_query("select articul, name from CARDSCLA WHERE classif = '2122'", $db);
-//$res = ibase_query("select articul, name from CARDSCLA WHERE CLASSIF > -1", $db);
 //$row = ibase_fetch_assoc($res);
 
 $path = 'img/'; // директория для загрузки
@@ -110,7 +109,7 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
 
 <div class="container">
     <a class="imgBtn"><span class="menu_logo" data-toggle="modal" data-target="#exampleModalCenter"><i
-                            class="fas fa-toolbox fa-3x"></i></span></a>
+                    class="fas fa-toolbox fa-3x"></i></span></a>
     <div class="row" id="main">
         <?php
         while (@$row = ibase_fetch_assoc($res)) {
@@ -223,8 +222,68 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
     </div>
     <script>
         $(document).ready(function () {
+            var files; // переменная. будет содержать данные файлов
+
+// заполняем переменную данными файлов, при изменении значения file поля
+            $('input[type=file]').on('change', function () {
+                files = this.files;
+                myfile_name = this.value;
+                console.log('' + files + ' ' + myfile_name);
+            });
+
+            function imgUpload() {
+                console.log('' + files + ' тест');
+                event.stopPropagation(); // остановка всех текущих JS событий
+                event.preventDefault();  // остановка дефолтного события для текущего элемента - клик для <a> тега
+
+                // ничего не делаем если files пустой
+                if (typeof files == 'undefined') return;
+
+                // создадим данные файлов в подходящем для отправки формате
+                var data = new FormData();
+                $.each(files, function (key, value) {
+                    data.append(key, value);
+                });
+
+                // добавим переменную идентификатор запроса
+                data.append('my_file_upload', 1);
+
+                // AJAX запрос
+                $.ajax({
+                    url: './imgeadd.php',
+                    type: 'POST',
+                    data: data,
+                    cache: false,
+                    dataType: 'json',
+                    // отключаем обработку передаваемых данных, пусть передаются как есть
+                    processData: false,
+                    // отключаем установку заголовка типа запроса. Так jQuery скажет серверу что это строковой запрос
+                    contentType: false,
+                    // функция успешного ответа сервера
+                    success: function (respond, status, jqXHR) {
+                        // Ок
+                        if (typeof respond.error === 'undefined') {
+
+                        }
+                        // error
+                        else {
+                            console.log('ОШИБКА: ' + respond.error);
+                        }
+                    },
+                    // функция ошибки ответа сервера
+                    error: function (jqXHR, status, errorThrown) {
+                        console.log('ОШИБКА AJAX Запроса: ' + status, jqXHR);
+                    }
+                });
+            }
+
             /* добовление товара на сайт*/
             $(".button").click(function () {
+
+                imgUpload();
+                console.log('test');
+
+
                 let price = document.getElementById(this.id + "txt").value;
                 if (price !== '') {
                     let el = document.getElementById(this.id);
@@ -250,12 +309,15 @@ while ($categoryRow = ibase_fetch_assoc($categoryRes)) {
                             }
                         }
                     }
+
                     $.ajax({
+
                         type: 'POST',
                         url: 'operations.php',
                         data: 'operation=ProductAdd&articul=' + this.id + '&name=' + name + '&price=' + price + '&path=' + myfile_name + '&category=' + category + '&description=' + description,
                         success: function (data) {
                             alert("Добавлено");
+
                             // location.reload();
                         }
                     });
